@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.car.modules.car.dao.MsgTypeDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.car.modules.car.entity.MsgTypeEntity" id="msgTypeMap">
+        <result property="id" column="id"/>
+        <result property="projectId" column="project_id"/>
+        <result property="projectName" column="project_name"/>
+        <result property="typeName" column="type_name"/>
+        <result property="typeDesc" column="type_desc"/>
+        <result property="effective" column="effective"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="seq" column="seq"/>
+    </resultMap>
+
+    <select id="queryWithProject" resultType="com.car.modules.car.entity.MsgTypeEntity">
+        SELECT
+        t.*,
+        p.project_name as projectName
+        FROM
+        msg_type AS t,
+        project AS p
+        WHERE
+        t.project_id = p.id
+    </select>
+</mapper>

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>鏂囦欢涓婁紶</title>
+<#include "/header.html">
+<script src="${request.contextPath}/statics/libs/ajaxupload.js"></script>
+</head>
+<body>
+<div id="rrapp" v-cloak>
+	<div v-show="showList">
+		<div class="grid-btn">
+			<a class="btn btn-danger" @click="addConfig"><i class="fa fa-sun-o"></i>&nbsp;浜戝瓨鍌ㄩ厤缃�</a>
+			<a class="btn btn-primary" id="upload"><i class="fa fa-plus"></i>&nbsp;涓婁紶鏂囦欢</a>
+			<a class="btn btn-primary" @click="del"><i class="fa fa-trash-o"></i>&nbsp;鍒犻櫎</a>
+		</div>
+	    <table id="jqGrid"></table>
+	    <div id="jqGridPager"></div>
+    </div>
+    
+    <div v-show="!showList" class="panel panel-default">
+		<div class="panel-heading">{{title}}</div>
+		<form class="form-horizontal">
+			<div class="form-group">
+				<div class="col-sm-2 control-label">瀛樺偍绫诲瀷</div>
+				<label class="radio-inline">
+					<input type="radio" name="type" v-model="config.type" value="1"/> 涓冪墰
+				</label>
+				<label class="radio-inline">
+					<input type="radio" name="type" v-model="config.type" value="2"/> 闃块噷浜�
+				</label>
+				<label class="radio-inline">
+					<input type="radio" name="type" v-model="config.type" value="3"/> 鑵捐浜�
+				</label>
+			</div>
+			<div v-show="config.type == 1">
+				<div class="form-group">
+					<div class="col-sm-2 control-label">&nbsp;</div>
+					<p class="form-control-static"><a href="http://www.car.io/open/qiniu.html" target="_blank">鍏嶈垂鐢宠(涓冪墰)10GB鍌ㄥ瓨绌洪棿</a></p>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-2 control-label">鍩熷悕</div>
+					<div class="col-sm-10">
+					  <input type="text" class="form-control" v-model="config.qiniuDomain" placeholder="涓冪墰缁戝畾鐨勫煙鍚�"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-2 control-label">璺緞鍓嶇紑</div>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" v-model="config.qiniuPrefix" placeholder="涓嶈缃粯璁や负绌�"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-2 control-label">AccessKey</div>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" v-model="config.qiniuAccessKey" placeholder="涓冪墰AccessKey"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-2 control-label">SecretKey</div>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" v-model="config.qiniuSecretKey" placeholder="涓冪墰SecretKey"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-2 control-label">绌洪棿鍚�</div>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" v-model="config.qiniuBucketName" placeholder="涓冪墰瀛樺偍绌洪棿鍚�"/>
+					</div>
+				</div>
+			</div>
+			<div v-show="config.type == 2">
+				<div class="form-group">
+					<div class="col-sm-2 control-label">鍩熷悕</div>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" v-model="config.aliyunDomain" placeholder="闃块噷浜戠粦瀹氱殑鍩熷悕"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-2 control-label">璺緞鍓嶇紑</div>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" v-model="config.aliyunPrefix" placeholder="涓嶈缃粯璁や负绌�"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-2 control-label">EndPoint</div>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" v-model="config.aliyunEndPoint" placeholder="闃块噷浜慐ndPoint"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-2 control-label">AccessKeyId</div>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" v-model="config.aliyunAccessKeyId" placeholder="闃块噷浜慉ccessKeyId"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-2 control-label">AccessKeySecret</div>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" v-model="config.aliyunAccessKeySecret" placeholder="闃块噷浜慉ccessKeySecret"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-2 control-label">BucketName</div>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" v-model="config.aliyunBucketName" placeholder="闃块噷浜態ucketName"/>
+					</div>
+				</div>
+			</div>
+			<div v-show="config.type == 3">
+				<div class="form-group">
+					<div class="col-sm-2 control-label">鍩熷悕</div>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" v-model="config.qcloudDomain" placeholder="鑵捐浜戠粦瀹氱殑鍩熷悕"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-2 control-label">璺緞鍓嶇紑</div>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" v-model="config.qcloudPrefix" placeholder="涓嶈缃粯璁や负绌�"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-2 control-label">AppId</div>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" v-model="config.qcloudAppId" placeholder="鑵捐浜慉ppId"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-2 control-label">SecretId</div>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" v-model="config.qcloudSecretId" placeholder="鑵捐浜慡ecretId"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-2 control-label">SecretKey</div>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" v-model="config.qcloudSecretKey" placeholder="鑵捐浜慡ecretKey"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-2 control-label">BucketName</div>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" v-model="config.qcloudBucketName" placeholder="鑵捐浜態ucketName"/>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-2 control-label">Bucket鎵�灞炲湴鍖�</div>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" v-model="config.qcloudRegion" placeholder="濡傦細sh锛堝彲閫夊�� 锛屽崕鍗楋細gz 鍗庡寳锛歵j 鍗庝笢锛歴h锛�"/>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-2 control-label"></div> 
+				<input type="button" class="btn btn-primary" @click="saveOrUpdate" value="纭畾"/>
+				&nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="reload" value="杩斿洖"/>
+			</div>
+		</form>
+	</div>
+</div>
+
+<script src="${request.contextPath}/statics/js/modules/oss/oss.js?_${.now?long}"></script>
+</body>
+</html>

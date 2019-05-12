@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.car.modules.car.dao.UserDetailDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.car.modules.car.entity.UserDetailEntity" id="userDetailMap">
+        <result property="id" column="id"/>
+        <result property="userId" column="user_id"/>
+        <result property="userCode" column="user_code"/>
+        <result property="cityId" column="city_id"/>
+        <result property="cityName" column="city_name"/>
+        <result property="projectId" column="project_id"/>
+        <result property="projectName" column="project_name"/>
+        <result property="sex" column="sex"/>
+        <result property="education" column="education"/>
+        <result property="buySmsRemind" column="buy_sms_remind"/>
+        <result property="openSmsRemind" column="open_sms_remind"/>
+        <result property="userType" column="user_type"/>
+        <result property="userPicture" column="user_picture"/>
+        <result property="equipmentType" column="equipment_type"/>
+        <result property="equipmentModel" column="equipment_model"/>
+        <result property="systemVersion" column="system_version"/>
+        <result property="softVersion" column="soft_version"/>
+        <result property="code" column="code"/>
+        <result property="accessToken" column="access_token"/>
+        <result property="openid" column="openid"/>
+        <result property="expiresIn" column="expires_in"/>
+        <result property="offlineOrganizationId" column="offline_organization_id"/>
+        <result property="organCode" column="organ_code"/>
+        <result property="organPicture" column="organ_picture"/>
+        <result property="organName" column="organ_name"/>
+        <result property="userCodePicture" column="user_code_picture"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+
+</mapper>

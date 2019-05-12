@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.car.dao.UserDetailDao">
+	
+	<select id="getUserDetailByCondition" parameterType="long" resultType="com.car.vo.UserDetailVO">
+		SELECT c.id AS cityId,c.city_name,p.province_name,c.province_id,
+		ud.id userDetailId,education,buy_sms_remind,open_sms_remind,user_type,user_picture
+		FROM user_detail ud, province p, city c
+		WHERE p.id = c.province_id AND ud.city_id = c.id AND ud.user_id = #{userId}
+	</select>
+	
+	<insert id="saveUserDetail" parameterType="com.car.vo.UserDetailVO">
+		INSERT INTO user_detail (user_id,city_id,education,buy_sms_remind,
+		open_sms_remind,user_type,user_picture,equipment_type,equipment_model,
+		system_version,soft_version,access_token,openid,expires_in,sex,user_code,
+		offline_organization_id,organ_code,organ_picture,organ_name)
+		VALUES
+		(#{userId},#{cityId},#{education},#{buySmsRemind},#{openSmsRemind},
+		#{userType},#{userPicture},#{equipmentType},#{equipmentModel},
+		#{systemVersion},#{softVersion},#{accessToken},#{openid},#{expiresIn},#{sex},
+		#{userCode},#{offlineOrganizationId},#{organCode},#{organPicture},#{organName})
+	</insert>
+	
+	<update id="updateUserDetail" parameterType="com.car.vo.UserDetailVO">
+		UPDATE user_detail SET city_id = ?, education = ?, buy_sms_remind = ?, 
+		open_sms_remind = ?, user_type = ?, user_picture = ? "
+		WHERE id = ?
+	</update>
+	
+	<select id="getMaxUserCode" resultType="string">
+		SELECT MAX(user_code) AS userCode FROM user_detail
+	</select>
+
+</mapper>

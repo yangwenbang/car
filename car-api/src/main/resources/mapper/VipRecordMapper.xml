@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.car.dao.VipRecordDao">
+	
+	<select id="findVipRecordByUserAndProject" resultType="com.car.vo.VipRecordVO">
+		SELECT id vipRecordId,user_id,project_id,vip_begin_date,
+		vip_end_date,vip_day,user_name,version
+		FROM vip_record
+		WHERE user_id = #{userId} AND project_id = #{projectId}
+	</select>
+	
+	<select id="findVipRecordEntityByUserAndProject" resultType="com.car.entity.VipRecord">
+		SELECT id,project_id,vip_begin_date,
+		vip_end_date,vip_day,user_name,version
+		FROM vip_record
+		WHERE user_id = #{userId} AND project_id = #{projectId}
+	</select>
+	
+	<insert id="saveVipRecord" parameterType="com.car.entity.VipRecord">
+		INSERT INTO vip_record
+		(user_id,project_id,vip_begin_date,vip_end_date,vip_day,user_name,
+		update_desc,create_time,update_time,version)
+		VALUES
+		(#{userId},#{projectId},#{vipBeginDate},#{vipEndDate},#{vipDay},#{userName},
+		#{updateDesc},#{createTime},#{updateTime},#{version})
+	</insert>
+	
+	<update id="updateVipReocrd" parameterType="com.car.entity.VipRecord">
+		UPDATE vip_record 
+		SET vip_begin_date = #{vipBeginDate},
+		vip_end_date = #{vipEndDate},
+		version = #{version} + 1
+		WHERE id = #{id} AND version = #{version}
+	</update>
+	
+</mapper>

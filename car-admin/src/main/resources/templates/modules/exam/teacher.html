@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+		<#include "/header.html">
+            <script src="${request.contextPath}/statics/libs/jquery.json.js"></script>
+            <script src="${request.contextPath}/statics/libs/ajaxupload.js"></script>
+</head>
+<body>
+<div id="rrapp" v-cloak>
+    <div v-show="showList">
+        <div class="grid-btn">
+			<#if shiro.hasPermission("car:teacher:save")>
+            <a class="btn btn-primary" @click="add"><i class="fa fa-plus"></i>&nbsp;鏂板</a>
+			</#if>
+			<#if shiro.hasPermission("car:teacher:update")>
+            <a class="btn btn-primary" @click="update"><i class="fa fa-pencil-square-o"></i>&nbsp;淇敼</a>
+			</#if>
+			<#if shiro.hasPermission("car:teacher:delete")>
+            <a class="btn btn-primary" @click="del"><i class="fa fa-trash-o"></i>&nbsp;鍒犻櫎</a>
+			</#if>
+            <a class="btn btn-default" @click="query" style="float:right;">鏌ヨ</a>
+            <div class="form-group col-sm-2" style="float:right;width: 150px">
+                <input type="text" class="form-control"  placeholder="鐢ㄦ埛鍚�" v-model="q.teacherName">
+            </div>
+        </div>
+        <table id="jqGrid"></table>
+        <div id="jqGridPager"></div>
+    </div>
+
+    <div v-show="!showList" class="panel panel-default">
+        <div class="panel-heading">{{title}}</div>
+        <form class="form-horizontal">
+														                    <div class="form-group">
+                        <div class="col-sm-2 control-label">鏁欏笀鎵嬫満鍙�</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="teacher.teacherMobile" placeholder="鏁欏笀鎵嬫満鍙�"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-2 control-label">鏁欏笀濮撳悕</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="teacher.teacherName" placeholder="鏁欏笀濮撳悕"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-2 control-label">鏁欏笀瀵嗙爜</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="teacher.teacherPassword" placeholder="鏁欏笀瀵嗙爜"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-2 control-label">鎵�鍦ㄥ煄甯�</div>
+                        <span style="font-size: 14px;">
+                                    <select class="refresh-seconds-select btn" style="border-color:#e9d3d3;width:200px;" v-model="teacher.cityId">
+                                        <option v-for="city in cityList" v-bind:value="city.id">{{city.cityName}}</option>
+                                    </select>
+                                </span>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-2 control-label">瀹跺涵浣忓潃</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="teacher.homeAddress" placeholder=""/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-2 control-label">鎬у埆</div>
+                        <span style="font-size: 14px;">
+                            <select class="refresh-seconds-select btn" style="width:200px;border-color:#e9d3d3;" v-model="teacher.sex">
+                                 <option v-for="item in [{key:'1',value:'鐢�'},{key:'0',value:'濂�'}]" v-bind:value="item.key">{{item.value}}</option>
+                            </select>
+                        </span>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-2 control-label">閭</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="teacher.email" placeholder="閭"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-2 control-label">鏁欏笀绠�浠�</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="teacher.teacherIntroduce" placeholder="鏁欏笀绠�浠�"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-2 control-label">鏁欏鐗归暱(鎿呴暱绉戠洰)</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="teacher.teacherSpecial" placeholder="鏁欏鐗归暱(鎿呴暱绉戠洰)"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-2 control-label">鏁欓緞</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="teacher.teacherLength" placeholder="鏁欓緞"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-2 control-label">瀛﹀巻</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="teacher.education" placeholder="瀛﹀巻"/>
+                        </div>
+                    </div>
+            <div class="form-group">
+                <div class="col-sm-2 control-label">鍚嶅笀鎺ㄨ崘(0涓嶆槸/1鏄�)</div>
+                <span style="font-size: 14px;">
+                            <select class="refresh-seconds-select btn" style="width:200px;border-color:#e9d3d3;" v-model="teacher.isFamous">
+                                 <option v-for="item in [{key:'1',value:'鏄�'},{key:'0',value:'涓嶆槸'}]" v-bind:value="item.key">{{item.value}}</option>
+                            </select>
+                        </span>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-2 control-label">鎵�鏁欑鐩�</div>
+                <span style="font-size: 14px;">
+                            <select class="refresh-seconds-select btn" style="width:200px;border-color:#e9d3d3;" v-model="teacher.subjectName">
+                                 <option v-for="item in subjectList" v-bind:value="item.id">{{item.subjectName}}</option>
+                            </select>
+                        </span>
+            </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">涓�鍙ヨ瘽</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="teacher.oneWord" placeholder="涓�鍙ヨ瘽"/>
+                        </div>
+                    </div>
+            <div class="form-group">
+                <div class="col-sm-2 control-label">鑰佸笀澶村儚</div>
+            <form id="myform" enctype="multipart/form-data">
+                <input type="file" name="fileup" id="fileup" accept="image/*"  v-on:change="fileChange($event)" />
+            </form>
+            </div>
+							            <div class="form-group">
+                <div class="col-sm-2 control-label"></div>
+                <input type="button" class="btn btn-primary" @click="saveOrUpdate" value="纭畾"/>
+                &nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="reload" value="杩斿洖"/>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="${request.contextPath}/statics/js/modules/car/teacher.js?_${.now?long}"></script>
+</body>
+</html>

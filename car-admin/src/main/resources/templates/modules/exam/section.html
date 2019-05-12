@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+		<#include "/header.html">
+            <script src="${request.contextPath}/statics/libs/wangEditor.min.js"></script>
+</head>
+<body>
+<div id="rrapp" v-cloak>
+    <div v-show="showList">
+        <div class="grid-btn">
+            <a class="btn btn-primary" @click="add"><i class="fa fa-plus"></i>&nbsp;鏂板</a>
+            <a class="btn btn-primary" @click="update"><i class="fa fa-pencil-square-o"></i>&nbsp;淇敼</a>
+            <a class="btn btn-primary" @click="del"><i class="fa fa-trash-o"></i>&nbsp;鍒犻櫎</a>
+            <a class="btn btn-primary" @click="deliveryIdName"><i class="fa fa-pencil-square-o"></i>&nbsp;棰樺簱绠＄悊</a>
+          <!--  <a class="btn btn-primary" href="chapter.html" onClick="javascript :history.back(-1);">&nbsp;杩斿洖</a>-->
+            <a class="btn btn-default" @click="query" style="float:right;">鏌ヨ</a>
+            <div class="form-group col-sm-2" style="float:right;width: 150px">
+                <input type="text" class="form-control"  placeholder="璇捐妭鍚�" v-model="find">
+            </div>
+        </div>
+
+        <table id="jqGrid"></table>
+        <div id="jqGridPager"></div>
+    </div>
+
+    <div v-show="!showList" class="panel panel-default">
+        <div class="panel-heading">{{title}}</div>
+        <form class="form-horizontal">
+														                    <div class="form-group">
+                        <div class="col-sm-2 control-label">绔犲悕绉�</div>
+                        <div class="col-sm-10">
+                            <input type="text" readonly="readonly" class="form-control" v-model="chapterName" placeholder="绔犲悕绉�"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">鑺傚悕绉�</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="section.sectionName" placeholder="鑺傚悕绉�"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">鑺傞暱搴�</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="section.timeLength" placeholder="鑺傞暱搴︼紝瑙嗛璁板綍鏃堕暱(鍒嗛挓)锛岃瘯鍗疯褰曢鏁帮紝璧勬枡璁板綍瀛楁暟锛堜及绠楋級"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">璇句欢绫诲瀷</div>
+                        <div class="col-sm-10">
+                            <select class="refresh-seconds-select btn" style="width:200px;border-color:#e9d3d3;" v-model="section.sectionType">
+                                <option v-for="item in [{key:'0',value:'瑙嗛'},{key:'1',value:'璧勬枡'},{key:'2',value:'璇曞嵎'}]" v-bind:value="item.key">{{item.value}}</option>
+                            </select>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">璇句欢鍐呭缃戝潃</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="section.sectionUrl" placeholder="璇句欢鍐呭缃戝潃"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">璧勬枡鍐呭(html)</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="section.sectionContent" placeholder="璧勬枡鍐呭(html)"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">澶囨敞</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="section.remark" placeholder="澶囨敞"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">鎺掑簭(灏忓彿鎺掑墠)</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="section.seq" placeholder="鎺掑簭(灏忓彿鎺掑墠)"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">鏄惁鍏嶈垂</div>
+                        <div class="col-sm-10">
+                            <select class="refresh-seconds-select btn" style="width:200px;border-color:#e9d3d3;" v-model="section.free">
+                                <option v-for="item in [{key:'0',value:'涓嶅厤璐�'},{key:'1',value:'鍏嶈垂'}]" v-bind:value="item.key">{{item.value}}</option>
+                            </select>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">璇曞嵎鎶ご</div>
+                        <div class="col-sm-10">
+                            <input type="text" style="width: 650px" class="form-control" v-model="section.carTitle" placeholder="璇曞嵎鎶ご"/>
+                           <!-- <div id="editor" style="width: 650px">
+                                <p>娆㈣繋浣跨敤 <b>wangEditor</b> 瀵屾枃鏈紪杈戝櫒</p>
+                            </div>-->
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">棰樺瀷妯℃澘</div>
+                        <div class="col-sm-10">
+                            <select class="refresh-seconds-select btn" style="width:200px;border-color:#e9d3d3;" v-model="section.exerciseModel">
+                                <option  v-for="exerciseType in exerciseTypeList" v-bind:value="exerciseType.exerciseModel">{{exerciseType.exerciseModel}}</option>
+                            </select>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">璁蹭箟</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="section.handout" placeholder="璁蹭箟"/>
+                        </div>
+                    </div>
+							            <div class="form-group">
+                <div class="col-sm-2 control-label"></div>
+                <input type="button" class="btn btn-primary" @click="saveOrUpdate" value="纭畾"/>
+                &nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="reload" value="杩斿洖"/>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="${request.contextPath}/statics/js/modules/car/section.js?_${.now?long}"></script>
+</body>
+</html>

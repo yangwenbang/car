@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.car.modules.car.dao.CourseDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.car.modules.car.entity.CourseEntity" id="courseMap">
+        <result property="id" column="id"/>
+        <result property="courseName" column="course_name"/>
+        <result property="courseType" column="course_type"/>
+        <result property="pictureUrl" column="picture_url"/>
+        <result property="oneWord" column="one_word"/>
+        <result property="introduce" column="introduce"/>
+        <result property="teacherId" column="teacher_id"/>
+        <result property="teacherName" column="teacher_name"/>
+        <result property="courseCount" column="course_count"/>
+        <result property="price" column="price"/>
+        <result property="discount" column="discount"/>
+        <result property="projectId" column="project_id"/>
+        <result property="categoryId" column="category_id"/>
+        <result property="subjectId" column="subject_id"/>
+        <result property="effective" column="effective"/>
+        <result property="replayDate" column="replay_date"/>
+        <result property="replayUsername" column="replay_username"/>
+        <result property="seq" column="seq"/>
+        <result property="projectName" column="project_name"/>
+        <result property="categoryName" column="category_name"/>
+        <result property="subjectName" column="subject_name"/>
+        <result property="isFamous" column="is_famous"/>
+        <result property="createDate" column="create_date"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="courseUrl" column="course_url"/>
+    </resultMap>
+
+
+</mapper>

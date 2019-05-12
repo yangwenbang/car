@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.car.modules.car.dao.CommodityDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.car.modules.car.entity.CommodityEntity" id="commodityMap">
+        <result property="id" column="id"/>
+        <result property="projectId" column="project_id"/>
+        <result property="projectName" column="project_name"/>
+        <result property="commodityName" column="commodity_name"/>
+        <result property="pictureUrl" column="picture_url"/>
+        <result property="oneWord" column="one_word"/>
+        <result property="introduce" column="introduce"/>
+        <result property="introduceUrl" column="introduce_url"/>
+        <result property="coin" column="coin"/>
+        <result property="effective" column="effective"/>
+        <result property="seq" column="seq"/>
+        <result property="replayDate" column="replay_date"/>
+        <result property="replayUsername" column="replay_username"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+
+</mapper>

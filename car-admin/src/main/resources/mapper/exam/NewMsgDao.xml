@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.car.modules.car.dao.NewMsgDao">
+
+    <!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.car.modules.car.entity.NewMsgEntity" id="newMsgMap">
+        <result property="id" column="id"/>
+        <result property="projectId" column="project_id"/>
+        <result property="msgTypeId" column="msg_type_id"/>
+        <result property="msgName" column="msg_name"/>
+        <result property="oneWord" column="one_word"/>
+        <result property="msgContent" column="msg_content"/>
+        <result property="msgContentUrl" column="msg_content_url"/>
+        <result property="publishDate" column="publish_date"/>
+        <result property="publishUsername" column="publish_username"/>
+        <result property="effective" column="effective"/>
+        <result property="seq" column="seq"/>
+        <result property="importLevel" column="import_level"/>
+        <result property="createDate" column="create_date"/>
+        <result property="msgTypeName" column="msg_type_name"/>
+    </resultMap>
+
+
+    <select id="queryWithProject" resultType="com.car.modules.car.entity.NewMsgEntity">
+        SELECT
+        n.*, p.project_name,
+        m.type_name
+        FROM
+        new_msg AS n,
+        project AS p,
+        msg_type AS m
+        WHERE
+        m.id = n.msg_type_id
+        AND p.id = m.project_id
+    </select>
+
+</mapper>

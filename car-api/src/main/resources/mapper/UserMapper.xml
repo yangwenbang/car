@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.car.dao.UserDao">
+	
+	<select id="findUserByCondition" resultType="com.car.vo.UserVO">
+		SELECT u.user_id,mobile,ud.soft_version,email,sex,city_id,city_name,user_picture,
+		organ_code,organ_picture,organ_name,soft_version,user_code 
+		FROM sys_user u LEFT JOIN user_detail ud ON (u.user_id = ud.user_id)
+		WHERE mobile = #{mobile} 
+		AND password = #{password}
+	</select>
+	
+	<select id="findUserVOByMobile" parameterType="string" resultType="com.car.vo.UserVO">
+		SELECT u.user_id,mobile,ud.soft_version,email,sex,city_id,city_name,user_picture 
+		FROM sys_user u LEFT JOIN user_detail ud ON (u.user_id = ud.user_id)
+		WHERE mobile = #{mobile}
+	</select>
+	
+	<insert id="saveUser" useGeneratedKeys="true" keyProperty="userId" parameterType="com.car.entity.UserEntity">
+		INSERT INTO sys_user
+		(mobile,password,username,status,user_type,create_time,update_time)
+		VALUES (#{mobile},#{password},#{username},#{status},#{userType},#{createTime},#{updateTime})
+	</insert>
+	
+	<update id="updateUserMobile" parameterType="map">
+		UPDATE sys_user SET password = #{password} WHERE user_id = #{userId}
+	</update>
+	
+	<select id="findById" parameterType="long" resultType="com.car.vo.UserVO">
+		SELECT u.user_id,mobile,ud.soft_version,email,sex,city_id,city_name,user_picture 
+		FROM sys_user u LEFT JOIN user_detail ud ON (u.user_id = ud.user_id)
+		WHERE u.user_id = #{userId}
+	</select>
+	
+	<select id="findUserByOpenid" resultType="com.car.vo.UserVO">
+		SELECT u.user_id,city_id,city_name,user_picture,
+		organ_code,organ_picture,organ_name,user_code,openid,username userName 
+		FROM sys_user u LEFT JOIN user_detail ud ON (u.user_id = ud.user_id)
+		WHERE openid = #{openid} 
+	</select>
+	
+	<select id="findUserByOpenidAndPassword" resultType="com.car.vo.UserVO">
+		SELECT u.user_id,city_id,city_name,user_picture,
+		organ_code,organ_picture,organ_name,user_code,openid,username userName 
+		FROM sys_user u LEFT JOIN user_detail ud ON (u.user_id = ud.user_id)
+		WHERE openid = #{openid} 
+		AND u.password = #{password}
+	</select>
+	
+	<select id="getUserCount" resultType="int">
+		SELECT COUNT(*) AS count FROM sys_user
+	</select>
+
+</mapper>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.car.modules.car.dao.ProvinceDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.car.modules.car.entity.ProvinceEntity" id="provinceMap">
+        <result property="id" column="id"/>
+        <result property="provinceName" column="province_name"/>
+        <result property="companyAddress" column="company_address"/>
+        <result property="contactWay" column="contact_way"/>
+        <result property="effective" column="effective"/>
+        <result property="createTime" column="create_time"/>
+    </resultMap>
+
+
+</mapper>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.car.modules.car.dao.ExerciseTypeDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.car.modules.car.entity.ExerciseTypeEntity" id="exerciseTypeMap">
+        <result property="id" column="id"/>
+        <result property="exerciseName" column="exercise_name"/>
+        <result property="description" column="description"/>
+        <result property="exerciseType" column="exercise_type"/>
+        <result property="remark" column="remark"/>
+        <result property="exerciseModelId" column="exercise_model_id"/>
+        <result property="seq" column="seq"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+
+</mapper>

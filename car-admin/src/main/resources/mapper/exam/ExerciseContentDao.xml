@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.car.modules.car.dao.ExerciseContentDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.car.modules.car.entity.ExerciseContentEntity" id="exerciseContentMap">
+        <result property="id" column="id"/>
+        <result property="exerciseTypeId" column="exercise_type_id"/>
+        <result property="sectionId" column="section_id"/>
+        <result property="exerciseContent" column="exercise_content"/>
+        <result property="optionss" column="optionss"/>
+        <result property="rightAnswer" column="right_answer"/>
+        <result property="answerAnalysis" column="answer_analysis"/>
+        <result property="score" column="score"/>
+        <result property="exerciseContentPicture" column="exercise_content_picture"/>
+        <result property="remark" column="remark"/>
+        <result property="seq" column="seq"/>
+        <result property="exerciseAnswerPicture" column="exercise_answer_picture"/>
+        <result property="exerciseOptionPicture" column="exercise_option_picture"/>
+        <result property="createDate" column="create_date"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="exerciseName" column="exercise_name"/>
+    </resultMap>
+
+    <select id="strengSelectPage" resultType="com.car.modules.car.entity.ExerciseContentEntity">
+        SELECT
+        c1.course_name as courseName,
+        s.section_name as sectionName,
+        c.chapter_name as chapterName,
+        e.id as id,
+        e.optionss as optionss,
+        e.exercise_content as exerciseContent,
+        e.right_answer as rightAnswer,
+        e.exercise_content_picture as exerciseContentPicture,
+        e.exercise_answer_picture as exerciseAnswerPicture,
+        e.score as score,
+        e1.exercise_name as exerciseName
+        FROM
+        exercise_content e
+        INNER JOIN section s
+        ON e.section_id = s.id
+        INNER JOIN chapter c
+        ON s.chapter_id = c.id
+        INNER JOIN course c1
+        ON c1.id = c.course_id
+        INNER JOIN exercise_type e1
+        ON e1.id = e.exercise_type_id
+        WHERE 1=1
+        <if test="sectionId != null and  sectionId != ''">
+            and  e.section_id = #{sectionId}
+        </if>
+    </select>
+
+</mapper>

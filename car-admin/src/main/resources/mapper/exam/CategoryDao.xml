@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.car.modules.car.dao.CategoryDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.car.modules.car.entity.CategoryEntity" id="categoryMap">
+        <result property="id" column="id"/>
+        <result property="projectId" column="project_id"/>
+        <result property="categoryName" column="category_name"/>
+        <result property="categoryDesc" column="category_desc"/>
+        <result property="categoryPicture" column="category_picture"/>
+        <result property="effective" column="effective"/>
+        <result property="seq" column="seq"/>
+        <result property="createDate" column="create_date"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+
+</mapper>

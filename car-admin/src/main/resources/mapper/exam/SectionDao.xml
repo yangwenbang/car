@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.car.modules.car.dao.SectionDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.car.modules.car.entity.SectionEntity" id="sectionMap">
+        <result property="id" column="id"/>
+        <result property="chapterId" column="chapter_id"/>
+        <result property="sectionName" column="section_name"/>
+        <result property="timeLength" column="time_length"/>
+        <result property="sectionType" column="section_type"/>
+        <result property="sectionUrl" column="section_url"/>
+        <result property="sectionContent" column="section_content"/>
+        <result property="remark" column="remark"/>
+        <result property="seq" column="seq"/>
+        <result property="free" column="free"/>
+        <result property="carTitle" column="car_title"/>
+        <result property="exerciseModelId" column="exercise_model_id"/>
+        <result property="exerciseCount" column="exercise_count"/>
+        <result property="handout" column="handout"/>
+        <result property="createDate" column="create_date"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+
+</mapper>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.car.dao.ParamSetDao">
+	
+	<select id="getParamSetVO" resultType="com.car.vo.ParamSetVO">
+		SELECT id as paramSetId,is_login_show,exercise_share_context,
+		daily_share_context,equipment_version,is_mobile_show
+		FROM param_set 
+		ORDER BY update_time 
+		DESC LIMIT 1
+	</select>
+	
+</mapper>

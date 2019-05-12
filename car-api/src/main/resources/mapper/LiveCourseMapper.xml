@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.car.dao.LiveCourseDao">
+
+	<select id="getLiveCoursesByUser" resultType="com.car.vo.LiveCourseVO">
+		SELECT IF(ucr.actual_money IS NULL, 0, ucr.actual_money) AS actual_money,
+		c.id liveCourseId,c.course_name,DATE_FORMAT(ucr.buy_date,'%Y-%m-%d') AS buy_date, 
+		introduce,c.introduce_url,DATE_FORMAT(live_start_time,'%Y-%m-%d %H:%i') AS liveStartTime,
+		DATE_FORMAT(live_end_time,'%Y-%m-%d %H:%i') AS liveEndTime
+		FROM live_course c LEFT JOIN user_course_record ucr ON 
+		(ucr.cargo_id = c.id AND ucr.user_id = #{userId} AND cargo_type = 0 AND ucr.effective = 1)
+		WHERE c.effective = 1 
+		ORDER BY c.seq DESC
+	</select>
+
+</mapper>

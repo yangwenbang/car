@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+		<#include "/header.html">
+            <script src="${request.contextPath}/statics/libs/ajaxupload.js"></script>
+            <script src="${request.contextPath}/statics/libs/jquery.json.js"></script>
+</head>
+<body>
+<div id="rrapp" v-cloak>
+    <div v-show="showList">
+        <div class="grid-btn">
+            <a class="btn btn-primary" @click="add"><i class="fa fa-plus"></i>&nbsp;鏂板</a>
+            <a class="btn btn-primary" @click="update"><i class="fa fa-pencil-square-o"></i>&nbsp;淇敼</a>
+            <a class="btn btn-primary" @click="del"><i class="fa fa-trash-o"></i>&nbsp;鍒犻櫎</a>
+           <!-- <a class="btn btn-primary" href="section.html" onClick="javascript :history.back(-1);">&nbsp;杩斿洖</a>-->
+            <a class="btn btn-primary" id="upload"><i class="fa fa-plus"></i>&nbsp;涓婁紶鏂囦欢</a>
+            <a class="btn btn-primary" @click="exportExcel" id="exportExcel"><i class="fa fa-plus"></i>&nbsp;涓嬭浇妯℃澘</a>
+        </div>
+        <table id="jqGrid"></table>
+        <div id="jqGridPager"></div>
+    </div>
+
+    <div v-show="!showList" class="panel panel-default">
+        <div class="panel-heading">{{title}}</div>
+        <form class="form-horizontal">
+            <div class="form-group">
+                <div class="col-sm-2 control-label">棰樺瀷</div>
+                <div class="col-sm-10">
+                    <select class="refresh-seconds-select btn" style="width:200px;border-color:#e9d3d3;" v-model="exerciseContent.exerciseTypeId">
+                        <option  v-for="exerciseType in exerciseTypeList" v-bind:value="exerciseType.id">{{exerciseType.exerciseName}}</option>
+                    </select>
+                </div>
+            </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">棰樼洰鍐呭</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="exerciseContent.exerciseContent" placeholder="棰樼洰鍐呭"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">鍊欓�夐」(澶氫釜鐢ㄨ嫳鏂�;闅斿紑)</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="exerciseContent.optionss" placeholder="鍊欓�夐」(澶氫釜鐢ㄨ嫳鏂�;闅斿紑)"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">姝ｇ‘绛旀</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="exerciseContent.rightAnswer" placeholder="姝ｇ‘绛旀"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">绛旀瑙ｆ瀽</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="exerciseContent.answerAnalysis" placeholder="绛旀瑙ｆ瀽"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">鍒嗘暟</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="exerciseContent.score" placeholder="鍒嗘暟"/>
+                        </div>
+                    </div>
+
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">澶囨敞</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="exerciseContent.remark" placeholder="澶囨敞"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">鎺掑簭(灏忓彿鎺掑墠搴忓彿*10)</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="exerciseContent.seq" placeholder="鎺掑簭(灏忓彿鎺掑墠搴忓彿*10)"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-2 control-label">棰樼洰鍐呭鍥剧墖</div>
+                        <div class="col-sm-10" class="col-sm-10">
+                            <!--<form id="myform" enctype="multipart/form-data">-->
+                            <input type="file" name="fileup" id="fileupContent" accept="image/*"  v-on:change="fileContentChange($event)" />
+                            <!--</form>-->
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-2 control-label">绛旀鍐呭鍥剧墖</div>
+                        <div class="col-sm-10" class="col-sm-10">
+                            <!--<form id="myform" enctype="multipart/form-data">-->
+                            <input type="file" name="fileup" id="fileupAnswer" accept="image/*"  v-on:change="fileAnswerChange($event)" />
+                            <!--</form>-->
+                        </div>
+                    </div>
+							            <div class="form-group">
+                <div class="col-sm-2 control-label"></div>
+                <input type="button" class="btn btn-primary" @click="saveOrUpdate" value="纭畾"/>
+                &nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="reload" value="杩斿洖"/>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="${request.contextPath}/statics/js/modules/car/exercisecontent.js?_${.now?long}"></script>
+</body>
+</html>

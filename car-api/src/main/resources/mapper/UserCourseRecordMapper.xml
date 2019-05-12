@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.car.dao.UserCourseRecordDao">
+
+
+	<insert id="saveUserCourseRecord" parameterType="com.car.entity.UserCourseRecord">
+		INSERT INTO user_course_record
+		(user_id,cargo_type,cargo_id,buy_date,actual_money,create_time,update_time)
+		VALUES (#{userId},#{cargoType},#{cargoId},#{buyDate},#{actualMoney},#{createTime},#{updateTime})
+	</insert>
+	
+	<select id="getBuyCountByCargo" resultType="int">
+		SELECT COUNT(*) AS COUNT FROM user_course_record 
+		WHERE cargo_id = #{cargoId} AND cargo_type = #{cargoType}
+	</select>
+
+</mapper>

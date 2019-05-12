@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+		<#include "/header.html">
+            <link rel="stylesheet" href="${request.contextPath}/statics/plugins/laydate/theme/default/laydate.css">
+        <script src="${request.contextPath}/statics/libs/ajaxupload.js"></script>
+        <script src="${request.contextPath}/statics/plugins/laydate/laydate.js"></script>
+        <script src="${request.contextPath}/statics/libs/jquery.json.js"></script>
+        <script src="${request.contextPath}/statics/libs/vue-router.js"></script>
+</head>
+<body>
+<div id="rrapp" v-cloak>
+    <div v-show="showList">
+        <div class="grid-btn">
+			<#if shiro.hasPermission("car:course:save")>
+            <a class="btn btn-primary" @click="add"><i class="fa fa-plus"></i>&nbsp;鏂板</a>
+			</#if>
+            <#if shiro.hasPermission("car:course:update")>
+                <a class="btn btn-primary" @click="getInfo"><i class="fa fa-pencil-square-o"></i>&nbsp;淇敼</a>
+            </#if>
+            <#if shiro.hasPermission("car:course:delete")>
+                <a class="btn btn-primary" @click="del"><i class="fa fa-trash-o"></i>&nbsp;鍒犻櫎</a>
+            </#if>
+            <a class="btn btn-primary" @click="deliveryIdName"><i class="fa fa-pencil-square-o"></i>&nbsp;绔犵鐞�</a>
+               <!-- <#if shiro.hasPermission("car:course:update")>
+                <a class="btn btn-primary" @click="update"><i class="fa fa-pencil-square-o"></i>&nbsp;璇勭骇璇勪环</a>
+                </#if>
+                <#if shiro.hasPermission("car:course:update")>
+                <a class="btn btn-primary" @click="update"><i class="fa fa-pencil-square-o"></i>&nbsp;鍚庡彴璐拱</a>
+                </#if>
+                <#if shiro.hasPermission("car:course:update")>
+                    <a class="btn btn-primary" @click="update"><i class="fa fa-pencil-square-o"></i>&nbsp;璐拱璁板綍</a>
+                </#if>-->
+            <a class="btn btn-default" @click="query" style="float:right;">鏌ヨ</a>
+            <div class="form-group col-sm-2" style="float:right;width: 150px">
+                <input type="text" class="form-control"  placeholder="璇剧▼鍚�" v-model="q.courseName">
+            </div>
+            <span style="font-size: 14px;float:right;">
+          						<label langkey="RefreshPeriod" class="lang" style="display:inline;font-size:15px;margin-right: 5px" for="refreshSecondsSelect">鍒嗙被:</label>
+          						<select id="refreshSecondsSelect" class="refresh-seconds-select btn" style="width:150px;border-color:#e9d3d3;"   v-model="q.categoryId">
+                                    <option value="null">璇烽�夋嫨</option>
+          							<option v-for="category in course.categoryList" v-bind:value="category.id">{{category.categoryName}}</option>
+          						</select>
+          					</span>
+            <span style="font-size: 16px; margin-right: 20px;float:right;">
+          						<label langkey="RefreshPeriod" class="lang" style="display: inline;font-size:15px;" for="refreshSecondsSelect">椤圭洰:</label>
+          						<select id="refreshSecondsSelect" class="refresh-seconds-select btn"  style="width:150px;border-color:#e9d3d3;" @change="listChangeProject" v-model="q.projectId">
+                                    <option value="null">璇烽�夋嫨</option>
+          							<option  v-for="project in course.projectList" v-bind:value="project.id">{{project.projectName}}</option>
+          						</select>
+          					</span>
+        </div>
+        <table id="jqGrid"></table>
+        <div id="jqGridPager"></div>
+    </div>
+
+    <div v-show="!showList" class="panel panel-default">
+        <div class="panel-heading">{{title}}</div>
+        <form class="form-horizontal">
+            <div class="form-group">
+                <div class="col-sm-2 control-label">璇剧▼鍚嶇О</div>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" v-model="course.courseName" placeholder="璇剧▼鍚嶇О"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-2 control-label">璇剧▼绫诲瀷</div>
+                <span style="font-size: 14px;">
+                    <select class="refresh-seconds-select btn" style="width:200px;border-color:#e9d3d3;" v-model="course.courseType">
+                        <option v-for="item in [{key:'0',value:'璧勬枡'},{key:'1',value:'瑙嗛'},{key:'1',value:'棰樺簱'}]" v-bind:value="item.key">{{item.value}}</option>
+                    </select>
+                </span>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-2 control-label">椤圭洰id</div>
+                <span style="font-size: 14px;">
+                    <select class="refresh-seconds-select btn" style="width:200px;border-color:#e9d3d3;" @change="addChangeProject" v-model="course.projectId">
+                        <option v-for="project in projectList" v-bind:value="project.id">{{project.projectName}}</option>
+                    </select>
+                </span>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-2 control-label">鍒嗙被</div>
+                <span style="font-size: 14px;">
+                    <select class="refresh-seconds-select btn" style="width:200px;border-color:#e9d3d3;" @change="addChangeCategory" v-model="course.categoryId">
+                        <option v-for="category in categoryList" v-bind:value="category.id">{{category.categoryName}}</option>
+                    </select>
+                </span>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-2 control-label">瀛︾</div>
+                <span style="font-size: 14px;">
+                    <select class="refresh-seconds-select btn" style="width:200px;border-color:#e9d3d3;" v-model="course.subjectId">
+                        <option v-for="subject in subjectList" v-bind:value="subject.id">{{subject.subjectName}}</option>
+                    </select>
+                </span>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-2 control-label">鏁欏笀</div>
+                <span style="font-size: 14px;">
+                    <select class="refresh-seconds-select btn" style="width:200px;border-color:#e9d3d3;" v-model="course.teacherId">
+                        <option  v-for="teacher in teacherList" v-bind:value="teacher.id">{{teacher.teacherName}}</option>
+                    </select>
+                </span>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-2 control-label">鏈夋晥鍚�</div>
+                <span style="font-size: 14px;">
+                    <select class="refresh-seconds-select btn" style="width:200px;border-color:#e9d3d3;" v-model="course.effective">
+                        <option selected="item.selected" v-for="item in [{key:'0',value:'0-鏃犳晥',selected:'selected'},{key:'1',value:'1-鏈夋晥'}]" v-bind:value="item.key">{{item.value}}</option>
+                    </select>
+                </span>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-2 control-label">鎶樻墸</div>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" v-model="course.discount" placeholder="鎶樻墸"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-2 control-label">绮惧搧璇剧▼</div>
+                <span style="font-size: 14px;">
+                    <select class="refresh-seconds-select btn" style="width:200px;border-color:#e9d3d3;" v-model="course.isFamous">
+                       <option v-for="item in [{key:'0',value:'涓嶆槸'},{key:'1',value:'鏄�'}]" v-bind:value="item.key">{{item.value}}</option>
+                    </select>
+                </span>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-2 control-label">璇剧▼浠嬬粛</div>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" v-model="course.introduce" placeholder="璇剧▼浠嬬粛"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-2 control-label">涓�鍙ヨ瘽</div>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" v-model="course.oneWord" placeholder="涓�鍙ヨ瘽"/>
+                </div>
+            </div>
+            <!--<div class="form-group">
+                <div class="col-sm-2 control-label">璇剧▼鍥剧墖</div>
+                <div class="col-sm-10">
+                    <a class="btn btn-primary" id="upload" type="file"><i class="fa fa-plus"></i>&nbsp;涓婁紶鏂囦欢</a>
+                </div>
+            </div>-->
+                     <div class="form-group">
+                <div class="col-sm-2 control-label">璇炬椂鏁�</div>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" v-model="course.courseCount" placeholder="璇炬椂鏁�"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-2 control-label">浠锋牸</div>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" v-model="course.price" placeholder="浠锋牸"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-2 control-label">鍙戝竷鏃堕棿</div>
+                <div class="col-sm-10">
+                    <input type="text" autocomplete="off" class="layui-input form-control" id="time" placeholder="鍙戝竷鏃堕棿"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-2 control-label">鎺掑簭(澶у彿鍦ㄥ墠)</div>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" v-model="course.seq" placeholder="鎺掑簭(澶у彿鍦ㄥ墠)"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-2 control-label">璇剧▼鍥剧墖</div>
+                <div class="col-sm-10" class="col-sm-10">
+                    <!--<form id="myform" enctype="multipart/form-data">-->
+                        <input type="file" name="fileup" id="fileup" accept="image/*"  v-on:change="fileChange($event)" />
+                    <!--</form>-->
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-2 control-label"></div>
+                <input type="button" class="btn btn-primary" @click="saveOrUpdate" value="纭畾"/>
+                &nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="reload" value="杩斿洖"/>
+            </div>
+        </form>
+    </div>
+</div>
+<script src="${request.contextPath}/statics/js/modules/car/course.js?_${.now?long}"></script>
+</body>
+</html>

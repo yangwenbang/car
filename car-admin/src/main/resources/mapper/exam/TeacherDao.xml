@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.car.modules.car.dao.TeacherDao">
+
+    <!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.car.modules.car.entity.TeacherEntity" id="teacherMap">
+        <result property="id" column="id"/>
+        <result property="teacherMobile" column="teacher_mobile"/>
+        <result property="teacherPassword" column="teacher_password"/>
+        <result property="teacherName" column="teacher_name"/>
+        <result property="sex" column="sex"/>
+        <result property="cityId" column="city_id"/>
+        <result property="homeAddress" column="home_address"/>
+        <result property="email" column="email"/>
+        <result property="teacherIntroduce" column="teacher_introduce"/>
+        <result property="teacherSpecial" column="teacher_special"/>
+        <result property="teacherLength" column="teacher_length"/>
+        <result property="education" column="education"/>
+        <result property="headPictureUrl" column="head_picture_url"/>
+        <result property="isFamous" column="is_famous"/>
+        <result property="subjectName" column="subject_name"/>
+        <result property="oneWord" column="one_word"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+
+    <select id="strengSelectPage" resultType="com.car.modules.car.entity.vo.TeacherVO">
+        SELECT
+        t.id,
+        t.teacher_mobile,
+        t.teacher_length,
+        t.teacher_name,
+        t.sex,
+        t.teacher_special,
+        t.education,
+        t.head_picture_url,
+        c.city_name AS cityName
+        FROM
+        teacher t
+        LEFT JOIN city c
+        ON c.id = t.city_id
+        where 1=1
+        <if test="teacherName != null and  teacherName!= ''">
+            and t.teacher_name like concat('%',#{teacherName},'%')
+        </if>
+    </select>
+
+</mapper>

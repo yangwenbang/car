@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.car.dao.SysInfoDao">
+
+	<insert id="saveSysInfo" parameterType="com.car.entity.SysInfo">
+		INSERT INTO sys_info (user_id,project_id,info_type,produce_date,produce_username,info_content) 
+		VALUES (#{userId},#{projectId},#{infoType},#{produceDate},#{produceUserName},#{infoContent})
+	</insert>
+	
+</mapper>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.car.dao.UserCoursePlanDao">
+
+	<select id="getUserCoursePlansByCondition" resultType="com.car.vo.UserCoursePlanVO">
+		SELECT DATE_FORMAT(uc.finish_date,'%Y-%m-%d') AS finish_date, 
+		uc.id AS userCoursePlanId,uc.user_id,uc.section_id
+		FROM chapter c, section s,user_course_plan uc 
+		WHERE c.id = s.chapter_id 
+		AND s.id = uc.section_id 
+		AND uc.user_id = #{userId} 
+		AND c.course_id = #{courseId}
+	</select>
+
+</mapper>

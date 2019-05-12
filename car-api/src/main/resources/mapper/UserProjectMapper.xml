@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.car.dao.UserProjectDao">
+
+	<insert id="saveUserProject" parameterType="com.car.vo.UserProjectVO">
+		INSERT INTO user_project
+		(user_id,project_id,project_name,category_id,category_name,last_update_date)
+		VALUES (#{userId},#{projectId},#{projectName},#{categoryId},#{categoryName},#{lastUpdateDate})
+	</insert>
+	
+	<select id="getUserProjectsByUser" parameterType="long" resultType="com.car.vo.UserProjectVO">
+		SELECT user_id,project_id,category_id,project_name,category_name
+		FROM user_project WHERE user_id = #{userId} 
+		ORDER BY last_update_date DESC
+	</select>
+	
+	<select id="getUserNewestProjectByUser" resultType="com.car.vo.UserProjectVO">
+		SELECT id userProjectId,user_id,project_name,project_id,
+		DATE_FORMAT(vip_date,'%Y-%m-%d') vip_date
+		FROM user_project
+		WHERE user_id = #{userId} ORDER BY last_update_date DESC LIMIT 1
+	</select>
+	
+	<select id="getUserProjectByProject" resultType="com.car.vo.UserProjectVO">
+		SELECT user_id,project_id,category_id,project_name,category_name
+		FROM user_project 
+		WHERE user_id = #{userId} AND project_id = #{projectId}
+	</select>
+	
+	<update id="updateUserProjectVipDate">
+		UPDATE user_project SET vip_date = #{vipDate}
+		 WHERE id = #{userProjectId}
+	</update>
+
+</mapper>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.car.dao.EquipmentManagerDao">
+
+	<select id="getLastEquipmentManagerByType" resultType="com.car.vo.EquipmentManagerVO">
+		SELECT id equipmentManagerId,equipment_version,
+		equipment_path,is_force_update,update_content
+		FROM equipment_manager 
+		WHERE equipment_type = #{equipmentType} 
+		ORDER BY update_time DESC LIMIT 1
+	</select>
+
+</mapper>

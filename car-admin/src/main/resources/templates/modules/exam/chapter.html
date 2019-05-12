@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+		<#include "/header.html">
+</head>
+<body>
+<div id="rrapp" v-cloak>
+    <div v-show="showList">
+        <div class="grid-btn">
+            <a class="btn btn-primary" @click="add"><i class="fa fa-plus"></i>&nbsp;鏂板</a>
+            <a class="btn btn-primary" @click="update"><i class="fa fa-pencil-square-o"></i>&nbsp;淇敼</a>
+            <a class="btn btn-primary" @click="del"><i class="fa fa-trash-o"></i>&nbsp;鍒犻櫎</a>
+            <a class="btn btn-primary" @click="deliveryIdName"><i class="fa fa-pencil-square-o"></i>&nbsp;鑺傜鐞�</a>
+            <a class="btn btn-primary" href="course.html" onClick="javascript :history.back(-1);">&nbsp;杩斿洖</a>
+            <a class="btn btn-default" @click="query" style="float:right;">鏌ヨ</a>
+            <div class="form-group col-sm-2" style="float:right;width: 150px">
+                <input type="text" class="form-control"  placeholder="璇剧珷鍚�" v-model="find">
+            </div>
+            <!--<#if shiro.hasPermission("car:chapter:save")>&ndash;&gt;
+			</#if>
+			<#if shiro.hasPermission("car:chapter:update")>
+			</#if>
+			<#if shiro.hasPermission("car:chapter:delete")>
+			</#if>-->
+
+        </div>
+        <table id="jqGrid"></table>
+        <div id="jqGridPager"></div>
+    </div>
+
+    <div v-show="!showList" class="panel panel-default">
+        <div class="panel-heading">{{title}}</div>
+        <form class="form-horizontal">
+
+														                  <div class="form-group">
+                        <div class="col-sm-2 control-label">璇剧▼鍚嶇О</div>
+                        <div class="col-sm-10">
+                            <input readonly="readonly" type="text" class="form-control" v-model="courseName" placeholder="璇剧▼鍚嶇О"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">绔犲悕绉�</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="chapter.chapterName" placeholder="绔犲悕绉�"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">璇存槑</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="chapter.description" placeholder="璇存槑"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">鎺掑簭</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="chapter.seq" placeholder="鎺掑簭"/>
+                        </div>
+                    </div>
+							            <div class="form-group">
+                <div class="col-sm-2 control-label"></div>
+                <input type="button" class="btn btn-primary" @click="saveOrUpdate" value="纭畾"/>
+                &nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="reload" value="杩斿洖"/>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="${request.contextPath}/statics/js/modules/car/chapter.js?_${.now?long}"></script>
+</body>
+</html>

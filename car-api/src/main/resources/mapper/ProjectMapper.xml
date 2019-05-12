@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.car.dao.ProjectDao">
+	
+	<select id="getProjects" resultType="com.car.vo.ProjectVO">
+		SELECT id as project_id,project_name,project_picture,project_desc
+		from project where effective = 1 order by seq
+	</select>
+	
+	<select id="getProjectByProjectId" resultType="com.car.vo.ProjectVO">
+		SELECT id as project_id,project_name,project_picture,project_desc
+		from project where id = #{projectId}
+	</select>
+	
+	<select id="getProjectCategorys" resultType="com.car.vo.ProjectCategoryVO">
+		SELECT p.id AS projectId,p.project_name,c.id AS categoryId, c.category_name
+		FROM project p,category c 
+		WHERE p.id = c.project_id AND p.effective = 1 AND c.effective = 1
+		ORDER BY p.seq,c.seq
+	</select>
+
+</mapper>
