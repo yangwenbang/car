@@ -173,36 +173,21 @@ public class UserServiceImpl implements UserService {
 			userVO = saveWeChatLoginInfo(form, weChatMap);
 		} else {
 			// 用户选择的项目.
-			List<UserProjectVO> userProjects = userProjectDao.getUserProjectsByUser(userVO.getUserId());
-			if (!CollectionUtils.isEmpty(userProjects)) {
-				UserProjectVO userProject = userProjects.get(0);
-				userVO.setProjectId(userProject.getProjectId());
-				userVO.setCategoryId(userProject.getCategoryId());
-				userVO.setProjectName(userProject.getProjectName());
-				userVO.setCategoryName(userProject.getCategoryName());
-			}
+//			List<UserProjectVO> userProjects = userProjectDao.getUserProjectsByUser(userVO.getUserId());
+//			if (!CollectionUtils.isEmpty(userProjects)) {
+//				UserProjectVO userProject = userProjects.get(0);
+//				userVO.setProjectId(userProject.getProjectId());
+//				userVO.setCategoryId(userProject.getCategoryId());
+//				userVO.setProjectName(userProject.getProjectName());
+//				userVO.setCategoryName(userProject.getCategoryName());
+//			}
 			
 		}
 		
-		// 咨询url
-		String askUrl = "";
-		if (StringUtils.isNotEmpty(userVO.getOrganCode())) {
-			OfflineOrganizationVO organization = offlineOrganizationDao.findOfflineOrganizationByCode(userVO.getOrganCode());
-			if (organization != null) {
-				askUrl = organization.getAskUrl();
-			}
-		} else {
-			SysDeptVO sysDept = sysDeptDao.findFirstSysDept();
-			if (sysDept != null) {
-				askUrl = sysDept.getAskUrl();
-			}
-		}
-		userVO.setAskUrl(askUrl);
 		
 		//获取登录token
 		TokenEntity tokenEntity = tokenService.createToken(userVO.getUserId());
 		userVO.setToken(tokenEntity.getToken());
-		userVO.setExpire(tokenEntity.getExpireTime().getTime() - System.currentTimeMillis());
 		
 		return userVO;
 	}
@@ -245,10 +230,6 @@ public class UserServiceImpl implements UserService {
 		userVO.setCityName(cityName);
 		userVO.setUserName(userName);
 		userVO.setUserPicture(picUrl);
-		userVO.setUserCode(userDetail.getUserCode());
-		userVO.setOrganCode(userDetail.getOrganCode());
-		userVO.setOrganName(userDetail.getOrganName());
-		userVO.setOrganPicture(userDetail.getOrganPicture());
 		
 		return userVO;
 	}

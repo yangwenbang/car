@@ -2,216 +2,105 @@ package com.car.vo;
 
 import java.io.Serializable;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
+@ApiModel("用户对象")
 public class UserVO implements Serializable {
 
 	private static final long serialVersionUID = 7547555237125420315L;
 	
+	@ApiModelProperty(value = "用户ID")
 	private long userId;
+	
+	@ApiModelProperty(value = "手机号")
 	private String mobile;
+	
+	@ApiModelProperty(value = "用户名称")
 	private String userName;
+	
+	@ApiModelProperty(value = "性别")
 	private int sex;
+	
+	@ApiModelProperty(value = "地址")
 	private String homeAddress;
+	
+	@ApiModelProperty(value = "邮箱")
 	private String email;
+	
+	@ApiModelProperty(value = "城市名称")
 	private String cityName;
-	private String softVersion;
+	
+	@ApiModelProperty(value = "用户图片")
 	private String userPicture;
-	private Integer openSmsRemind;
+	
+	@ApiModelProperty(value = "token")
 	private String token;
-	private Long expire;
-	private Long projectId;
-	private Long categoryId;
-	private String projectName;	
-	private String categoryName;
+	
+	@ApiModelProperty(value = "城市ID")
 	private Long cityId;
-	private String organCode;
-	private String organPicture;
-	private String organName;
-	private String userCode;
-	private String askUrl;
-	private String openid;
-
+	
 	public long getUserId() {
 		return userId;
 	}
-
 	public void setUserId(long userId) {
 		this.userId = userId;
 	}
-
 	public String getMobile() {
 		return mobile;
 	}
-
 	public void setMobile(String mobile) {
 		this.mobile = mobile;
 	}
-
 	public String getUserName() {
-		return userName == null ? "" : userName;
+		return userName;
 	}
-
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
-
 	public int getSex() {
 		return sex;
 	}
-
 	public void setSex(int sex) {
 		this.sex = sex;
 	}
-
 	public String getHomeAddress() {
-		return homeAddress == null ? "" : homeAddress;
+		return homeAddress;
 	}
-
 	public void setHomeAddress(String homeAddress) {
 		this.homeAddress = homeAddress;
 	}
-
 	public String getEmail() {
-		return email == null ? "" : email;
+		return email;
 	}
-
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
 	public String getCityName() {
-		return cityName == null ? "" : cityName;
+		return cityName;
 	}
-
 	public void setCityName(String cityName) {
 		this.cityName = cityName;
 	}
-
-	public String getSoftVersion() {
-		return softVersion == null ? "" : softVersion;
-	}
-
-	public void setSoftVersion(String softVersion) {
-		this.softVersion = softVersion;
-	}
-
 	public String getUserPicture() {
-		return userPicture == null ? "" : userPicture;
+		return userPicture;
 	}
-
-	public Integer getOpenSmsRemind() {
-		return openSmsRemind == null ? 0 : openSmsRemind;
-	}
-
-	public void setOpenSmsRemind(Integer openSmsRemind) {
-		this.openSmsRemind = openSmsRemind;
-	}
-
 	public void setUserPicture(String userPicture) {
 		this.userPicture = userPicture;
 	}
-
 	public String getToken() {
 		return token;
 	}
-
 	public void setToken(String token) {
 		this.token = token;
 	}
-
-	public Long getExpire() {
-		return expire == null ? 0 : expire;
-	}
-
-	public void setExpire(Long expire) {
-		this.expire = expire;
-	}
-
-	public Long getProjectId() {
-		return projectId;
-	}
-
-	public void setProjectId(Long projectId) {
-		this.projectId = projectId;
-	}
-
-	public Long getCategoryId() {
-		return categoryId;
-	}
-
-	public void setCategoryId(Long categoryId) {
-		this.categoryId = categoryId;
-	}
-
-	public String getProjectName() {
-		return projectName;
-	}
-
-	public void setProjectName(String projectName) {
-		this.projectName = projectName;
-	}
-
-	public String getCategoryName() {
-		return categoryName;
-	}
-
-	public void setCategoryName(String categoryName) {
-		this.categoryName = categoryName;
-	}
-
 	public Long getCityId() {
-		return cityId == null ? 0 : cityId;
+		return cityId;
 	}
-
 	public void setCityId(Long cityId) {
 		this.cityId = cityId;
 	}
 
-	public String getOrganCode() {
-		return organCode == null ? "" : organCode;
-	}
-
-	public void setOrganCode(String organCode) {
-		this.organCode = organCode;
-	}
-
-	public String getOrganPicture() {
-		return organPicture == null ? "" : organPicture;
-	}
-
-	public void setOrganPicture(String organPicture) {
-		this.organPicture = organPicture;
-	}
-
-	public String getOrganName() {
-		return organName == null ? "" : organName;
-	}
-
-	public void setOrganName(String organName) {
-		this.organName = organName;
-	}
-
-	public String getUserCode() {
-		return userCode;
-	}
-
-	public void setUserCode(String userCode) {
-		this.userCode = userCode;
-	}
-
-	public String getAskUrl() {
-		return askUrl;
-	}
-
-	public void setAskUrl(String askUrl) {
-		this.askUrl = askUrl;
-	}
-
-	public String getOpenid() {
-		return openid;
-	}
-
-	public void setOpenid(String openid) {
-		this.openid = openid;
-	}
+	
 	
 }

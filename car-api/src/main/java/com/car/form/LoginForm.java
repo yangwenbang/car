@@ -20,8 +20,8 @@ public class LoginForm {
 //    private String softVersion;
 //    private String verficationCode;
 
-	@ApiModelProperty(value = "登录类型：0微信/1支付宝")
-	private Integer loginType;
+//	@ApiModelProperty(value = "登录类型：0微信/1支付宝")
+//	private Integer loginType;
 
 	@ApiModelProperty(value = "微信code")
 	@NotBlank(message = "code不能为空")
@@ -47,12 +47,12 @@ public class LoginForm {
 		this.password = password;
 	}
 
-	public Integer getLoginType() {
-		return loginType;
-	}
-
-	public void setLoginType(Integer loginType) {
-		this.loginType = loginType;
-	}
+//	public Integer getLoginType() {
+//		return loginType;
+//	}
+//
+//	public void setLoginType(Integer loginType) {
+//		this.loginType = loginType;
+//	}
 
 }
