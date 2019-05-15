@@ -3,7 +3,6 @@ package com.car.service;
 import java.util.List;
 
 import com.car.exception.DAOException;
-import com.car.vo.CityVO;
 import com.car.vo.ProvinceVO;
 
 /**

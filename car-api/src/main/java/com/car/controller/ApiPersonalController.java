@@ -13,7 +13,6 @@ import java.util.SortedMap;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +31,6 @@ import com.car.exception.DAOException;
 import com.car.form.PayForm;
 import com.car.form.UserAddressForm;
 import com.car.form.UserDetailForm;
-import com.car.form.VipContentForm;
 import com.car.pay.alipay.AlipayUtils;
 import com.car.pay.service.PayService;
 import com.car.pay.service.impl.AliPayServiceImpl;
@@ -40,30 +38,19 @@ import com.car.pay.service.impl.WeChatPayServiceImpl;
 import com.car.pay.wxpay.WeChatPayUtils;
 import com.car.service.AdvertisementService;
 import com.car.service.CityService;
-import com.car.service.CourseService;
 import com.car.service.EquipmentManagerService;
-import com.car.service.NewMsgService;
-import com.car.service.OfflineOrganizationService;
 import com.car.service.PayRecordService;
 import com.car.service.ProvinceService;
-import com.car.service.SysDeptService;
 import com.car.service.UserAddressService;
 import com.car.service.UserDetailService;
-import com.car.service.UserProjectService;
 import com.car.service.UserService;
-import com.car.service.VipContentService;
-import com.car.service.VipRecordService;
 import com.car.utils.StringUtil;
-import com.car.vo.AboutCompanyVO;
 import com.car.vo.CityVO;
 import com.car.vo.EquipmentManagerVO;
-import com.car.vo.OfflineOrganizationVO;
 import com.car.vo.ProvinceVO;
-import com.car.vo.SysDeptVO;
 import com.car.vo.UserAddressVO;
 import com.car.vo.UserDetailVO;
 import com.car.vo.UserVO;
-import com.car.vo.VipContentVO;
 
 /**
  * 个人接口
@@ -78,10 +65,6 @@ public class ApiPersonalController {
     @Autowired
     private AdvertisementService advertisementService;
     @Autowired
-    private NewMsgService newMsgService;
-    @Autowired
-    private CourseService courseService;
-    @Autowired
     private CityService cityService;
     @Autowired
     private UserService userService;
@@ -90,19 +73,9 @@ public class ApiPersonalController {
     @Autowired
     private ProvinceService provinceService;
     @Autowired
-    private VipContentService vipContentService;
-    @Autowired
-    private UserProjectService userProjectService;
-    @Autowired
-    private VipRecordService vipRecordService;
-    @Autowired
     private PayRecordService payRecordService;
     @Autowired
     private UserAddressService userAddressService;
-    @Autowired
-    private OfflineOrganizationService offlineOrganizationService;
-    @Autowired
-    private SysDeptService sysDeptService;
     @Autowired
     private EquipmentManagerService equipmentManagerService;
     
@@ -256,49 +229,6 @@ public class ApiPersonalController {
 		}
 		
         return R.ok().put(DATA, provinceCityNames);
-    }
-    
-    @Login
-    @GetMapping("vipContents")
-    public R getVipContents(@RequestParam("projectId") long projectId) throws DAOException {
-    	List<VipContentVO> vipContents = new ArrayList<>();
-		try {
-			
-			vipContents = vipContentService.getVipContentsByProject(projectId);
-				
-		} catch (DAOException e) {
-			log.error("get vipContents occur error ", e);
-			return R.error();
-		}
-		
-        return R.ok().put(DATA, vipContents);
-    }
-    
-    @Login
-    @PostMapping("buyVipByProject")
-    public R buyVipByProject(@ModelAttribute VipContentForm vipContentForm) throws DAOException {
-    	
-    	if (vipContentForm == null) {
-    		throw new DAOException("vipContentForm is null");
-    	}
-    	
-    	long userId = vipContentForm.getUserId();
-    	long vipContentId = vipContentForm.getVipContentId();
-    	if (userId == 0 || vipContentId == 0) {
-    		throw new DAOException("usreId or vipContentId is null");
-    	}
-
-    	String vipEndDate = "";
-		try {
-			
-			vipEndDate = vipRecordService.buyVipByProject(userId, vipContentId);			
-			
-		} catch (DAOException e) {
-			log.error("save userDetail occur error ", e);
-			return R.error();
-		}
-
-        return R.ok().put(DATA, vipEndDate);
     }
     
     @Login
@@ -461,42 +391,7 @@ public class ApiPersonalController {
         return R.ok();
     }
     
-    @Login
-    @GetMapping("aboutCompany")
-    public R getAboutCompany(String organizationCode) throws DAOException {
-    	AboutCompanyVO aboutCompany = new AboutCompanyVO();
-		try {
-			
-			if (StringUtils.isNotEmpty(organizationCode)) {
-				OfflineOrganizationVO organization = offlineOrganizationService.findOfflineOrganizationByCode(organizationCode);
-				
-				if (organization == null) {
-					return R.ok().put(DATA, aboutCompany);
-				}
-				
-				aboutCompany.setCompanyAddress(organization.getOrganizationAddress());
-				aboutCompany.setCompanyContact(organization.getContact());
-				aboutCompany.setCompanyDesc(organization.getOrganizationDesc());
-				aboutCompany.setCompanyName(organization.getOrganizationName());
-				aboutCompany.setCompanyPhone(organization.getPhone());
-				aboutCompany.setCompanyPicture(organization.getOrganizationPicture());
-			} else {
-				SysDeptVO sysDept = sysDeptService.findFirstSysDept();
-				aboutCompany.setCompanyAddress(sysDept.getAddress());
-				aboutCompany.setCompanyContact(sysDept.getContact());
-				aboutCompany.setCompanyDesc(sysDept.getDescription());
-				aboutCompany.setCompanyName(sysDept.getName());
-				aboutCompany.setCompanyPhone(sysDept.getPhone());
-				aboutCompany.setCompanyPicture(sysDept.getPicture());
-			}
-				
-		} catch (DAOException e) {
-			log.error("get vipContents occur error ", e);
-			return R.error();
-		}
-		
-        return R.ok().put(DATA, aboutCompany);
-    }
+    
     
     @GetMapping("equipmentInfo")
     public R getEquipmentInfo(@RequestParam("equipmentType") int equipmentType) throws DAOException {

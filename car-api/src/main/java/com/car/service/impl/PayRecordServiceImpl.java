@@ -11,11 +11,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.car.dao.PayRecordDao;
 import com.car.dao.SysInfoDao;
-import com.car.dao.UserCoinDao;
 import com.car.dao.UserDao;
 import com.car.entity.PayRecord;
 import com.car.entity.SysInfo;
-import com.car.entity.UserCoin;
 import com.car.exception.DAOException;
 import com.car.service.PayRecordService;
 import com.car.vo.PayRecordVO;
@@ -28,8 +26,6 @@ public class PayRecordServiceImpl implements PayRecordService {
 	
 	@Autowired
 	private PayRecordDao payRecordDao;
-	@Autowired
-	private UserCoinDao usrCoinDao;
 	@Autowired
 	private SysInfoDao sysInfoDao;
 	@Autowired
@@ -69,22 +65,22 @@ public class PayRecordServiceImpl implements PayRecordService {
 		String infoContent = "";
 		long userId = payRecord.getUserId();
 		UserVO user = userDao.findById(userId);
-		UserCoin userCoin = usrCoinDao.getUserCoinEntityByUser(userId);
-		if (userCoin == null) {
-			userCoin = new UserCoin();
-			userCoin.setUserId(userId);
-			userCoin.setCoin(payRecord.getCoin());
-			userCoin.setVersion(0);
-			userCoin.setCreateTime(new Date());
-			userCoin.setUpdateTime(new Date());
-			usrCoinDao.saveUserCoin(userCoin);
-			infoContent = "您充值成功！剩余学币为：" + payRecord.getCoin();
-		} else {
-			double newCoin = userCoin.getCoin() + payRecord.getCoin();
-			userCoin.setCoin(newCoin);
-			usrCoinDao.updateUserCoin(userCoin);
-			infoContent = "您充值成功！剩余学币为：" + newCoin;
-		}
+//		UserCoin userCoin = usrCoinDao.getUserCoinEntityByUser(userId);
+//		if (userCoin == null) {
+//			userCoin = new UserCoin();
+//			userCoin.setUserId(userId);
+//			userCoin.setCoin(payRecord.getCoin());
+//			userCoin.setVersion(0);
+//			userCoin.setCreateTime(new Date());
+//			userCoin.setUpdateTime(new Date());
+//			usrCoinDao.saveUserCoin(userCoin);
+//			infoContent = "您充值成功！剩余学币为：" + payRecord.getCoin();
+//		} else {
+//			double newCoin = userCoin.getCoin() + payRecord.getCoin();
+//			userCoin.setCoin(newCoin);
+//			usrCoinDao.updateUserCoin(userCoin);
+//			infoContent = "您充值成功！剩余学币为：" + newCoin;
+//		}
 		
 		// sysInfo
 		SysInfo sysInfo = new SysInfo();

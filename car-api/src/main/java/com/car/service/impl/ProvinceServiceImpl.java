@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import com.car.dao.ProvinceDao;
 import com.car.exception.DAOException;
 import com.car.service.ProvinceService;
-import com.car.vo.CityVO;
 import com.car.vo.ProvinceVO;
 
 @Service("provinceService")

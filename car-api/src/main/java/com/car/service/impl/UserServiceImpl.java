@@ -3,7 +3,6 @@ package com.car.service.impl;
 
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.codec.digest.DigestUtils;
@@ -13,16 +12,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.CollectionUtils;
 
 import com.car.dao.CityDao;
 import com.car.dao.EquipmentManagerDao;
-import com.car.dao.OfflineOrganizationDao;
-import com.car.dao.SysDeptDao;
 import com.car.dao.UserDao;
 import com.car.dao.UserDetailDao;
-import com.car.dao.UserIntroduceDao;
-import com.car.dao.UserProjectDao;
 import com.car.entity.TokenEntity;
 import com.car.entity.UserEntity;
 import com.car.exception.DAOException;
@@ -32,11 +26,7 @@ import com.car.service.TokenService;
 import com.car.service.UserService;
 import com.car.utils.WeChatLoginUtils;
 import com.car.vo.CityVO;
-import com.car.vo.OfflineOrganizationVO;
-import com.car.vo.SysDeptVO;
 import com.car.vo.UserDetailVO;
-import com.car.vo.UserIntroduceVO;
-import com.car.vo.UserProjectVO;
 import com.car.vo.UserVO;
 
 @Service("userService")
@@ -51,25 +41,10 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private UserDetailDao userDetailDao;
 	@Autowired
-	private UserProjectDao userProjectDao;
-	@Autowired
 	private CityDao cityDao;
 	@Autowired
-	private UserIntroduceDao userIntroduceDao;
-	@Autowired
 	private EquipmentManagerDao equipmentManagerDao;
-	@Autowired
-	private OfflineOrganizationDao offlineOrganizationDao;
-	@Autowired
-	private SysDeptDao sysDeptDao;
-
-//	@Override
-//	public UserEntity queryByMobile(String mobile) {
-//		UserEntity userEntity = new UserEntity();
-//		userEntity.setMobile(mobile);
-//		return baseMapper.selectOne(userEntity);
-//	}
-
+	
 	@Transactional(rollbackFor = Exception.class)
 	public UserVO login(LoginForm form) throws DAOException {
 		
@@ -274,13 +249,6 @@ public class UserServiceImpl implements UserService {
 //		userDetail.setSystemVersion(form.getSystemVersion());
 		userDetail.setUserCode(userCode);
 		
-		// 机构码
-		UserIntroduceVO userIntroduce = userIntroduceDao.findByOpenid(openid);
-		if (userIntroduce != null) {
-			userDetail.setOrganCode(userIntroduce.getOrganizationCode());
-			userDetail.setOrganName(userIntroduce.getOrganizationName());
-			userDetail.setOrganPicture(userIntroduce.getOrganizationPicture());
-		}
 		
 		userDetailDao.saveUserDetail(userDetail);
 		return userDetail;
