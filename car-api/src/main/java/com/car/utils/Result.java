@@ -8,10 +8,10 @@ public class Result<T> implements Serializable {
 
 	private static final long serialVersionUID = -8484888486216844289L;
 	private static final String SUCCESS = "success";
-	private static final String ZERO = "0";
+	private static final int ZERO = 0;
 
 	@ApiModelProperty(value = "code: 状态: 0 - 成功, 其他 - 失败 , 600-token过期，需要重新登录")
-	private String code = ZERO;
+	private Integer code = ZERO;
 	
 	@ApiModelProperty(value = "消息")
 	private String msg = SUCCESS;
@@ -23,13 +23,13 @@ public class Result<T> implements Serializable {
 		super();
 	}
 	
-	public Result(String code, String msg) {
+	public Result(Integer code, String msg) {
 		super();
 		this.code = code;
 		this.msg = msg;
 	}
 	
-	public Result(String code, String msg, T data) {
+	public Result(Integer code, String msg, T data) {
         super();
         this.code = code;
         this.msg = msg;
@@ -43,11 +43,11 @@ public class Result<T> implements Serializable {
 		this.data = data;
 	}
 	
-	public String getCode() {
+	public Integer getCode() {
 		return code;
 	}
 
-	public void setCode(String code) {
+	public void setCode(Integer code) {
 		this.code = code;
 	}
 

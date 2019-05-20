@@ -40,15 +40,17 @@ public class ApiPublishController {
 	 */
 	@PostMapping("/saveCommodity")
 	@ApiOperation("发布商品接口")
-	public Result saveCommodity(@ModelAttribute CommodityForm commodity) throws DAOException {
+	public Result<String> saveCommodity(@ModelAttribute CommodityForm commodity) throws DAOException {
 		if(commodity.getCommodityName() == null || commodity.getCommodityName().isEmpty()){
-			throw new DAOException("商品名称为空");
+//			throw new DAOException("商品名称为空");
+			return new Result<>(500, "商品名称为空");
 		}
 		if(commodity.getCommodityCategoryId() == null){
-			throw new DAOException("商品分类不能为空");
+//			throw new DAOException("商品分类不能为空");
+			return new Result<>(500, "商品分类不能为空");
 		}
 		Commodity commodityEntity = commodityService.insertCommodity(commodity);
-		return new Result(commodityEntity);
+		return new Result<>(0, "success");
 	}
 
 	/**
@@ -56,7 +58,7 @@ public class ApiPublishController {
 	 */
 	@PostMapping("/savePublishPost")
 	@ApiOperation("发布帖子接口")
-	public Result save(@ModelAttribute PublishPostForm publishPost) throws DAOException {
+	public Result<String> save(@ModelAttribute PublishPostForm publishPost) throws DAOException {
 		if(publishPost.getPublishTitle() == null || publishPost.getPublishTitle().isEmpty()){
 			throw new DAOException("帖子标题为空");
 		}
@@ -67,7 +69,7 @@ public class ApiPublishController {
 			throw new DAOException("帖子用户为空");
 		}
 		PublishPost publishPostEntity = publishPostService.insertPublishPost(publishPost);
-		return new Result(publishPostEntity);
+		return new Result<>(0, "success");
 	}
     
    

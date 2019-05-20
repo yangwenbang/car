@@ -40,7 +40,8 @@ public class ApiLoginController {
     @Autowired
     private TokenService tokenService;
     
-    @PostMapping("login")
+    @PostMapping("mobileLogin")
+    @ApiOperation("用户手机登录接口(测试用)")
     public Result<UserVO> login(@ModelAttribute LoginForm form){
 
         //用户登录
@@ -49,7 +50,7 @@ public class ApiLoginController {
 			user = userService.login(form);
 		} catch (DAOException e) {
 			log.error("login occur error ", e);
-			return new Result<>("500",e.getMessage());
+			return new Result<>(500, e.getMessage());
 		}
 
         return new Result<>(user);
@@ -65,7 +66,7 @@ public class ApiLoginController {
 			user = userService.weChatLogin(form);
 		} catch (Exception e) {
 			log.error("login occur error ", e);
-			return new Result<>("500",e.getMessage());
+			return new Result<>(500, e.getMessage());
 		}
 
         return new Result<>(user);
