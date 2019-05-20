@@ -13,14 +13,12 @@ import java.util.Date;
  * @email sunlightcs@gmail.com
  * @date 2019-05-16 21:32:24
  */
-@TableName("commodity_category")
-public class CommodityCategoryEntity implements Serializable {
+public class CommodityCategory implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * 商品分类ID
 	 */
-	@TableId
 	private Long id;
 	/**
 	 * 商品分类父ID

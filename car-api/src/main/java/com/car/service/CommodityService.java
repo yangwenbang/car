@@ -1,10 +1,7 @@
 package com.car.service;
 
-import com.baomidou.mybatisplus.service.IService;
-import com.car.common.utils.PageUtils;
-import com.car.entity.CommodityEntity;
-
-import java.util.Map;
+import com.car.entity.Commodity;
+import com.car.form.CommodityForm;
 
 
 /**
@@ -16,6 +13,6 @@ import java.util.Map;
  */
 public interface CommodityService {
 
-    void insert(CommodityEntity commodity);
+    Commodity insertCommodity(CommodityForm commodity);
 }
 

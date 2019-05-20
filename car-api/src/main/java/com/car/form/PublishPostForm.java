@@ -1,25 +1,29 @@
 package com.car.form;
 
+import io.swagger.annotations.ApiModelProperty;
+
+import javax.validation.constraints.NotBlank;
+
 public class PublishPostForm {
-    /**
-     * 发布标题
-     */
+
+    @ApiModelProperty(value = "发布标题",required=true)
+    @NotBlank(message = "发布标题不能为空")
     private String publishTitle;
-    /**
-     * 发布内容
-     */
+
+    @ApiModelProperty(value = "发布内容",required=true)
+    @NotBlank(message = "发布内容不能为空")
     private String publishContent;
     /**
-     * 发布图片，多个用逗号隔开
+     *
      */
+    @ApiModelProperty(value = "发布图片，多个用逗号隔开")
     private String publishPicture;
-    /**
-     * 发布地址
-     */
+
+    @ApiModelProperty(value = "发布地址")
     private String publishAddress;
-    /**
-     * 发布人
-     */
+
+    @ApiModelProperty(value = "发布人",required=true)
+    @NotBlank(message = "发布人不能为空")
     private Long publishUserId;
 
     public String getPublishTitle() {

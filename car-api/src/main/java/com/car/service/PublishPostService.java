@@ -1,8 +1,7 @@
 package com.car.service;
 
-import com.car.entity.PublishPostEntity;
-
-import java.util.Map;
+import com.car.entity.PublishPost;
+import com.car.form.PublishPostForm;
 
 /**
  * 
@@ -13,6 +12,6 @@ import java.util.Map;
  */
 public interface PublishPostService{
 
-    void insert(PublishPostEntity publishPostEntity);
+    PublishPost insertPublishPost(PublishPostForm publishPostEntity);
 }
 

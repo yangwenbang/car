@@ -1,11 +1,5 @@
 package com.car.service;
 
-import com.baomidou.mybatisplus.service.IService;
-import com.car.common.utils.PageUtils;
-import com.car.entity.CommodityCategoryEntity;
-
-import java.util.Map;
-
 /**
  * 
  *

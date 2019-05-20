@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.car.dao.PublishPostDao">
+
+    <insert id="insertPublishPost" parameterType="com.car.entity.PublishPost">
+        INSERT INTO publish_post (publish_title,publish_content,publish_picture,
+        publish_address,publish_user_id,publish_time,update_time)
+        VALUES (#{publishTitle},#{publishContent},#{publishPicture},#{publishAddress},
+        #{publishUserId},#{publishTime},#{updateTime})
+    </insert>
+
+</mapper>

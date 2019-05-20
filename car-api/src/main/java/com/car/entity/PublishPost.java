@@ -14,7 +14,7 @@ import java.util.Date;
  * @date 2019-05-19 23:07:55
  */
 @TableName("publish_post")
-public class PublishPostEntity implements Serializable {
+public class PublishPost implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**

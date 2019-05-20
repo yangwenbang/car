@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.car.dao.CommodityDao">
+
+    <insert id="insertCommodity" parameterType="com.car.entity.Commodity">
+        INSERT INTO commodity (commodity_category_id,commodity_name,commodity_picture,
+        description,commodity_type,use_start_time,use_end_time,use_state,price,publish_user_id,
+        trade_mode,create_time,update_time)
+        VALUES (#{commodityCategoryId},#{commodityName},#{commodityPicture},#{description},
+        #{commodityType},#{useStartTime},#{useEndTime},#{useState},#{price},#{publishUserId}
+        ,#{tradeMode},#{createTime},#{updateTime})
+    </insert>
+
+</mapper>

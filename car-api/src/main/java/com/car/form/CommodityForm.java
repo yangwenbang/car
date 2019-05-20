@@ -1,56 +1,51 @@
 package com.car.form;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.NotBlank;
 import java.math.BigDecimal;
 import java.util.Date;
 
+@ApiModel(value = "商品表单")
 public class CommodityForm {
-    /**
-     * 商品分类
-     */
+    @ApiModelProperty(value = "商品分类",required=true)
+    @NotBlank(message = "分类不能为空")
     private Long commodityCategoryId;
-    /**
-     * 商品名称
-     */
+
+    @ApiModelProperty(value = "商品名称",required=true)
+    @NotBlank(message = "商品名称不能为空")
     private String commodityName;
-    /**
-     * 商品描述
-     */
+
+    @ApiModelProperty(value = "商品描述")
     private String description;
-    /**
-     * 商品类型(0新商品/1二手商品)
-     */
+
+    //@ApiModelProperty(value = "商品类型(0新商品/1二手商品)")
     //private Integer commodityType;
-    /**
-     * 商品使用开始时间
-     */
+
+    @ApiModelProperty(value = "商品使用开始时间")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date useStartTime;
-    /**
-     * 商品使用结束时间
-     */
+
+    @ApiModelProperty(value = "商品使用结束时间")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date useEndTime;
-    /**
-     * 使用状况
-     */
+
+    @ApiModelProperty(value = "商品使用使用状况")
     private String useState;
-    /**
-     * 商品价格
-     */
+
+    @ApiModelProperty(value = "商品价格")
     private BigDecimal price;
-    /**
-     * 商品发布人
-     */
+
+    @ApiModelProperty(value = "商品发布人",required=true)
+    @NotBlank(message = "商品发布人为空")
     private Long publishUserId;
-    /**
-     * 交易方式(0同城面交/1邮寄)
-     */
+
+    @ApiModelProperty(value = "交易方式(0同城面交/1邮寄)")
     private Integer tradeMode;
-    /**
-     * 商品图片，多个用逗号隔开
-     */
+
+    @ApiModelProperty(value = "商品图片，多个用逗号隔开")
     private String commodityPicture;
 
     public Long getCommodityCategoryId() {
