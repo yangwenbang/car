@@ -20,16 +20,18 @@ import com.car.exception.DAOException;
 import com.car.service.AdvertisementService;
 import com.car.vo.AdvertisementVO;
 
+import io.swagger.annotations.Api;
+
 /**
- * 登录接口
+ * 主页接口
  *
  * @author wind
  */
 @RestController
-@RequestMapping("/api/find")
-//@Api(tags="登录接口")
-public class ApiFindController {
-	private static final Logger log = LoggerFactory.getLogger(ApiFindController.class);
+@RequestMapping("/api/main")
+@Api(tags="主页接口")
+public class ApiMainController {
+	private static final Logger log = LoggerFactory.getLogger(ApiMainController.class);
 
     @Autowired
     private AdvertisementService advertisementService;
