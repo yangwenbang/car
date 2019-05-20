@@ -6,16 +6,15 @@ import static com.car.ApiConstants.DATA;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.car.annotation.Login;
 import com.car.common.utils.R;
+import com.car.exception.DAOException;
 import com.car.form.LoginForm;
 import com.car.service.TokenService;
 import com.car.service.UserService;
@@ -41,11 +40,19 @@ public class ApiLoginController {
     @Autowired
     private TokenService tokenService;
     
-    @GetMapping("verficationCode")
-    public R verficationCode(@RequestParam("mobile") String mobile) {
-    	String verficationCode = "123456";
-		
-		return R.ok().put(DATA, verficationCode);
+    @PostMapping("login")
+    public Result<UserVO> login(@ModelAttribute LoginForm form){
+
+        //用户登录
+        UserVO user = null;
+		try {
+			user = userService.login(form);
+		} catch (DAOException e) {
+			log.error("login occur error ", e);
+			return new Result<>("500",e.getMessage());
+		}
+
+        return new Result<>(user);
     }
     
     @PostMapping("login")

@@ -13,10 +13,17 @@ import io.swagger.annotations.ApiModelProperty;
  */
 @ApiModel(value = "登录表单")
 public class LoginForm {
-//    private String mobile;
-//    private Integer equipmentType;
-//    private String equipmentModel;
-//    private String systemVersion;
+	@ApiModelProperty(value = "手机号")
+    private String mobile;
+	
+	@ApiModelProperty(value = "用户设备类别(0安卓/1苹果)")
+    private Integer equipmentType;
+	
+	@ApiModelProperty(value = "设备型号")
+    private String equipmentModel;
+	
+	@ApiModelProperty(value = "系统版本号")
+    private String systemVersion;
 //    private String softVersion;
 //    private String verficationCode;
 
@@ -24,7 +31,6 @@ public class LoginForm {
 //	private Integer loginType;
 
 	@ApiModelProperty(value = "微信code")
-	@NotBlank(message = "code不能为空")
 	private String code;
 
 	@ApiModelProperty(value = "密码")
@@ -47,12 +53,36 @@ public class LoginForm {
 		this.password = password;
 	}
 
-//	public Integer getLoginType() {
-//		return loginType;
-//	}
-//
-//	public void setLoginType(Integer loginType) {
-//		this.loginType = loginType;
-//	}
+	public String getMobile() {
+		return mobile;
+	}
 
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
+	}
+
+	public Integer getEquipmentType() {
+		return equipmentType;
+	}
+
+	public void setEquipmentType(Integer equipmentType) {
+		this.equipmentType = equipmentType;
+	}
+
+	public String getEquipmentModel() {
+		return equipmentModel;
+	}
+
+	public void setEquipmentModel(String equipmentModel) {
+		this.equipmentModel = equipmentModel;
+	}
+
+	public String getSystemVersion() {
+		return systemVersion;
+	}
+
+	public void setSystemVersion(String systemVersion) {
+		this.systemVersion = systemVersion;
+	}
+	
 }

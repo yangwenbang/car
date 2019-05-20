@@ -48,12 +48,11 @@ public class UserServiceImpl implements UserService {
 	@Transactional(rollbackFor = Exception.class)
 	public UserVO login(LoginForm form) throws DAOException {
 		
-		/*String mobile = form.getMobile();
+		String mobile = form.getMobile();
 		String shaPwd = StringUtils.isEmpty(form.getPassword()) ? "" : DigestUtils.sha256Hex(form.getPassword());
 		int equipmentType = form.getEquipmentType();
 		String equipmentModel = form.getEquipmentModel();
 		String systemVersion = form.getSystemVersion();
-		String verficationCode = form.getVerficationCode();
 		
 		UserVO userVO = userDao.findUserByCondition(mobile, shaPwd);
 		if (userVO == null) {
@@ -66,16 +65,6 @@ public class UserServiceImpl implements UserService {
 		if (userVO != null) { // 登录.
 //			// 用户明细.
 			long userId = userVO.getUserId();
-			
-			// 用户选择的项目.
-			List<UserProjectVO> userProjects = userProjectDao.getUserProjectsByUser(userId);
-			if (!CollectionUtils.isEmpty(userProjects)) {
-				UserProjectVO userProject = userProjects.get(0);
-				userVO.setProjectId(userProject.getProjectId());
-				userVO.setCategoryId(userProject.getCategoryId());
-				userVO.setProjectName(userProject.getProjectName());
-				userVO.setCategoryName(userProject.getCategoryName());
-			}
 			
 		} else { // 注册.
 			
@@ -93,8 +82,8 @@ public class UserServiceImpl implements UserService {
 			UserDetailVO userDetail = new UserDetailVO();
 			userDetail.setUserId(userEntity.getUserId());
 			userDetail.setUserCode(getUserCode());
+			userDetail.setEquipmentType(equipmentType);
 			userDetail.setEquipmentModel(equipmentModel);
-//			userDetail.setSoftVersion(softVersion);
 			userDetail.setSystemVersion(systemVersion);
 			userDetailDao.saveUserDetail(userDetail);
 			
@@ -107,10 +96,8 @@ public class UserServiceImpl implements UserService {
 		//获取登录token
 		TokenEntity tokenEntity = tokenService.createToken(userVO.getUserId());
 		userVO.setToken(tokenEntity.getToken());
-		userVO.setExpire(tokenEntity.getExpireTime().getTime() - System.currentTimeMillis());
 		
-		return userVO;*/
-		return null;
+		return userVO;
 	}
 
 	@Override
