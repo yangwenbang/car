@@ -21,10 +21,6 @@ public class CommodityCategory implements Serializable {
 	 */
 	private Long id;
 	/**
-	 * 商品分类父ID
-	 */
-	private Long parentId;
-	/**
 	 * 分类名称
 	 */
 	private String categoryName;
@@ -48,18 +44,6 @@ public class CommodityCategory implements Serializable {
 	 */
 	public Long getId() {
 		return id;
-	}
-	/**
-	 * 设置：商品分类父ID
-	 */
-	public void setParentId(Long parentId) {
-		this.parentId = parentId;
-	}
-	/**
-	 * 获取：商品分类父ID
-	 */
-	public Long getParentId() {
-		return parentId;
 	}
 	/**
 	 * 设置：分类名称

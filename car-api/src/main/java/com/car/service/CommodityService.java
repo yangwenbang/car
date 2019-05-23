@@ -1,7 +1,11 @@
 package com.car.service;
 
-import com.car.entity.Commodity;
-import com.car.form.CommodityForm;
+import com.car.entity.OldCommodity;
+import com.car.form.OldCommodityForm;
+import com.car.vo.CommodityCategoryVo;
+import com.car.vo.CommodityVO;
+
+import java.util.List;
 
 
 /**
@@ -13,6 +17,10 @@ import com.car.form.CommodityForm;
  */
 public interface CommodityService {
 
-    Commodity insertCommodity(CommodityForm commodity);
+    OldCommodity insertCommodity(OldCommodityForm commodity);
+
+    List<CommodityCategoryVo> listCommodityCategory();
+
+    List<CommodityVO> listCommodityByCategoryId(String commodityCategoryId);
 }
 

@@ -1,6 +1,10 @@
 package com.car.dao;
 
-import com.car.entity.Commodity;
+import com.car.entity.OldCommodity;
+import com.car.vo.CommodityCategoryVo;
+import com.car.vo.CommodityVO;
+
+import java.util.List;
 
 /**
  * 
@@ -11,5 +15,9 @@ import com.car.entity.Commodity;
  */
 public interface CommodityDao {
 
-    void insertCommodity(Commodity commodityEntity);
+    void insertCommodity(OldCommodity commodityEntity);
+
+    List<CommodityCategoryVo> listCommodityCategory();
+
+    List<CommodityVO> listCommodityByCategoryId(String commodityCategoryId);
 }
