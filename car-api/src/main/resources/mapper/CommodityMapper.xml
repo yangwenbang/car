@@ -16,7 +16,7 @@
         #{flaw},#{position})
     </insert>
 
-    <select id="listCommodityCategory" resultType="com.car.vo.CommodityCategoryVo">
+    <select id="queryCommodityCategorys" resultType="com.car.vo.CommodityCategoryVO">
         SELECT
           id AS id,
           category_name AS categoryName
@@ -24,10 +24,10 @@
           commodity_category
     </select>
 
-    <select id="listCommodityByCategoryId" resultType="com.car.vo.CommodityVO">
+    <select id="queryCommoditysByCategoryId" resultType="com.car.vo.CommodityVO">
         SELECT
           id,
-          commodity_name AS commodityNme,
+          commodity_name AS commodityName,
           commodity_picture AS commodityPicture,
           description,
           use_start_time AS useStartTime,

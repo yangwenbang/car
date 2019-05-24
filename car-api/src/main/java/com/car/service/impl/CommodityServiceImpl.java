@@ -1,10 +1,11 @@
 package com.car.service.impl;
 
+import com.baomidou.mybatisplus.plugins.Page;
 import com.car.dao.CommodityDao;
 import com.car.entity.OldCommodity;
 import com.car.form.OldCommodityForm;
 import com.car.service.CommodityService;
-import com.car.vo.CommodityCategoryVo;
+import com.car.vo.CommodityCategoryVO;
 import com.car.vo.CommodityVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -53,14 +54,14 @@ public class CommodityServiceImpl implements CommodityService {
     }
 
     @Override
-    public List<CommodityCategoryVo> listCommodityCategory() {
-        List<CommodityCategoryVo> commodityCategoryList = commodityDao.listCommodityCategory();
+    public List<CommodityCategoryVO> queryCommodityCategorys() {
+        List<CommodityCategoryVO> commodityCategoryList = commodityDao.queryCommodityCategorys();
         return commodityCategoryList;
     }
 
     @Override
-    public List<CommodityVO> listCommodityByCategoryId(String commodityCategoryId) {
-        List<CommodityVO> commodityList = commodityDao.listCommodityByCategoryId(commodityCategoryId);
-        return null;
+    public Page<CommodityVO> queryCommoditysByCategoryId(Page<CommodityVO> page, String commodityCategoryId) {
+        page = commodityDao.queryCommoditysByCategoryId(page,commodityCategoryId);
+        return page;
     }
 }

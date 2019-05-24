@@ -1,9 +1,11 @@
 package com.car.service;
 
+import com.baomidou.mybatisplus.plugins.Page;
 import com.car.entity.OldCommodity;
 import com.car.form.OldCommodityForm;
-import com.car.vo.CommodityCategoryVo;
+import com.car.vo.CommodityCategoryVO;
 import com.car.vo.CommodityVO;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -19,8 +21,8 @@ public interface CommodityService {
 
     OldCommodity insertCommodity(OldCommodityForm commodity);
 
-    List<CommodityCategoryVo> listCommodityCategory();
+    List<CommodityCategoryVO> queryCommodityCategorys();
 
-    List<CommodityVO> listCommodityByCategoryId(String commodityCategoryId);
+    Page<CommodityVO> queryCommoditysByCategoryId(Page<CommodityVO> page,@Param("commodityCategoryId") String commodityCategoryId);
 }
 

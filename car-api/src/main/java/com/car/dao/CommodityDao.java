@@ -1,7 +1,8 @@
 package com.car.dao;
 
+import com.baomidou.mybatisplus.plugins.Page;
 import com.car.entity.OldCommodity;
-import com.car.vo.CommodityCategoryVo;
+import com.car.vo.CommodityCategoryVO;
 import com.car.vo.CommodityVO;
 
 import java.util.List;
@@ -17,7 +18,7 @@ public interface CommodityDao {
 
     void insertCommodity(OldCommodity commodityEntity);
 
-    List<CommodityCategoryVo> listCommodityCategory();
+    List<CommodityCategoryVO> queryCommodityCategorys();
 
-    List<CommodityVO> listCommodityByCategoryId(String commodityCategoryId);
+    Page<CommodityVO> queryCommoditysByCategoryId(Page<CommodityVO> page, String commodityCategoryId);
 }

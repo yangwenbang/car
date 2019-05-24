@@ -10,7 +10,7 @@ import com.car.form.PublishPostForm;
 import com.car.service.CommodityService;
 import com.car.service.PublishPostService;
 import com.car.utils.Result;
-import com.car.vo.CommodityCategoryVo;
+import com.car.vo.CommodityCategoryVO;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,22 +43,20 @@ public class ApiPublishController {
 	@ApiOperation("发布商品接口")
 	public Result<String> saveCommodity(@ModelAttribute OldCommodityForm oldCommodity) throws DAOException {
 		if(oldCommodity.getCommodityName() == null || oldCommodity.getCommodityName().isEmpty()){
-//			throw new DAOException("商品名称为空");
 			return new Result<>(500, "商品名称为空");
 		}
 		if(oldCommodity.getCommodityCategoryId() == null){
-//			throw new DAOException("商品分类不能为空");
 			return new Result<>(500, "商品分类不能为空");
 		}
 		OldCommodity oldCommodityEntity = commodityService.insertCommodity(oldCommodity);
 		return new Result<>(0, "success");
 	}
 
-	@GetMapping("/getCommodityCategory")
-	@ApiOperation("得到商品分类接口")
-	public Result<List<CommodityCategoryVo>> getCommodityCategory(){
-		List<CommodityCategoryVo> commodityCategoryList = commodityService.listCommodityCategory();
-		return new Result<List<CommodityCategoryVo>>(0, "success",commodityCategoryList);
+	@GetMapping("/getCommodityCategorys")
+	@ApiOperation("获取商品分类接口")
+	public Result<List<CommodityCategoryVO>> getCommodityCategory(){
+		List<CommodityCategoryVO> commodityCategoryList = commodityService.queryCommodityCategorys();
+		return new Result<>(0, "success",commodityCategoryList);
 	}
 
 	/**
