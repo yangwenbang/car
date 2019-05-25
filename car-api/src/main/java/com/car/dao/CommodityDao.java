@@ -1,11 +1,12 @@
 package com.car.dao;
 
-import com.baomidou.mybatisplus.plugins.Page;
-import com.car.entity.OldCommodity;
-import com.car.vo.CommodityCategoryVO;
-import com.car.vo.CommodityVO;
-
 import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+
+import com.car.entity.OldCommodity;
+import com.car.exception.DAOException;
+import com.car.vo.CommodityVO;
 
 /**
  * 
@@ -18,7 +19,7 @@ public interface CommodityDao {
 
     void insertCommodity(OldCommodity commodityEntity);
 
-    List<CommodityCategoryVO> queryCommodityCategorys();
-
-    Page<CommodityVO> queryCommoditysByCategoryId(Page<CommodityVO> page, String commodityCategoryId);
+    List<CommodityVO> queryCommoditysByCategoryId(@Param("CommodityCategoryId") long CommodityCategoryId,
+			@Param("pageId") int pageId,
+			@Param("pageSize") int pageSize) throws DAOException;
 }

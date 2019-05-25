@@ -1,13 +1,11 @@
 package com.car.service;
 
-import com.baomidou.mybatisplus.plugins.Page;
-import com.car.entity.OldCommodity;
-import com.car.form.OldCommodityForm;
-import com.car.vo.CommodityCategoryVO;
-import com.car.vo.CommodityVO;
-import org.apache.ibatis.annotations.Param;
-
 import java.util.List;
+
+import com.car.entity.OldCommodity;
+import com.car.exception.DAOException;
+import com.car.form.OldCommodityForm;
+import com.car.vo.CommodityVO;
 
 
 /**
@@ -21,8 +19,6 @@ public interface CommodityService {
 
     OldCommodity insertCommodity(OldCommodityForm commodity);
 
-    List<CommodityCategoryVO> queryCommodityCategorys();
-
-    Page<CommodityVO> queryCommoditysByCategoryId(Page<CommodityVO> page,@Param("commodityCategoryId") String commodityCategoryId);
+    List<CommodityVO> queryCommoditysByCategoryId(long commodityCategoryId, int pageId) throws DAOException;
 }
 

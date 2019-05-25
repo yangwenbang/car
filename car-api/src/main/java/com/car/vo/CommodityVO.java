@@ -11,7 +11,7 @@ import java.util.Date;
 public class CommodityVO implements Serializable {
 
     @ApiModelProperty(value = "商品ID")
-    private Long id;
+    private Long commodityId;
 
     @ApiModelProperty(value = "商品名称")
     private String commodityName;
@@ -194,15 +194,15 @@ public class CommodityVO implements Serializable {
         this.position = position;
     }
 
-    public Long getId() {
-        return id;
-    }
+    public Long getCommodityId() {
+		return commodityId;
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public void setCommodityId(Long commodityId) {
+		this.commodityId = commodityId;
+	}
 
-    public String getCommodityName() {
+	public String getCommodityName() {
         return commodityName;
     }
 

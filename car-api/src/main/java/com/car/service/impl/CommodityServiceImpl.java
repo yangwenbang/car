@@ -1,18 +1,19 @@
 package com.car.service.impl;
 
-import com.baomidou.mybatisplus.plugins.Page;
-import com.car.dao.CommodityDao;
-import com.car.entity.OldCommodity;
-import com.car.form.OldCommodityForm;
-import com.car.service.CommodityService;
-import com.car.vo.CommodityCategoryVO;
-import com.car.vo.CommodityVO;
+import java.util.Date;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
-import java.util.List;
+import com.car.ApiConstants;
+import com.car.dao.CommodityDao;
+import com.car.entity.OldCommodity;
+import com.car.exception.DAOException;
+import com.car.form.OldCommodityForm;
+import com.car.service.CommodityService;
+import com.car.vo.CommodityVO;
 
 
 @Service("commodityService")
@@ -54,14 +55,8 @@ public class CommodityServiceImpl implements CommodityService {
     }
 
     @Override
-    public List<CommodityCategoryVO> queryCommodityCategorys() {
-        List<CommodityCategoryVO> commodityCategoryList = commodityDao.queryCommodityCategorys();
-        return commodityCategoryList;
-    }
-
-    @Override
-    public Page<CommodityVO> queryCommoditysByCategoryId(Page<CommodityVO> page, String commodityCategoryId) {
-        page = commodityDao.queryCommoditysByCategoryId(page,commodityCategoryId);
-        return page;
+    public List<CommodityVO> queryCommoditysByCategoryId(long commodityCategoryId, int pageId) throws DAOException {
+    	int pageSize = pageId * ApiConstants.PAGE_COUNT;
+        return commodityDao.queryCommoditysByCategoryId(commodityCategoryId, pageSize, ApiConstants.PAGE_COUNT);
     }
 }

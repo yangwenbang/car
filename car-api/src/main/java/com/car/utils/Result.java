@@ -23,6 +23,11 @@ public class Result<T> implements Serializable {
 		super();
 	}
 	
+	public Result(Integer code) {
+		super();
+		this.code = code;
+	}
+	
 	public Result(Integer code, String msg) {
 		super();
 		this.code = code;

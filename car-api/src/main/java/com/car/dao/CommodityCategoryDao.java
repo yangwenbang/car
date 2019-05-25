@@ -1,6 +1,9 @@
 package com.car.dao;
 
-import com.car.entity.CommodityCategory;
+import java.util.List;
+
+import com.car.exception.DAOException;
+import com.car.vo.CommodityCategoryVO;
 
 /**
  * 
@@ -10,5 +13,7 @@ import com.car.entity.CommodityCategory;
  * @date 2019-05-16 21:32:24
  */
 public interface CommodityCategoryDao {
+	
+	List<CommodityCategoryVO> queryCommodityCategorys() throws DAOException;
 	
 }

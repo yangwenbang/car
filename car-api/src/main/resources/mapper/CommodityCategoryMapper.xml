@@ -3,6 +3,9 @@
 
 <mapper namespace="com.car.modules.car.dao.CommodityCategoryDao">
 
-
+	<select id="queryCommodityCategorys" resultType="com.car.vo.CommodityCategoryVO">
+        SELECT id commodityCategoryId, category_name
+        FROM commodity_category
+    </select>
 
 </mapper>

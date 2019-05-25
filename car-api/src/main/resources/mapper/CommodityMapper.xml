@@ -16,42 +16,34 @@
         #{flaw},#{position})
     </insert>
 
-    <select id="queryCommodityCategorys" resultType="com.car.vo.CommodityCategoryVO">
-        SELECT
-          id AS id,
-          category_name AS categoryName
-        FROM
-          commodity_category
-    </select>
-
     <select id="queryCommoditysByCategoryId" resultType="com.car.vo.CommodityVO">
         SELECT
-          id,
-          commodity_name AS commodityName,
-          commodity_picture AS commodityPicture,
+          id commodityId,
+          commodity_name,
+          commodity_picture,
           description,
-          use_start_time AS useStartTime,
-          use_end_time AS useEndTime,
-          use_state AS useState,
+          use_start_time,
+          use_end_time,
+          use_state,
           price,
-          trade_mode AS tradeMode,
+          trade_mode,
           brand,
           model,
           color,
           material,
-          have_flaw AS haveFlaw,
-          tyre_size AS tyreSize,
-          hole_spacing AS holeSpacing,
-          manufactur_mode AS manufacturMode,
-          light_type AS lightType,
-          hub_size AS hubSize,
-          size AS size,
-          flaw AS flaw,
-          type AS type,
-          position AS position
-        FROM
-          old_commodity
+          have_flaw,
+          tyre_size,
+          hole_spacing,
+          manufactur_mode,
+          light_type,
+          hub_size,
+          size,
+          flaw,
+          type,
+          position
+        FROM old_commodity
         WHERE commodity_category_id = #{commodityCategoryId}
+        ORDER BY seq DESC LIMIT #{pageId}, #{pageSize}
     </select>
 
 </mapper>
