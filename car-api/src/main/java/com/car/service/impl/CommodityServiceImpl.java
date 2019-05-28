@@ -47,6 +47,7 @@ public class CommodityServiceImpl implements CommodityService {
         commodityEntity.setSize(commodity.getSize());
         commodityEntity.setType(commodity.getType());
         commodityEntity.setFlaw(commodity.getFlaw());
+        commodityEntity.setCommodityNum(commodity.getCommodityNum());
         commodityEntity.setPosition(commodity.getPosition());
         commodityEntity.setCreateTime(new Date());
         commodityEntity.setUpdateTime(new Date());

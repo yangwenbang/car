@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.car.modules.car.dao.CommodityCategoryDao">
+<mapper namespace="com.car.dao.CommodityCategoryDao">
 
 	<select id="queryCommodityCategorys" resultType="com.car.vo.CommodityCategoryVO">
         SELECT id commodityCategoryId, category_name

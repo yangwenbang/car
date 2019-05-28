@@ -8,12 +8,12 @@
         description,use_start_time,use_end_time,use_state,price,publish_user_id,
         trade_mode,create_time,update_time,brand,model,color,material,have_flaw,
         tyre_size,hole_spacing,manufactur_mode,light_type,hub_size,size,type,
-        flaw,position)
+        flaw,position,commodity_num)
         VALUES (#{commodityCategoryId},#{commodityName},#{commodityPicture},
         #{description},#{useStartTime},#{useEndTime},#{useState},#{price},#{publishUserId},
         #{tradeMode},#{createTime},#{updateTime},#{brand},#{model},#{color},#{material},#{haveFlaw},
         #{tyreSize},#{holeSpacing},#{manufacturMode},#{lightType},#{hubSize},#{size},#{type},
-        #{flaw},#{position})
+        #{flaw},#{position},#{commodityNum})
     </insert>
 
     <select id="queryCommoditysByCategoryId" resultType="com.car.vo.CommodityVO">
@@ -40,7 +40,8 @@
           size,
           flaw,
           type,
-          position
+          position,
+          commodity_num
         FROM old_commodity
         WHERE commodity_category_id = #{commodityCategoryId}
         ORDER BY seq DESC LIMIT #{pageId}, #{pageSize}

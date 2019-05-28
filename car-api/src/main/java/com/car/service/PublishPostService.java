@@ -13,5 +13,6 @@ import com.car.form.PublishPostForm;
 public interface PublishPostService{
 
     PublishPost insertPublishPost(PublishPostForm publishPostEntity);
+
 }
 

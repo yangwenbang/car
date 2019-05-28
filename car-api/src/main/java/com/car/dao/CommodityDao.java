@@ -19,7 +19,7 @@ public interface CommodityDao {
 
     void insertCommodity(OldCommodity commodityEntity);
 
-    List<CommodityVO> queryCommoditysByCategoryId(@Param("CommodityCategoryId") long CommodityCategoryId,
+    List<CommodityVO> queryCommoditysByCategoryId(@Param("commodityCategoryId") long commodityCategoryId,
 			@Param("pageId") int pageId,
 			@Param("pageSize") int pageSize) throws DAOException;
 }

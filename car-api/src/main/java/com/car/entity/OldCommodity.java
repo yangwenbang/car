@@ -126,6 +126,10 @@ public class OldCommodity implements Serializable {
 	 * 部位（整体0,前段1,中段2,中后3,后段4）
 	 */
 	private Integer position;
+	/**
+	 * 商品数量
+	 */
+	private Integer commodityNum;
 
 	public Long getId() {
 		return id;
@@ -341,5 +345,13 @@ public class OldCommodity implements Serializable {
 
 	public void setPosition(Integer position) {
 		this.position = position;
+	}
+
+	public Integer getCommodityNum() {
+		return commodityNum;
+	}
+
+	public void setCommodityNum(Integer commodityNum) {
+		this.commodityNum = commodityNum;
 	}
 }

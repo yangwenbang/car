@@ -4,6 +4,9 @@ package com.car.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.car.annotation.Login;
+import com.car.form.CommodityQuestionFrom;
+import com.car.service.CommodityQuestionService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.baomidou.mybatisplus.plugins.Page;
 import com.car.entity.OldCommodity;
 import com.car.entity.PublishPost;
 import com.car.exception.DAOException;
@@ -51,10 +53,12 @@ public class ApiOldCommodityController {
 	private CommodityCategoryService commodityCategoryService;
 	@Autowired
 	private PublishPostService publishPostService;
-	
+	@Autowired
+	private CommodityQuestionService commodityQuestionService;
 	/**
 	 * 保存商品
 	 */
+	@Login
 	@PostMapping("/publishCommodity")
 	@ApiOperation("发布商品")
 	public Result<String> saveCommodity(@ModelAttribute OldCommodityForm oldCommodity) throws DAOException {
@@ -84,9 +88,10 @@ public class ApiOldCommodityController {
 	/**
 	 * 发布帖子
 	 */
+	@Login
 	@PostMapping("/savePublishPost")
 	@ApiOperation("发布帖子接口")
-	public Result<String> save(@ModelAttribute PublishPostForm publishPost) throws DAOException {
+	public Result<String> savePublishPost(@ModelAttribute PublishPostForm publishPost) throws DAOException {
 		if(publishPost.getPublishTitle() == null || publishPost.getPublishTitle().isEmpty()){
 			throw new DAOException("帖子标题为空");
 		}
@@ -100,7 +105,6 @@ public class ApiOldCommodityController {
 		return new Result<>(ZERO, SUCCESS);
 	}
     
-	
 	@GetMapping("/getCommoditysByCategorys")
 	@ApiOperation("获取二手商品")
 	public Result<List<CommodityVO>> getCommoditysByCategoryId(@ApiParam(value = "商品分类ID")@RequestParam("commodityCategoryId") long commodityCategoryId,
@@ -114,6 +118,26 @@ public class ApiOldCommodityController {
 		}
 		return new Result<>(0, SUCCESS,commodityList);
 	}
+
+	@GetMapping("/getCommodityQuestions")
+	@ApiOperation("获取问答接口")
+	public Result getCommodityQuestions(){
+		//commodityQuestionService.queryCommodityQuestions();
+
+		return new Result<>(0, SUCCESS);
+	}
+
+	/**
+	 * 发布商品问答接口
+	 */
+	@Login
+	@PostMapping("/saveCommodityQuestion")
+	@ApiOperation("发布商品问答接口")
+	public Result<String> saveCommodityQuestion(@ModelAttribute CommodityQuestionFrom commodityQuestionFrom ) throws DAOException {
+		commodityQuestionService.insertCommodityQuestion(commodityQuestionFrom);
+		return new Result<>(ZERO, SUCCESS);
+	}
+
    
     
 }

@@ -90,6 +90,10 @@ public class OldCommodityForm {
     @ApiModelProperty(value = "部位（整体0,前段1,中段2,中后3,后段4）")
     private Integer position;
 
+    @ApiModelProperty(value = "商品数量",required=true)
+    @NotBlank(message = "商品数量为空")
+    private Integer commodityNum;
+
     public Long getCommodityCategoryId() {
         return commodityCategoryId;
     }
@@ -280,5 +284,13 @@ public class OldCommodityForm {
 
     public void setPosition(Integer position) {
         this.position = position;
+    }
+
+    public Integer getCommodityNum() {
+        return commodityNum;
+    }
+
+    public void setCommodityNum(Integer commodityNum) {
+        this.commodityNum = commodityNum;
     }
 }
