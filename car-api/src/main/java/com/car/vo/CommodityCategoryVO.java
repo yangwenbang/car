@@ -13,11 +13,11 @@ public class CommodityCategoryVO implements Serializable {
     @ApiModelProperty(value = "分类名称")
     private String categoryName;
 
-    public Long getId() {
+    public Long getCommodityCategoryId() {
         return commodityCategoryId;
     }
 
-    public void setId(Long commodityCategoryId) {
+    public void setCommodityCategoryId(Long commodityCategoryId) {
         this.commodityCategoryId = commodityCategoryId;
     }
 
