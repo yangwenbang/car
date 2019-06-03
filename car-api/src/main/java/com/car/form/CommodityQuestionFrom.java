@@ -3,12 +3,11 @@ package com.car.form;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
-import javax.validation.constraints.NotBlank;
 
 @ApiModel(value = "商品问答表")
 public class CommodityQuestionFrom {
 
-    @ApiModelProperty(value = "问题父类ID")
+    @ApiModelProperty(value = "问答父类ID,如果是第一次提问父ID为-1，如果不是则取当前问答对应上一层的id")
     private Long commodityQuestionParentId;
 
     @ApiModelProperty(value = "问题类型ID(商品ID/帖子ID)")

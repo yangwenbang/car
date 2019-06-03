@@ -7,6 +7,7 @@ import java.util.List;
 import com.car.annotation.Login;
 import com.car.form.CommodityQuestionFrom;
 import com.car.service.CommodityQuestionService;
+import com.car.dto.CommodityQuestionDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.car.entity.OldCommodity;
-import com.car.entity.PublishPost;
 import com.car.exception.DAOException;
 import com.car.form.OldCommodityForm;
 import com.car.form.PublishPostForm;
@@ -61,14 +60,19 @@ public class ApiOldCommodityController {
 	@Login
 	@PostMapping("/publishCommodity")
 	@ApiOperation("发布商品")
-	public Result<String> saveCommodity(@ModelAttribute OldCommodityForm oldCommodity) throws DAOException {
+	public Result<String> saveCommodity(@ModelAttribute OldCommodityForm oldCommodity) {
 		if(oldCommodity.getCommodityName() == null || oldCommodity.getCommodityName().isEmpty()){
 			return new Result<>(500, "商品名称为空");
 		}
 		if(oldCommodity.getCommodityCategoryId() == null){
 			return new Result<>(500, "商品分类不能为空");
 		}
-		OldCommodity oldCommodityEntity = commodityService.insertCommodity(oldCommodity);
+		try {
+			commodityService.insertCommodity(oldCommodity);
+		} catch (DAOException e) {
+			log.error("insert oldCommodity occur errors .", e);
+			return new Result<>(500);
+		}
 		return new Result<>(ZERO, SUCCESS);
 	}
 
@@ -101,14 +105,14 @@ public class ApiOldCommodityController {
 		if(publishPost.getPublishUserId() == null){
 			throw new DAOException("帖子用户为空");
 		}
-		PublishPost publishPostEntity = publishPostService.insertPublishPost(publishPost);
+		publishPostService.insertPublishPost(publishPost);
 		return new Result<>(ZERO, SUCCESS);
 	}
-    
+
 	@GetMapping("/getCommoditysByCategorys")
 	@ApiOperation("获取二手商品")
 	public Result<List<CommodityVO>> getCommoditysByCategoryId(@ApiParam(value = "商品分类ID")@RequestParam("commodityCategoryId") long commodityCategoryId,
-			@ApiParam(value = "分页ID(从0开始)")@RequestParam("pageId") int pageId){
+			@ApiParam(value = "分页ID(从0开始)")@RequestParam("pageId") int pageId) {
 		List<CommodityVO> commodityList = new ArrayList<>();
 		try {
 			commodityList = commodityService.queryCommoditysByCategoryId(commodityCategoryId, pageId);
@@ -119,12 +123,19 @@ public class ApiOldCommodityController {
 		return new Result<>(0, SUCCESS,commodityList);
 	}
 
-	@GetMapping("/getCommodityQuestions")
+	@Login
+	@GetMapping("/getCommodityQuestionsByTypeId")
 	@ApiOperation("获取问答接口")
-	public Result getCommodityQuestions(){
-		//commodityQuestionService.queryCommodityQuestions();
-
-		return new Result<>(0, SUCCESS);
+	public Result<List<CommodityQuestionDTO>> getCommodityQuestionsByTypeId(@ApiParam(value = "问题类型ID(商品ID/帖子ID)") @RequestParam("questionTypeId") long questionTypeId,
+		@ApiParam(value = "提问类型(0商品/1帖子)") @RequestParam("questionType") Integer questionType) {
+		List<CommodityQuestionDTO> commodityQuestionList = null;
+		try {
+			commodityQuestionList = commodityQuestionService.queryCommodityQuestionsByTypeId(questionTypeId,questionType);
+		} catch (DAOException e) {
+			log.error("get CommodityQuestionDTO occur errors .", e);
+			return new Result<>(500);
+		}
+		return new Result<>(0, SUCCESS,commodityQuestionList);
 	}
 
 	/**
@@ -133,11 +144,14 @@ public class ApiOldCommodityController {
 	@Login
 	@PostMapping("/saveCommodityQuestion")
 	@ApiOperation("发布商品问答接口")
-	public Result<String> saveCommodityQuestion(@ModelAttribute CommodityQuestionFrom commodityQuestionFrom ) throws DAOException {
-		commodityQuestionService.insertCommodityQuestion(commodityQuestionFrom);
+	public Result<String> saveCommodityQuestion(@ModelAttribute CommodityQuestionFrom commodityQuestionFrom ) {
+		try {
+			commodityQuestionService.insertCommodityQuestion(commodityQuestionFrom);
+		} catch (DAOException e) {
+			log.error("get CommodityQuestionDTO occur errors .", e);
+			return new Result<>(500,e.getMessage());
+		}
 		return new Result<>(ZERO, SUCCESS);
 	}
 
-   
-    
 }

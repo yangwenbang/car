@@ -19,11 +19,13 @@ import com.car.vo.CommodityVO;
 @Service("commodityService")
 public class CommodityServiceImpl implements CommodityService {
 
+    private static final Integer APPROVE_STATUS = 1;
+
     @Autowired
     private CommodityDao commodityDao;
 
     @Transactional(rollbackFor = Exception.class)
-    public OldCommodity insertCommodity(OldCommodityForm commodity) {
+    public void insertCommodity(OldCommodityForm commodity) throws DAOException {
         OldCommodity commodityEntity = new OldCommodity();
         commodityEntity.setCommodityName(commodity.getCommodityName());
         commodityEntity.setCommodityCategoryId(commodity.getCommodityCategoryId());
@@ -51,8 +53,8 @@ public class CommodityServiceImpl implements CommodityService {
         commodityEntity.setPosition(commodity.getPosition());
         commodityEntity.setCreateTime(new Date());
         commodityEntity.setUpdateTime(new Date());
+        commodityEntity.setApproveStatus(APPROVE_STATUS);
         commodityDao.insertCommodity(commodityEntity);
-        return commodityEntity;
     }
 
     @Override

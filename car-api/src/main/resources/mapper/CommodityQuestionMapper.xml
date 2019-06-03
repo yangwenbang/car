@@ -14,5 +14,48 @@
         )
     </insert>
 
+    <select id="queryCommodityQuestionsByTypeId" resultType="com.car.dto.CommodityQuestionDTO">
+        SELECT
+          id as commodityQuestionId,
+          parent_id,
+          user_name,
+          replay_content,
+          replay_date,
+          question_type
+        FROM
+          commodity_question
+        WHERE question_type = #{questionType}
+        and question_type_id = #{questionTypeId}
+    </select>
+
+    <select id="getUserIdByCommodityId" resultType="Long">
+        SELECT
+          publish_user_id
+        FROM
+          old_commodity
+        WHERE id = #{getUserIdByquestionTypeId}
+    </select>
+
+    <select id="getUserIdByPublishPostId" resultType="Long">
+        SELECT
+          publish_user_id
+        FROM
+          publish_post
+        WHERE id = #{getUserIdByquestionTypeId}
+    </select>
+
+    <select id="queryPageInfoCommodityQuestions" resultType="com.car.dto.MainPageInfoDTO">
+        SELECT
+          id as publishPostId,
+          publish_title,
+          publish_content,
+          publish_picture,
+          publish_user_id
+        FROM
+          publish_post
+        WHERE approve_status = 2
+        ORDER BY publish_time DESC
+        LIMIT #{pageId}, #{pageSize}
+    </select>
 
 </mapper>

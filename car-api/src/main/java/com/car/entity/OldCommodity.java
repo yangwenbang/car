@@ -1,7 +1,5 @@
 package com.car.entity;
 
-import com.baomidou.mybatisplus.annotations.TableId;
-import com.baomidou.mybatisplus.annotations.TableName;
 
 import java.math.BigDecimal;
 import java.io.Serializable;
@@ -20,7 +18,6 @@ public class OldCommodity implements Serializable {
 	/**
 	 * 商品ID
 	 */
-	@TableId
 	private Long id;
 	/**
 	 * 商品分类ID
@@ -130,6 +127,10 @@ public class OldCommodity implements Serializable {
 	 * 商品数量
 	 */
 	private Integer commodityNum;
+	/**
+	 * 审批状态(1待审核/2已通过/3已拒绝)
+	 */
+	private Integer approveStatus;
 
 	public Long getId() {
 		return id;
@@ -353,5 +354,13 @@ public class OldCommodity implements Serializable {
 
 	public void setCommodityNum(Integer commodityNum) {
 		this.commodityNum = commodityNum;
+	}
+
+	public Integer getApproveStatus() {
+		return approveStatus;
+	}
+
+	public void setApproveStatus(Integer approveStatus) {
+		this.approveStatus = approveStatus;
 	}
 }

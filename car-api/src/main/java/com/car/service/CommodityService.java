@@ -2,7 +2,6 @@ package com.car.service;
 
 import java.util.List;
 
-import com.car.entity.OldCommodity;
 import com.car.exception.DAOException;
 import com.car.form.OldCommodityForm;
 import com.car.vo.CommodityVO;
@@ -17,7 +16,7 @@ import com.car.vo.CommodityVO;
  */
 public interface CommodityService {
 
-    OldCommodity insertCommodity(OldCommodityForm commodity);
+    void insertCommodity(OldCommodityForm commodity) throws DAOException;
 
     List<CommodityVO> queryCommoditysByCategoryId(long commodityCategoryId, int pageId) throws DAOException;
 }

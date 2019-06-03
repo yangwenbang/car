@@ -5,9 +5,9 @@
 
     <insert id="insertPublishPost" parameterType="com.car.entity.PublishPost">
         INSERT INTO publish_post (publish_title,publish_content,publish_picture,
-        publish_address,publish_user_id,publish_time,update_time)
+        publish_address,publish_user_id,publish_time,update_time,approve_status)
         VALUES (#{publishTitle},#{publishContent},#{publishPicture},#{publishAddress},
-        #{publishUserId},#{publishTime},#{updateTime})
+        #{publishUserId},#{publishTime},#{updateTime},#{approveStatus})
     </insert>
 
 </mapper>

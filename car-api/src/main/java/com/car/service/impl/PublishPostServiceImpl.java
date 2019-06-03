@@ -13,6 +13,9 @@ import java.util.Date;
 
 @Service("publishPostService")
 public class PublishPostServiceImpl implements PublishPostService {
+
+    private static final Integer APPROVE_STATUS = 1;
+
     @Autowired
     private PublishPostDao publishPostDao;
 
@@ -26,6 +29,7 @@ public class PublishPostServiceImpl implements PublishPostService {
         publishPostEntity.setPublishUserId(publishPost.getPublishUserId());
         publishPostEntity.setPublishTime(new Date());
         publishPostEntity.setUpdateTime(new Date());
+        publishPostEntity.setApproveStatus(APPROVE_STATUS);
         publishPostDao.insertPublishPost(publishPostEntity);
         return publishPostEntity;
     }
