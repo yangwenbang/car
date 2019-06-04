@@ -62,7 +62,7 @@ public class CommodityQuestionServiceImpl implements CommodityQuestionService {
                 commodityQuestion.setReplayDate(commodityQuestionChild.getReplayDate());
                 commodityQuestion.setQuestionType(commodityQuestionChild.getQuestionType());
                 commodityQuestion.setReplayStatus(commodityQuestionChild.getReplayStatus());
-                commodityQuestion.setCommodityQuestionChildDTO(getChildrenNode(commodityQuestion.getCommodityQuestionId(), commodityQuestionList, newCommodityQuestionList));
+                commodityQuestion.setCommodityQuestionChilds(getChildrenNode(commodityQuestion.getCommodityQuestionId(), commodityQuestionList, newCommodityQuestionList));
                 list.add(commodityQuestion);
             }
         }
@@ -74,7 +74,7 @@ public class CommodityQuestionServiceImpl implements CommodityQuestionService {
         int pageSize = pageId * ApiConstants.PAGE_COUNT;
         List<MainPageInfoDTO> mainPageInfoList = commodityQuestionDao.queryPageInfoCommodityQuestions(pageSize, ApiConstants.PAGE_COUNT);
         for (MainPageInfoDTO MainPageInfo : mainPageInfoList) {
-            MainPageInfo.setCommodityQuestionList(queryCommodityQuestionsByTypeId(MainPageInfo.getPublishPostId(),PUBLISHPOST_TYPE));
+            MainPageInfo.setCommodityQuestions(queryCommodityQuestionsByTypeId(MainPageInfo.getPublishPostId(),PUBLISHPOST_TYPE));
         }
         return mainPageInfoList;
     }

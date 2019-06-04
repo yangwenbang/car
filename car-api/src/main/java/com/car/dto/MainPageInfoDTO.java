@@ -24,7 +24,7 @@ public class MainPageInfoDTO implements Serializable {
     @ApiModelProperty(value = "发布人")
     private Long publishUserId;
 
-    private List<CommodityQuestionDTO> commodityQuestionList;
+    private List<CommodityQuestionDTO> commodityQuestions;
 
     public Long getPublishPostId() {
         return publishPostId;
@@ -66,11 +66,12 @@ public class MainPageInfoDTO implements Serializable {
         this.publishUserId = publishUserId;
     }
 
-    public List<CommodityQuestionDTO> getCommodityQuestionList() {
-        return commodityQuestionList;
-    }
+	public List<CommodityQuestionDTO> getCommodityQuestions() {
+		return commodityQuestions;
+	}
 
-    public void setCommodityQuestionList(List<CommodityQuestionDTO> commodityQuestionList) {
-        this.commodityQuestionList = commodityQuestionList;
-    }
+	public void setCommodityQuestions(List<CommodityQuestionDTO> commodityQuestions) {
+		this.commodityQuestions = commodityQuestions;
+	}
+    
 }
