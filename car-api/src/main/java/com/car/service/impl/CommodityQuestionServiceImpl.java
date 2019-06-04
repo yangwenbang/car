@@ -2,6 +2,7 @@ package com.car.service.impl;
 
 import com.car.ApiConstants;
 import com.car.dao.CommodityQuestionDao;
+import com.car.dto.CommodityQuestionChildDTO;
 import com.car.dto.MainPageInfoDTO;
 import com.car.entity.CommodityQuestion;
 import com.car.exception.DAOException;
@@ -28,19 +29,6 @@ public class CommodityQuestionServiceImpl implements CommodityQuestionService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void insertCommodityQuestion(CommodityQuestionFrom commodityQuestionFrom) throws DAOException {
-        Long userId;
-        if (commodityQuestionFrom.getReplayStatus().equals(1)){
-            if (commodityQuestionFrom.getQuestionType() == 0) {
-                userId = commodityQuestionDao.getUserIdByCommodityId(commodityQuestionFrom.getQuestionTypeId());
-            } else if (commodityQuestionFrom.getQuestionType() == 1) {
-                userId = commodityQuestionDao.getUserIdByPublishPostId(commodityQuestionFrom.getQuestionTypeId());
-            } else {
-                throw new DAOException("提问类型不符合规范");
-            }
-            if (userId == null || !userId.equals(commodityQuestionFrom.getUserId())) {
-                throw new DAOException("你没有回复的权限");
-            }
-        }
         CommodityQuestion commodityQuestionEntity = new CommodityQuestion();
         commodityQuestionEntity.setParentId(commodityQuestionFrom.getCommodityQuestionParentId());
         commodityQuestionEntity.setQuestionTypeId(commodityQuestionFrom.getQuestionTypeId());
@@ -55,16 +43,26 @@ public class CommodityQuestionServiceImpl implements CommodityQuestionService {
         commodityQuestionDao.insertCommodityQuestion(commodityQuestionEntity);
     }
 
+    //查出对应商品下面所有的问答封装
     @Override
     public List<CommodityQuestionDTO> queryCommodityQuestionsByTypeId(long questionTypeId, Integer questionType) throws DAOException {
-        List<CommodityQuestionDTO> commodityQuestionList = commodityQuestionDao.queryCommodityQuestionsByTypeId(questionTypeId, questionType);
-        if (commodityQuestionList == null || commodityQuestionList.isEmpty()){
-            return commodityQuestionList;
-        }
         List<CommodityQuestionDTO> list = new ArrayList<>();
-        for (CommodityQuestionDTO commodityQuestion : commodityQuestionList) {
-            if (commodityQuestion.getParentId() == -1) {
-                commodityQuestion.setCommodityQuestionList(getChildrenNode(commodityQuestion.getCommodityQuestionId(), commodityQuestionList));
+        List<CommodityQuestionChildDTO> commodityQuestionList = commodityQuestionDao.queryCommodityQuestionsByTypeId(questionTypeId, questionType);
+        if (commodityQuestionList == null || commodityQuestionList.isEmpty()){
+            return list;
+        }
+        CommodityQuestionDTO commodityQuestion = new CommodityQuestionDTO();
+        for (CommodityQuestionChildDTO  commodityQuestionChild : commodityQuestionList) {
+            if (commodityQuestionChild.getParentId() == -1) {
+                List<CommodityQuestionChildDTO> newCommodityQuestionList = new ArrayList<>();
+                commodityQuestion.setCommodityQuestionId(commodityQuestionChild.getCommodityQuestionId());
+                commodityQuestion.setParentId(commodityQuestionChild.getParentId());
+                commodityQuestion.setUserName(commodityQuestionChild.getUserName());
+                commodityQuestion.setReplayContent(commodityQuestionChild.getReplayContent());
+                commodityQuestion.setReplayDate(commodityQuestionChild.getReplayDate());
+                commodityQuestion.setQuestionType(commodityQuestionChild.getQuestionType());
+                commodityQuestion.setReplayStatus(commodityQuestionChild.getReplayStatus());
+                commodityQuestion.setCommodityQuestionChildDTO(getChildrenNode(commodityQuestion.getCommodityQuestionId(), commodityQuestionList, newCommodityQuestionList));
                 list.add(commodityQuestion);
             }
         }
@@ -81,12 +79,21 @@ public class CommodityQuestionServiceImpl implements CommodityQuestionService {
         return mainPageInfoList;
     }
 
-    // 获取子问答的递归方法
-    public List<CommodityQuestionDTO> getChildrenNode(Long id, List<CommodityQuestionDTO> commodityQuestionList) {
-        List<CommodityQuestionDTO> newCommodityQuestionList = new ArrayList<>();
-        for (CommodityQuestionDTO commodityQuestion : commodityQuestionList) {
+    @Override
+    public Long getUserIdByCommodityId(Long questionTypeId) throws DAOException {
+        return commodityQuestionDao.getUserIdByCommodityId(questionTypeId);
+    }
+
+    @Override
+    public Long getUserIdByPublishPostId(Long questionTypeId) throws DAOException {
+        return commodityQuestionDao.getUserIdByPublishPostId(questionTypeId);
+    }
+
+    // 取出所有的一级以下的问答加入到对应一级问答下面的集合里面
+    public List<CommodityQuestionChildDTO> getChildrenNode(Long id, List<CommodityQuestionChildDTO> commodityQuestionList,List<CommodityQuestionChildDTO> newCommodityQuestionList) {
+        for (CommodityQuestionChildDTO commodityQuestion : commodityQuestionList) {
             if (commodityQuestion.getParentId().equals(id)) {
-                commodityQuestion.setCommodityQuestionList(getChildrenNode(commodityQuestion.getCommodityQuestionId(), commodityQuestionList));
+                getChildrenNode(commodityQuestion.getCommodityQuestionId(), commodityQuestionList,newCommodityQuestionList);
                 newCommodityQuestionList.add(commodityQuestion);
             }
         }

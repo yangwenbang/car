@@ -140,11 +140,25 @@ public class ApiOldCommodityController {
 
 	/**
 	 * 发布商品问答接口
+	 * 仅做了商品回复权限校验
 	 */
 	@Login
 	@PostMapping("/saveCommodityQuestion")
 	@ApiOperation("发布商品问答接口")
-	public Result<String> saveCommodityQuestion(@ModelAttribute CommodityQuestionFrom commodityQuestionFrom ) {
+	public Result<String> saveCommodityQuestion(@ModelAttribute CommodityQuestionFrom commodityQuestionFrom ) throws DAOException {
+		Long userId;
+		if (commodityQuestionFrom.getReplayStatus().equals(1)){
+			if (commodityQuestionFrom.getQuestionType() == 0) {
+				userId = commodityQuestionService.getUserIdByCommodityId(commodityQuestionFrom.getQuestionTypeId());
+			} else if (commodityQuestionFrom.getQuestionType() == 1) {
+				userId = commodityQuestionService.getUserIdByPublishPostId(commodityQuestionFrom.getQuestionTypeId());
+			} else {
+				return new Result<>(500,"提问类型不符合规范");
+			}
+			if (userId == null || !userId.equals(commodityQuestionFrom.getUserId())) {
+				return new Result<>(500,"你没有回复的权限");
+			}
+		}
 		try {
 			commodityQuestionService.insertCommodityQuestion(commodityQuestionFrom);
 		} catch (DAOException e) {

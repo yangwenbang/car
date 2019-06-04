@@ -3,10 +3,8 @@ package com.car.dto;
 import io.swagger.annotations.ApiModelProperty;
 
 import java.io.Serializable;
-import java.util.List;
 
-public class CommodityQuestionDTO implements Serializable {
-
+public class CommodityQuestionChildDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "问答父id",required=true)
@@ -27,10 +25,8 @@ public class CommodityQuestionDTO implements Serializable {
     @ApiModelProperty(value = "问答时间",required=true)
     private String replayDate;
 
-    @ApiModelProperty(value = "问答时间")
+    @ApiModelProperty(value = "问答人类型(0提问/1回答)")
     private Integer replayStatus;
-
-    private List<CommodityQuestionChildDTO> commodityQuestionChildDTO;
 
     public Long getParentId() {
         return parentId;
@@ -86,13 +82,5 @@ public class CommodityQuestionDTO implements Serializable {
 
     public void setReplayStatus(Integer replayStatus) {
         this.replayStatus = replayStatus;
-    }
-
-    public List<CommodityQuestionChildDTO> getCommodityQuestionChildDTO() {
-        return commodityQuestionChildDTO;
-    }
-
-    public void setCommodityQuestionChildDTO(List<CommodityQuestionChildDTO> commodityQuestionChildDTO) {
-        this.commodityQuestionChildDTO = commodityQuestionChildDTO;
     }
 }

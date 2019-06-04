@@ -14,14 +14,15 @@
         )
     </insert>
 
-    <select id="queryCommodityQuestionsByTypeId" resultType="com.car.dto.CommodityQuestionDTO">
+    <select id="queryCommodityQuestionsByTypeId" resultType="com.car.dto.CommodityQuestionChildDTO">
         SELECT
           id as commodityQuestionId,
           parent_id,
           user_name,
           replay_content,
-          replay_date,
-          question_type
+          question_type,
+          replay_status,
+          DATE_FORMAT(replay_date,'%Y-%m-%d %H:%i') AS replay_date
         FROM
           commodity_question
         WHERE question_type = #{questionType}
@@ -54,8 +55,8 @@
         FROM
           publish_post
         WHERE approve_status = 2
-        ORDER BY publish_time DESC
-        LIMIT #{pageId}, #{pageSize}
+        ORDER BY publish_time
+        DESC LIMIT #{pageId}, #{pageSize}
     </select>
 
 </mapper>

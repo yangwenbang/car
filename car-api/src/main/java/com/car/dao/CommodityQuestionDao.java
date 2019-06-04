@@ -1,9 +1,9 @@
 package com.car.dao;
 
+import com.car.dto.CommodityQuestionChildDTO;
 import com.car.dto.MainPageInfoDTO;
 import com.car.entity.CommodityQuestion;
 import com.car.exception.DAOException;
-import com.car.dto.CommodityQuestionDTO;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -11,7 +11,7 @@ import java.util.List;
 public interface CommodityQuestionDao {
     void insertCommodityQuestion(CommodityQuestion commodityQuestionEntity) throws DAOException;
 
-    List<CommodityQuestionDTO> queryCommodityQuestionsByTypeId(@Param("questionTypeId") long questionTypeId,
+    List<CommodityQuestionChildDTO> queryCommodityQuestionsByTypeId(@Param("questionTypeId") long questionTypeId,
         @Param("questionType") Integer questionType) throws DAOException;
 
     Long getUserIdByCommodityId(Long questionTypeId);

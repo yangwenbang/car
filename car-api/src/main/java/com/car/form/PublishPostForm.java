@@ -13,9 +13,7 @@ public class PublishPostForm {
     @ApiModelProperty(value = "发布内容",required=true)
     @NotBlank(message = "发布内容不能为空")
     private String publishContent;
-    /**
-     *
-     */
+
     @ApiModelProperty(value = "发布图片，多个用逗号隔开")
     private String publishPicture;
 

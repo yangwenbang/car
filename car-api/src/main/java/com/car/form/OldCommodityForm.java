@@ -2,7 +2,6 @@ package com.car.form;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotBlank;
 import java.math.BigDecimal;
@@ -21,15 +20,10 @@ public class OldCommodityForm {
     @ApiModelProperty(value = "商品描述")
     private String description;
 
-    //@ApiModelProperty(value = "商品类型(0新商品/1二手商品)")
-    //private Integer commodityType;
-
     @ApiModelProperty(value = "商品使用开始时间")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date useStartTime;
 
     @ApiModelProperty(value = "商品使用结束时间")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date useEndTime;
 
     @ApiModelProperty(value = "商品使用使用状况")
