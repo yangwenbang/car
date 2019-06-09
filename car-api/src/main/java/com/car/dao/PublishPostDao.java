@@ -1,6 +1,7 @@
 package com.car.dao;
 
 import com.car.entity.PublishPost;
+import com.car.exception.DAOException;
 
 /**
  * 
@@ -11,5 +12,7 @@ import com.car.entity.PublishPost;
  */
 public interface PublishPostDao {
 
-    void insertPublishPost(PublishPost publishPostEntity);
+    void insertPublishPost(PublishPost publishPostEntity) throws DAOException;
+
+    void deletePublishPostById(Long publishPostId) throws DAOException;
 }

@@ -25,7 +25,7 @@ public class PublishPostForm {
     private Long publishUserId;
 
     public String getPublishTitle() {
-        return publishTitle;
+        return publishTitle == null ? "" : publishTitle;
     }
 
     public void setPublishTitle(String publishTitle) {
@@ -33,7 +33,7 @@ public class PublishPostForm {
     }
 
     public String getPublishContent() {
-        return publishContent;
+        return publishContent == null ? "" : publishContent;
     }
 
     public void setPublishContent(String publishContent) {
@@ -41,7 +41,7 @@ public class PublishPostForm {
     }
 
     public String getPublishPicture() {
-        return publishPicture;
+        return publishPicture == null ? "" : publishPicture;
     }
 
     public void setPublishPicture(String publishPicture) {
@@ -49,7 +49,7 @@ public class PublishPostForm {
     }
 
     public String getPublishAddress() {
-        return publishAddress;
+        return publishAddress == null ? "" : publishAddress;
     }
 
     public void setPublishAddress(String publishAddress) {

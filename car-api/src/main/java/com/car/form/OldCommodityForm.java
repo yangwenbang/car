@@ -30,6 +30,7 @@ public class OldCommodityForm {
     private String useState;
 
     @ApiModelProperty(value = "商品价格")
+    @NotBlank(message = "商品价格为空")
     private BigDecimal price;
 
     @ApiModelProperty(value = "商品发布人",required=true)
@@ -97,7 +98,7 @@ public class OldCommodityForm {
     }
 
     public String getCommodityName() {
-        return commodityName;
+        return commodityName == null ? "" : commodityName;
     }
 
     public void setCommodityName(String commodityName) {
@@ -105,7 +106,7 @@ public class OldCommodityForm {
     }
 
     public String getCommodityPicture() {
-        return commodityPicture;
+        return commodityPicture == null ? "" : commodityPicture;
     }
 
     public void setCommodityPicture(String commodityPicture) {
@@ -113,7 +114,7 @@ public class OldCommodityForm {
     }
 
     public String getDescription() {
-        return description;
+        return description == null ? "" : description;
     }
 
     public void setDescription(String description) {
@@ -121,7 +122,7 @@ public class OldCommodityForm {
     }
 
     public Date getUseStartTime() {
-        return useStartTime;
+        return useStartTime == null ? new Date() : useStartTime;
     }
 
     public void setUseStartTime(Date useStartTime) {
@@ -129,7 +130,7 @@ public class OldCommodityForm {
     }
 
     public Date getUseEndTime() {
-        return useEndTime;
+        return useEndTime == null ? new Date() : useEndTime;
     }
 
     public void setUseEndTime(Date useEndTime) {
@@ -137,7 +138,7 @@ public class OldCommodityForm {
     }
 
     public String getUseState() {
-        return useState;
+        return useState == null ? "" : useState;
     }
 
     public void setUseState(String useState) {
@@ -145,7 +146,9 @@ public class OldCommodityForm {
     }
 
     public BigDecimal getPrice() {
-        return price;
+        BigDecimal bigDecimal = BigDecimal.valueOf(0.0);
+        System.out.println(bigDecimal);
+        return (price == null) ? BigDecimal.valueOf(0.0) : price;
     }
 
     public void setPrice(BigDecimal price) {
@@ -161,7 +164,7 @@ public class OldCommodityForm {
     }
 
     public Integer getTradeMode() {
-        return tradeMode;
+        return tradeMode == null ? 0 : tradeMode;
     }
 
     public void setTradeMode(Integer tradeMode) {
@@ -169,7 +172,7 @@ public class OldCommodityForm {
     }
 
     public String getBrand() {
-        return brand;
+        return brand == null ? "" : brand;
     }
 
     public void setBrand(String brand) {
@@ -177,7 +180,7 @@ public class OldCommodityForm {
     }
 
     public String getModel() {
-        return model;
+        return model == null ? "" : model;
     }
 
     public void setModel(String model) {
@@ -185,7 +188,7 @@ public class OldCommodityForm {
     }
 
     public String getColor() {
-        return color;
+        return color == null ? "" : color;
     }
 
     public void setColor(String color) {
@@ -193,7 +196,7 @@ public class OldCommodityForm {
     }
 
     public String getMaterial() {
-        return material;
+        return material == null ? "" : material;
     }
 
     public void setMaterial(String material) {
@@ -201,7 +204,7 @@ public class OldCommodityForm {
     }
 
     public Integer getHaveFlaw() {
-        return haveFlaw;
+        return haveFlaw == null ? 0 : haveFlaw;
     }
 
     public void setHaveFlaw(Integer haveFlaw) {
@@ -209,7 +212,7 @@ public class OldCommodityForm {
     }
 
     public String getTyreSize() {
-        return tyreSize;
+        return tyreSize == null ? "" : tyreSize;
     }
 
     public void setTyreSize(String tyreSize) {
@@ -217,7 +220,7 @@ public class OldCommodityForm {
     }
 
     public String getHoleSpacing() {
-        return holeSpacing;
+        return holeSpacing == null ? "" : holeSpacing;
     }
 
     public void setHoleSpacing(String holeSpacing) {
@@ -225,7 +228,7 @@ public class OldCommodityForm {
     }
 
     public Integer getManufacturMode() {
-        return manufacturMode;
+        return manufacturMode == null ? 0 : manufacturMode;
     }
 
     public void setManufacturMode(Integer manufacturMode) {
@@ -233,7 +236,7 @@ public class OldCommodityForm {
     }
 
     public String getLightType() {
-        return lightType;
+        return lightType == null ? "" : lightType;
     }
 
     public void setLightType(String lightType) {
@@ -241,7 +244,7 @@ public class OldCommodityForm {
     }
 
     public String getHubSize() {
-        return hubSize;
+        return hubSize == null ? "" : hubSize;
     }
 
     public void setHubSize(String hubSize) {
@@ -249,7 +252,7 @@ public class OldCommodityForm {
     }
 
     public String getSize() {
-        return size;
+        return size == null ? "" : size;
     }
 
     public void setSize(String size) {
@@ -257,7 +260,7 @@ public class OldCommodityForm {
     }
 
     public String getType() {
-        return type;
+        return type == null ? "" : type;
     }
 
     public void setType(String type) {
@@ -265,7 +268,7 @@ public class OldCommodityForm {
     }
 
     public String getFlaw() {
-        return flaw;
+        return flaw == null ? "" : flaw;
     }
 
     public void setFlaw(String flaw) {
@@ -273,7 +276,7 @@ public class OldCommodityForm {
     }
 
     public Integer getPosition() {
-        return position;
+        return position == null ? 0 : position;
     }
 
     public void setPosition(Integer position) {
@@ -281,7 +284,7 @@ public class OldCommodityForm {
     }
 
     public Integer getCommodityNum() {
-        return commodityNum;
+        return commodityNum == null ? 1 : commodityNum;
     }
 
     public void setCommodityNum(Integer commodityNum) {

@@ -22,4 +22,8 @@ public interface CommodityDao {
     List<CommodityVO> queryCommoditysByCategoryId(@Param("commodityCategoryId") long commodityCategoryId,
 			@Param("pageId") int pageId,
 			@Param("pageSize") int pageSize) throws DAOException;
+
+    void deleteCommodityById(Long commodityById) throws DAOException;
+
+    void updateCommodityById(Long commodityById) throws DAOException;
 }

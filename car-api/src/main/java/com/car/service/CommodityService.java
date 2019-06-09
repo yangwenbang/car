@@ -19,5 +19,9 @@ public interface CommodityService {
     void insertCommodity(OldCommodityForm commodity) throws DAOException;
 
     List<CommodityVO> queryCommoditysByCategoryId(long commodityCategoryId, int pageId) throws DAOException;
+
+    void deleteCommodityById(Long commodityById) throws DAOException;
+
+    void updateCommodityById(Long commodityById) throws DAOException;
 }
 

@@ -8,12 +8,12 @@
         description,use_start_time,use_end_time,use_state,price,publish_user_id,
         trade_mode,create_time,update_time,brand,model,color,material,have_flaw,
         tyre_size,hole_spacing,manufactur_mode,light_type,hub_size,size,type,
-        flaw,position,commodity_num,approve_status)
+        flaw,position,commodity_num)
         VALUES (#{commodityCategoryId},#{commodityName},#{commodityPicture},
         #{description},#{useStartTime},#{useEndTime},#{useState},#{price},#{publishUserId},
         #{tradeMode},#{createTime},#{updateTime},#{brand},#{model},#{color},#{material},#{haveFlaw},
         #{tyreSize},#{holeSpacing},#{manufacturMode},#{lightType},#{hubSize},#{size},#{type},
-        #{flaw},#{position},#{commodityNum},#{approveStatus})
+        #{flaw},#{position},#{commodityNum})
     </insert>
 
     <select id="queryCommoditysByCategoryId" resultType="com.car.vo.CommodityVO">
@@ -44,8 +44,39 @@
           commodity_num
         FROM old_commodity
         WHERE commodity_category_id = #{commodityCategoryId}
-        AND approve_status = 1
         ORDER BY seq DESC LIMIT #{pageId}, #{pageSize}
     </select>
 
+    <delete id="deleteCommodityById">
+        DELETE
+        FROM
+          old_commodity
+        WHERE id = #{commodityById}
+    </delete>
+
+    <update id="updateCommodityById">
+        UPDATE
+          old_commodity
+        SET
+          commodity_picture = #{commodityPicture},
+          description = #{description}，
+          use_state = #{useState},
+          price = #{price},
+          trade_mode = #{tradeMode},
+          brand = #{brand},
+          model = #{model},
+          color = #{color},
+          material = #{material},
+          have_flaw = #{haveFlaw},
+          tyre_size = #{tyreSize},
+          hole_spacing = #{holeSpacing},
+          manufactur_mode = #{manufacturMode},
+          light_type = #{lightType},
+          hub_size = #{hubSize},
+          size = #{size},
+          TYPE = #{TYPE},
+          flaw = #{flaw},
+          positioncommodity_num = #{positioncommodityNum}
+        WHERE id = #{commodityById}
+    </update>
 </mapper>

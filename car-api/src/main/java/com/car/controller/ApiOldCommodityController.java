@@ -11,12 +11,7 @@ import com.car.dto.CommodityQuestionDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.car.exception.DAOException;
 import com.car.form.OldCommodityForm;
@@ -168,4 +163,42 @@ public class ApiOldCommodityController {
 		return new Result<>(ZERO, SUCCESS);
 	}
 
+	@Login
+	@DeleteMapping("/removeCommodityById")
+	@ApiOperation("通过id删除商品")
+	public Result<String> removeCommodityById(@ApiParam(value = "商品id") Long commodityId,
+		@ApiParam(value = "发布商品的用户id") Long userId) throws DAOException {
+		Long dbUserId = commodityQuestionService.getUserIdByCommodityId(commodityId);
+		if (dbUserId == null || !dbUserId.equals(userId)){
+			return new Result(500,"你没有删除权限");
+		}
+		commodityService.deleteCommodityById(commodityId);
+		return new Result<>(ZERO, SUCCESS);
+	}
+
+	//todo 还没写完
+	@Login
+	@PutMapping("/updateCommodityById")
+	@ApiOperation("通过id更新商品")
+	public Result<String> updateCommodityById(Long commodityId, Long userId) throws DAOException {
+		Long dbUserId = commodityQuestionService.getUserIdByCommodityId(commodityId);
+		if (dbUserId == null || !dbUserId.equals(userId)){
+			return new Result("你没有修改权限");
+		}
+		commodityService.updateCommodityById(commodityId);
+		return new Result<>(ZERO, SUCCESS);
+	}
+
+	@Login
+	@DeleteMapping("/removePublishPostById")
+	@ApiOperation("通过id删除帖子")
+	public Result<String> removePublishPostById(@ApiParam(value = "帖子id") Long publishPostId,
+		@ApiParam(value = "发布帖子用户id") Long userId) throws DAOException {
+		Long dbUserId = commodityQuestionService.getUserIdByPublishPostId(publishPostId);
+		if (dbUserId == null || !dbUserId.equals(userId)){
+			return new Result(500,"你没有删除权限");
+		}
+		publishPostService.deletePublishPostById(publishPostId);
+		return new Result<>(ZERO, SUCCESS);
+	}
 }

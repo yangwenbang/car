@@ -2,6 +2,7 @@ package com.car.service.impl;
 
 import com.car.dao.PublishPostDao;
 import com.car.entity.PublishPost;
+import com.car.exception.DAOException;
 import com.car.form.PublishPostForm;
 import com.car.service.PublishPostService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,13 +15,11 @@ import java.util.Date;
 @Service("publishPostService")
 public class PublishPostServiceImpl implements PublishPostService {
 
-    private static final Integer APPROVE_STATUS = 1;
-
     @Autowired
     private PublishPostDao publishPostDao;
 
     @Transactional(rollbackFor = Exception.class)
-    public PublishPost insertPublishPost(PublishPostForm publishPost) {
+    public PublishPost insertPublishPost(PublishPostForm publishPost) throws DAOException {
         PublishPost publishPostEntity = new PublishPost();
         publishPostEntity.setPublishAddress(publishPost.getPublishAddress());
         publishPostEntity.setPublishPicture(publishPost.getPublishPicture());
@@ -29,8 +28,13 @@ public class PublishPostServiceImpl implements PublishPostService {
         publishPostEntity.setPublishUserId(publishPost.getPublishUserId());
         publishPostEntity.setPublishTime(new Date());
         publishPostEntity.setUpdateTime(new Date());
-        publishPostEntity.setApproveStatus(APPROVE_STATUS);
         publishPostDao.insertPublishPost(publishPostEntity);
         return publishPostEntity;
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void deletePublishPostById(Long publishPostId) throws DAOException {
+        publishPostDao.deletePublishPostById(publishPostId);
     }
 }

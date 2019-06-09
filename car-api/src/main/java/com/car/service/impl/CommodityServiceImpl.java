@@ -19,8 +19,6 @@ import com.car.vo.CommodityVO;
 @Service("commodityService")
 public class CommodityServiceImpl implements CommodityService {
 
-    private static final Integer APPROVE_STATUS = 1;
-
     @Autowired
     private CommodityDao commodityDao;
 
@@ -50,10 +48,10 @@ public class CommodityServiceImpl implements CommodityService {
         commodityEntity.setType(commodity.getType());
         commodityEntity.setFlaw(commodity.getFlaw());
         commodityEntity.setCommodityNum(commodity.getCommodityNum());
+        commodityEntity.setPrice(commodity.getPrice());
         commodityEntity.setPosition(commodity.getPosition());
         commodityEntity.setCreateTime(new Date());
         commodityEntity.setUpdateTime(new Date());
-        commodityEntity.setApproveStatus(APPROVE_STATUS);
         commodityDao.insertCommodity(commodityEntity);
     }
 
@@ -61,5 +59,17 @@ public class CommodityServiceImpl implements CommodityService {
     public List<CommodityVO> queryCommoditysByCategoryId(long commodityCategoryId, int pageId) throws DAOException {
     	int pageSize = pageId * ApiConstants.PAGE_COUNT;
         return commodityDao.queryCommoditysByCategoryId(commodityCategoryId, pageSize, ApiConstants.PAGE_COUNT);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void deleteCommodityById(Long commodityById) throws DAOException {
+        commodityDao.deleteCommodityById(commodityById);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void updateCommodityById(Long commodityById) throws DAOException {
+        commodityDao.updateCommodityById(commodityById);
     }
 }

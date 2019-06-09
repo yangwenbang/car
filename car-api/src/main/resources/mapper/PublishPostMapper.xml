@@ -5,9 +5,16 @@
 
     <insert id="insertPublishPost" parameterType="com.car.entity.PublishPost">
         INSERT INTO publish_post (publish_title,publish_content,publish_picture,
-        publish_address,publish_user_id,publish_time,update_time,approve_status)
+        publish_address,publish_user_id,publish_time,update_time)
         VALUES (#{publishTitle},#{publishContent},#{publishPicture},#{publishAddress},
-        #{publishUserId},#{publishTime},#{updateTime},#{approveStatus})
+        #{publishUserId},#{publishTime},#{updateTime})
     </insert>
 
+    <delete id="deletePublishPostById">
+        DELETE
+        FROM
+          publish_post
+        WHERE
+          id = #{publishPostId}
+    </delete>
 </mapper>

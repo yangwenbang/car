@@ -3,6 +3,25 @@
 
 <mapper namespace="com.car.dao.CommodityQuestionDao">
 
+    <resultMap type="com.car.dto.CommodityQuestionDTO" id="listCommodityQuestion">
+        <id column="id" property="commodityQuestionId"/>
+        <result column="parent_id" property="parentId"/>
+        <result column="question_type" property="questionType"/>
+        <result column="user_name" property="userName"/>
+        <result column="replay_content" property="replayContent"/>
+        <result column="replay_date" property="replayDate"/>
+        <result column="replay_status" property="replayStatus"/>
+        <collection property="commodityQuestionChildDTO" ofType="com.car.dto.CommodityQuestionChildDTO">
+            <id column="child_id" property="commodityQuestionId"/>
+            <result column="child_parent_id" property="parentId"/>
+            <result column="child_question_type" property="questionType"/>
+            <result column="child_user_name" property="userName"/>
+            <result column="child_replay_content" property="replayContent"/>
+            <result column="child_replay_date" property="replayDate"/>
+            <result column="child_replay_status" property="replayStatus"/>
+        </collection>
+    </resultMap>
+
     <insert id="insertCommodityQuestion" parameterType="com.car.entity.CommodityQuestion">
         INSERT INTO commodity_question (
            parent_id,question_type_id,question_type,user_id,user_name,replay_content,
@@ -13,21 +32,6 @@
            #{replayDate},#{replayStatus},#{createTime},#{updateTime}
         )
     </insert>
-
-    <select id="queryCommodityQuestionsByTypeId" resultType="com.car.dto.CommodityQuestionChildDTO">
-        SELECT
-          id as commodityQuestionId,
-          parent_id,
-          user_name,
-          replay_content,
-          question_type,
-          replay_status,
-          DATE_FORMAT(replay_date,'%Y-%m-%d %H:%i') AS replay_date
-        FROM
-          commodity_question
-        WHERE question_type = #{questionType}
-        and question_type_id = #{questionTypeId}
-    </select>
 
     <select id="getUserIdByCommodityId" resultType="Long">
         SELECT
@@ -54,9 +58,36 @@
           publish_user_id
         FROM
           publish_post
-        WHERE approve_status = 2
         ORDER BY publish_time
         DESC LIMIT #{pageId}, #{pageSize}
+    </select>
+
+    <select id="queryCommodityQuestionsByTypeId" resultMap="listCommodityQuestion">
+        SELECT
+          c1.id,
+          c1.parent_id,
+          c1.replay_content,
+          c1.user_name,
+          c1.question_type_id,
+          c1.question_type,
+          c1.replay_status,
+          DATE_FORMAT(c1.replay_date,'%Y-%m-%d %H:%i') AS replay_date,
+          c2.id child_id,
+          c2.parent_id child_parent_id,
+          c2.replay_content child_replay_content,
+          c2.user_name child_user_name,
+          c2.question_type_id child_question_type_id,
+          c2.question_type child_question_type,
+          c2.replay_status child_replay_status,
+          DATE_FORMAT(c2.replay_date,'%Y-%m-%d %H:%i') AS child_replay_date
+        FROM
+          commodity_question c1,
+          commodity_question c2
+        WHERE c1.id = c2.parent_id
+          and c1.question_type_id = #{questionTypeId}
+          and c1.question_type = #{questionType}
+        ORDER BY c1.create_time DESC ,
+          c2.create_time ASC
     </select>
 
 </mapper>
