@@ -146,8 +146,6 @@ public class OldCommodityForm {
     }
 
     public BigDecimal getPrice() {
-        BigDecimal bigDecimal = BigDecimal.valueOf(0.0);
-        System.out.println(bigDecimal);
         return (price == null) ? BigDecimal.valueOf(0.0) : price;
     }
 
