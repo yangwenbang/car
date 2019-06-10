@@ -42,9 +42,8 @@ public class CommodityQuestionServiceImpl implements CommodityQuestionService {
     }
 
     @Override
-    public List<CommodityQuestionDTO> queryCommodityQuestionsByTypeId(long questionTypeId, Integer questionType) throws DAOException {
-        List<CommodityQuestionDTO> commodityQuestionList = commodityQuestionDao.queryCommodityQuestionsByTypeId(questionTypeId,questionType);
-        return commodityQuestionList;
+    public List<CommodityQuestionDTO> queryCommodityQuestionsByTypeId(long questionTypeId,Integer questionType) throws DAOException {
+        return commodityQuestionDao.queryCommodityQuestionsByTypeId(questionTypeId,questionType);
     }
 
     @Override
@@ -58,7 +57,7 @@ public class CommodityQuestionServiceImpl implements CommodityQuestionService {
     }
 
     @Override
-    public Long getUserIdByCommodityId(Long questionTypeId) throws DAOException {
+    public Long getUserIdByCommodityId(Long questionTypeId) {
         return commodityQuestionDao.getUserIdByCommodityId(questionTypeId);
     }
 

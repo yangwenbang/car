@@ -23,7 +23,7 @@ public interface CommodityQuestionService {
 
     List<MainPageInfoDTO> queryPageInfoCommodityQuestions(int pageId) throws DAOException;
 
-    Long getUserIdByCommodityId(Long questionTypeId) throws DAOException;
+    Long getUserIdByCommodityId(Long questionTypeId);
 
     Long getUserIdByPublishPostId(Long questionTypeId) throws DAOException;
 }

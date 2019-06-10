@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.car.annotation.Login;
 import com.car.form.CommodityQuestionFrom;
+import com.car.form.UpdateOldCommodityForm;
 import com.car.service.CommodityQuestionService;
 import com.car.dto.CommodityQuestionDTO;
 import org.slf4j.Logger;
@@ -176,16 +177,21 @@ public class ApiOldCommodityController {
 		return new Result<>(ZERO, SUCCESS);
 	}
 
-	//todo 还没写完
 	@Login
 	@PutMapping("/updateCommodityById")
 	@ApiOperation("通过id更新商品")
-	public Result<String> updateCommodityById(Long commodityId, Long userId) throws DAOException {
-		Long dbUserId = commodityQuestionService.getUserIdByCommodityId(commodityId);
+	public Result<String> updateCommodityById(@ApiParam(value = "发布商品的用户id") Long userId,
+		@ApiParam(value = "修改的字段") UpdateOldCommodityForm commodityForm) {
+		Long dbUserId = commodityQuestionService.getUserIdByCommodityId(commodityForm.getCommodityId());
 		if (dbUserId == null || !dbUserId.equals(userId)){
 			return new Result("你没有修改权限");
 		}
-		commodityService.updateCommodityById(commodityId);
+		try {
+			commodityService.updateCommodityById(commodityForm);
+		} catch (DAOException e) {
+			log.error("update Commodity occur errors .", e);
+			return new Result<>(500,e.getMessage());
+		}
 		return new Result<>(ZERO, SUCCESS);
 	}
 

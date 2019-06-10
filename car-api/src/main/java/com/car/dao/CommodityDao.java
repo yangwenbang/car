@@ -2,6 +2,7 @@ package com.car.dao;
 
 import java.util.List;
 
+import com.car.form.UpdateOldCommodityForm;
 import org.apache.ibatis.annotations.Param;
 
 import com.car.entity.OldCommodity;
@@ -25,5 +26,5 @@ public interface CommodityDao {
 
     void deleteCommodityById(Long commodityById) throws DAOException;
 
-    void updateCommodityById(Long commodityById) throws DAOException;
+    void updateCommodityById(UpdateOldCommodityForm commodityForm) throws DAOException;
 }

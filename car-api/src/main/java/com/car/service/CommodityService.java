@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.car.exception.DAOException;
 import com.car.form.OldCommodityForm;
+import com.car.form.UpdateOldCommodityForm;
 import com.car.vo.CommodityVO;
 
 
@@ -22,6 +23,6 @@ public interface CommodityService {
 
     void deleteCommodityById(Long commodityById) throws DAOException;
 
-    void updateCommodityById(Long commodityById) throws DAOException;
+    void updateCommodityById(UpdateOldCommodityForm commodityForm) throws DAOException;
 }
 

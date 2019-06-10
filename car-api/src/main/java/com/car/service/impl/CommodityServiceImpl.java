@@ -3,6 +3,7 @@ package com.car.service.impl;
 import java.util.Date;
 import java.util.List;
 
+import com.car.form.UpdateOldCommodityForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -69,7 +70,7 @@ public class CommodityServiceImpl implements CommodityService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void updateCommodityById(Long commodityById) throws DAOException {
-        commodityDao.updateCommodityById(commodityById);
+    public void updateCommodityById(UpdateOldCommodityForm commodityForm) throws DAOException {
+        commodityDao.updateCommodityById(commodityForm);
     }
 }

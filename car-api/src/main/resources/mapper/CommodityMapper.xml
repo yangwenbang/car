@@ -58,25 +58,76 @@
         UPDATE
           old_commodity
         SET
-          commodity_picture = #{commodityPicture},
-          description = #{description}，
-          use_state = #{useState},
-          price = #{price},
-          trade_mode = #{tradeMode},
-          brand = #{brand},
-          model = #{model},
-          color = #{color},
-          material = #{material},
-          have_flaw = #{haveFlaw},
-          tyre_size = #{tyreSize},
-          hole_spacing = #{holeSpacing},
-          manufactur_mode = #{manufacturMode},
-          light_type = #{lightType},
-          hub_size = #{hubSize},
-          size = #{size},
-          TYPE = #{TYPE},
-          flaw = #{flaw},
-          positioncommodity_num = #{positioncommodityNum}
-        WHERE id = #{commodityById}
+          <if test="commodityName != null">
+              commodity_name = #{commodityName},
+          </if>
+          <if test="commodityPicture != null">
+              commodity_picture = #{commodityPicture},
+          </if>
+          <if test="description != null">
+              description = #{description},
+          </if>
+          <if test="useStartTime != null">
+              use_start_time = #{useStartTime},
+          </if>
+          <if test="useEndTime != null">
+              use_end_time = #{useEndTime},
+          </if>
+          <if test="useState != null">
+              use_state = #{useState},
+          </if>
+          <if test="price != null">
+              price = #{price},
+          </if>
+          <if test="tradeMode != null">
+              trade_mode = #{tradeMode},
+          </if>
+          <if test="model != null">
+              model = #{model},
+          </if>
+          <if test="brand != null">
+              brand = #{brand},
+          </if>
+          <if test="color != null">
+              color = #{color},
+          </if>
+          <if test="material != null">
+              material = #{material},
+          </if>
+          <if test="haveFlaw != null">
+              have_flaw = #{haveFlaw},
+          </if>
+          <if test="tyreSize != null">
+              tyre_size = #{tyreSize},
+          </if>
+          <if test="holeSpacing != null">
+              hole_spacing = #{holeSpacing},
+          </if>
+          <if test="manufacturMode != null">
+              manufactur_mode = #{manufacturMode},
+          </if>
+          <if test="lightType != null">
+              light_type = #{lightType},
+          </if>
+          <if test="hubSize != null">
+              hub_size = #{hubSize},
+          </if>
+          <if test="size != null">
+              size = #{size},
+          </if>
+          <if test="type != null">
+              type = #{type},
+          </if>
+          <if test="flaw != null">
+              flaw = #{flaw},
+          </if>
+          <if test="position != null">
+              position = #{position},
+          </if>
+          <if test="commodityNum != null">
+              commodity_num = #{commodityNum},
+          </if>
+          update_time = SYSDATE()
+        WHERE id = #{commodityId}
     </update>
 </mapper>
