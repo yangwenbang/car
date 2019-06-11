@@ -70,8 +70,8 @@ public class ApiMainController {
     }
 
 	@Login
-	@GetMapping("/getPageInfoCommodityQuestions")
-	@ApiOperation("分页得到首页的帖子及其评论")
+	@GetMapping("/getMainPageInfo")
+	@ApiOperation("获取主页帖子信息")
 	public Result<List<MainPageInfoDTO>> getPageInfoCommodityQuestions(@ApiParam(value = "分页ID(从0开始)")@RequestParam("pageId") int pageId) {
 		List<MainPageInfoDTO> mainPageList = null;
 		try {

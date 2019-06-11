@@ -165,8 +165,8 @@ public class ApiOldCommodityController {
 	}
 
 	@Login
-	@DeleteMapping("/deleteCommodity")
-	@ApiOperation("删除商品")
+	@DeleteMapping("/deleteOldCommodity")
+	@ApiOperation("删除二手商品")
 	public Result<String> removeCommodityById(@ApiParam(value = "商品id") Long commodityId,
 		@ApiParam(value = "发布商品的用户id") Long userId) throws DAOException {
 		Long dbUserId = commodityQuestionService.getUserIdByCommodityId(commodityId);
@@ -178,8 +178,8 @@ public class ApiOldCommodityController {
 	}
 
 	@Login
-	@PutMapping("/updateCommodit")
-	@ApiOperation("更新商品")
+	@PutMapping("/updateOldCommodity")
+	@ApiOperation("修改二手商品")
 	public Result<String> updateCommodityById(@ApiParam(value = "发布商品的用户id") Long userId,
 		@ApiParam(value = "修改的字段") UpdateOldCommodityForm commodityForm) {
 		Long dbUserId = commodityQuestionService.getUserIdByCommodityId(commodityForm.getCommodityId());

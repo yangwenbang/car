@@ -52,7 +52,7 @@ public class CommodityQuestionServiceImpl implements CommodityQuestionService {
         Map<Long, List<CommodityQuestionChildDTO>> commodityQuestionsMap = getCommodityQuestionsMap(commodityQuestionChildList);
         for (CommodityQuestionDTO commodityQuestion : commodityParentQuestionList){
             if (commodityQuestionsMap.get(commodityQuestion.getCommodityQuestionId()) != null){
-                commodityQuestion.setCommodityQuestionChildDTO(commodityQuestionsMap.get(commodityQuestion.getCommodityQuestionId()));
+                commodityQuestion.setCommodityQuestionChilds(commodityQuestionsMap.get(commodityQuestion.getCommodityQuestionId()));
             }
         }
         return commodityParentQuestionList;
