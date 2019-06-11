@@ -30,7 +30,7 @@ public class CommodityQuestionDTO implements Serializable {
     @ApiModelProperty(value = "问答时间")
     private Integer replayStatus;
 
-    private List<CommodityQuestionChildDTO> commodityQuestionChilds;
+    private List<CommodityQuestionChildDTO> commodityQuestionChildDTO;
 
     public Long getParentId() {
         return parentId;
@@ -88,12 +88,11 @@ public class CommodityQuestionDTO implements Serializable {
         this.replayStatus = replayStatus;
     }
 
-	public List<CommodityQuestionChildDTO> getCommodityQuestionChilds() {
-		return commodityQuestionChilds;
-	}
+    public List<CommodityQuestionChildDTO> getCommodityQuestionChildDTO() {
+        return commodityQuestionChildDTO;
+    }
 
-	public void setCommodityQuestionChilds(List<CommodityQuestionChildDTO> commodityQuestionChilds) {
-		this.commodityQuestionChilds = commodityQuestionChilds;
-	}
-   
+    public void setCommodityQuestionChildDTO(List<CommodityQuestionChildDTO> commodityQuestionChildDTO) {
+        this.commodityQuestionChildDTO = commodityQuestionChildDTO;
+    }
 }
