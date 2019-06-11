@@ -2,6 +2,7 @@ package com.car.service.impl;
 
 import com.car.ApiConstants;
 import com.car.dao.CommodityQuestionDao;
+import com.car.dto.CommodityQuestionChildDTO;
 import com.car.dto.MainPageInfoDTO;
 import com.car.entity.CommodityQuestion;
 import com.car.exception.DAOException;
@@ -12,8 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 
 @Service("commodityQuestionService")
@@ -43,7 +43,19 @@ public class CommodityQuestionServiceImpl implements CommodityQuestionService {
 
     @Override
     public List<CommodityQuestionDTO> queryCommodityQuestionsByTypeId(long questionTypeId,Integer questionType) throws DAOException {
-        return commodityQuestionDao.queryCommodityQuestionsByTypeId(questionTypeId, questionType);
+        List<Long> parentIdLsit = new ArrayList<>();
+        List<CommodityQuestionDTO> commodityParentQuestionList = commodityQuestionDao.queryParentCommodityQuestionsByTypeId(questionTypeId, questionType);
+        for (CommodityQuestionDTO commodityQuestion : commodityParentQuestionList){
+            parentIdLsit.add(commodityQuestion.getCommodityQuestionId());
+        }
+        List<CommodityQuestionChildDTO> commodityQuestionChildList = commodityQuestionDao.queryCommodityQuestionsByParentIds(parentIdLsit,questionTypeId, questionType);
+        Map<Long, List<CommodityQuestionChildDTO>> commodityQuestionsMap = getCommodityQuestionsMap(commodityQuestionChildList);
+        for (CommodityQuestionDTO commodityQuestion : commodityParentQuestionList){
+            if (commodityQuestionsMap.get(commodityQuestion.getCommodityQuestionId()) != null){
+                commodityQuestion.setCommodityQuestionChildDTO(commodityQuestionsMap.get(commodityQuestion.getCommodityQuestionId()));
+            }
+        }
+        return commodityParentQuestionList;
     }
 
     @Override
@@ -65,5 +77,24 @@ public class CommodityQuestionServiceImpl implements CommodityQuestionService {
     public Long getUserIdByPublishPostId(Long questionTypeId) throws DAOException {
         return commodityQuestionDao.getUserIdByPublishPostId(questionTypeId);
     }
+
+    // 4. 组map：key为parent_id, value为子问题集合
+    public Map<Long, List<CommodityQuestionChildDTO>> getCommodityQuestionsMap(List<CommodityQuestionChildDTO> commodityQuestionChildList){
+
+        List<CommodityQuestionChildDTO> childQuestions = null;
+        Map<Long, List<CommodityQuestionChildDTO>> questionMap = new HashMap<>();
+        for (CommodityQuestionChildDTO commodityQuestion : commodityQuestionChildList) {
+            long parentId = commodityQuestion.getParentId();
+            if (questionMap.containsKey(parentId)) {
+                childQuestions = questionMap.get(parentId);
+            } else {
+                childQuestions = new ArrayList<>();
+            }
+            childQuestions.add(commodityQuestion);
+            questionMap.put(parentId, childQuestions);
+        }
+        return questionMap;
+    }
+
 
 }

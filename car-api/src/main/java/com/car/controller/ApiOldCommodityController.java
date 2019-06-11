@@ -120,7 +120,7 @@ public class ApiOldCommodityController {
 	}
 
 	@Login
-	@GetMapping("/getCommodityQuestionsByTypeId")
+	@GetMapping("/getCommodityQuestions")
 	@ApiOperation("获取问答接口")
 	public Result<List<CommodityQuestionDTO>> getCommodityQuestionsByTypeId(@ApiParam(value = "问题类型ID(商品ID/帖子ID)") @RequestParam("questionTypeId") long questionTypeId,
 		@ApiParam(value = "提问类型(0商品/1帖子)") @RequestParam("questionType") Integer questionType) {
@@ -165,8 +165,8 @@ public class ApiOldCommodityController {
 	}
 
 	@Login
-	@DeleteMapping("/removeCommodityById")
-	@ApiOperation("通过id删除商品")
+	@DeleteMapping("/deleteCommodity")
+	@ApiOperation("删除商品")
 	public Result<String> removeCommodityById(@ApiParam(value = "商品id") Long commodityId,
 		@ApiParam(value = "发布商品的用户id") Long userId) throws DAOException {
 		Long dbUserId = commodityQuestionService.getUserIdByCommodityId(commodityId);
@@ -178,8 +178,8 @@ public class ApiOldCommodityController {
 	}
 
 	@Login
-	@PutMapping("/updateCommodityById")
-	@ApiOperation("通过id更新商品")
+	@PutMapping("/updateCommodit")
+	@ApiOperation("更新商品")
 	public Result<String> updateCommodityById(@ApiParam(value = "发布商品的用户id") Long userId,
 		@ApiParam(value = "修改的字段") UpdateOldCommodityForm commodityForm) {
 		Long dbUserId = commodityQuestionService.getUserIdByCommodityId(commodityForm.getCommodityId());
@@ -196,8 +196,8 @@ public class ApiOldCommodityController {
 	}
 
 	@Login
-	@DeleteMapping("/removePublishPostById")
-	@ApiOperation("通过id删除帖子")
+	@DeleteMapping("/deletePublishPost")
+	@ApiOperation("删除帖子")
 	public Result<String> removePublishPostById(@ApiParam(value = "帖子id") Long publishPostId,
 		@ApiParam(value = "发布帖子用户id") Long userId) throws DAOException {
 		Long dbUserId = commodityQuestionService.getUserIdByPublishPostId(publishPostId);
