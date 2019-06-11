@@ -43,7 +43,7 @@ public class CommodityQuestionServiceImpl implements CommodityQuestionService {
 
     @Override
     public List<CommodityQuestionDTO> queryCommodityQuestionsByTypeId(long questionTypeId,Integer questionType) throws DAOException {
-        return commodityQuestionDao.queryCommodityQuestionsByTypeId(questionTypeId,questionType);
+        return commodityQuestionDao.queryCommodityQuestionsByTypeId(questionTypeId, questionType);
     }
 
     @Override
@@ -51,7 +51,7 @@ public class CommodityQuestionServiceImpl implements CommodityQuestionService {
         int pageSize = pageId * ApiConstants.PAGE_COUNT;
         List<MainPageInfoDTO> mainPageInfoList = commodityQuestionDao.queryPageInfoCommodityQuestions(pageSize, ApiConstants.PAGE_COUNT);
         for (MainPageInfoDTO MainPageInfo : mainPageInfoList) {
-            MainPageInfo.setCommodityQuestionList(queryCommodityQuestionsByTypeId(MainPageInfo.getPublishPostId(),PUBLISHPOST_TYPE));
+            MainPageInfo.setCommodityQuestions(queryCommodityQuestionsByTypeId(MainPageInfo.getPublishPostId(),PUBLISHPOST_TYPE));
         }
         return mainPageInfoList;
     }
