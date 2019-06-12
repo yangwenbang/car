@@ -50,9 +50,11 @@ public class CommodityQuestionServiceImpl implements CommodityQuestionService {
         }
         List<CommodityQuestionChildDTO> commodityQuestionChildList = commodityQuestionDao.queryCommodityQuestionsByParentIds(parentIdLsit,questionTypeId, questionType);
         Map<Long, List<CommodityQuestionChildDTO>> commodityQuestionsMap = getCommodityQuestionsMap(commodityQuestionChildList);
+        List<CommodityQuestionChildDTO> commodityQuestionList;
         for (CommodityQuestionDTO commodityQuestion : commodityParentQuestionList){
-            if (commodityQuestionsMap.get(commodityQuestion.getCommodityQuestionId()) != null){
-                commodityQuestion.setCommodityQuestionChilds(commodityQuestionsMap.get(commodityQuestion.getCommodityQuestionId()));
+            commodityQuestionList = commodityQuestionsMap.get(commodityQuestion.getCommodityQuestionId());
+            if (commodityQuestionList != null){
+                commodityQuestion.setCommodityQuestionChilds(commodityQuestionList);
             }
         }
         return commodityParentQuestionList;

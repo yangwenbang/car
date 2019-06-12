@@ -8,12 +8,12 @@
         description,use_start_time,use_end_time,use_state,price,publish_user_id,
         trade_mode,create_time,update_time,brand,model,color,material,have_flaw,
         tyre_size,hole_spacing,manufactur_mode,light_type,hub_size,size,type,
-        flaw,position,commodity_num)
+        flaw,position,commodity_num,start_price,freight)
         VALUES (#{commodityCategoryId},#{commodityName},#{commodityPicture},
         #{description},#{useStartTime},#{useEndTime},#{useState},#{price},#{publishUserId},
         #{tradeMode},#{createTime},#{updateTime},#{brand},#{model},#{color},#{material},#{haveFlaw},
         #{tyreSize},#{holeSpacing},#{manufacturMode},#{lightType},#{hubSize},#{size},#{type},
-        #{flaw},#{position},#{commodityNum})
+        #{flaw},#{position},#{commodityNum},#{startPrice},#{freight})
     </insert>
 
     <select id="queryCommoditysByCategoryId" resultType="com.car.vo.CommodityVO">
@@ -41,7 +41,9 @@
           flaw,
           type,
           position,
-          commodity_num
+          commodity_num,
+          start_price,
+          freight
         FROM old_commodity
         WHERE commodity_category_id = #{commodityCategoryId}
         ORDER BY seq DESC LIMIT #{pageId}, #{pageSize}
@@ -126,6 +128,12 @@
           </if>
           <if test="commodityNum != null">
               commodity_num = #{commodityNum},
+          </if>
+          <if test="startPrice != null">
+              start_price = #{startPrice},
+          </if>
+          <if test="freight != null">
+              freight = #{freight},
           </if>
           update_time = SYSDATE()
         WHERE id = #{commodityId}

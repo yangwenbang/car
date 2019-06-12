@@ -13,6 +13,10 @@ import java.util.SortedMap;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.car.form.*;
+import com.car.service.*;
+import com.car.utils.Result;
+import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,22 +32,11 @@ import com.car.common.utils.R;
 import com.car.dto.ProvinceAndCityNameDTO;
 import com.car.entity.PayRecord;
 import com.car.exception.DAOException;
-import com.car.form.PayForm;
-import com.car.form.UserAddressForm;
-import com.car.form.UserDetailForm;
 import com.car.pay.alipay.AlipayUtils;
 import com.car.pay.service.PayService;
 import com.car.pay.service.impl.AliPayServiceImpl;
 import com.car.pay.service.impl.WeChatPayServiceImpl;
 import com.car.pay.wxpay.WeChatPayUtils;
-import com.car.service.AdvertisementService;
-import com.car.service.CityService;
-import com.car.service.EquipmentManagerService;
-import com.car.service.PayRecordService;
-import com.car.service.ProvinceService;
-import com.car.service.UserAddressService;
-import com.car.service.UserDetailService;
-import com.car.service.UserService;
 import com.car.utils.StringUtil;
 import com.car.vo.CityVO;
 import com.car.vo.EquipmentManagerVO;
@@ -61,6 +54,8 @@ import com.car.vo.UserVO;
 @RequestMapping("/api/personal")
 public class ApiPersonalController {
 	private static final Logger log = LoggerFactory.getLogger(ApiPersonalController.class);
+	private static final String SUCCESS = "success";
+
 
     @Autowired
     private AdvertisementService advertisementService;
@@ -78,6 +73,9 @@ public class ApiPersonalController {
     private UserAddressService userAddressService;
     @Autowired
     private EquipmentManagerService equipmentManagerService;
+
+    @Autowired
+	private UserFeedbackService userFeedbackService;
     
     @Login
     @PostMapping("saveUserDetail")
@@ -449,5 +447,17 @@ public class ApiPersonalController {
 		}
 		return ip;
 	}
-    
+
+	@Login
+	@PostMapping("/saveUserFeedback")
+	@ApiOperation("用户反馈接口")
+	public Result<String> saveUserFeedback(@ModelAttribute UserFeedbackFrom userFeedbackFrom) {
+		try {
+			userFeedbackService.insertUserFeedback(userFeedbackFrom);
+		} catch (DAOException e) {
+			log.error("insert Feedback occur errors .", e);
+			return new Result<>(500);
+		}
+		return new Result<>(ZERO, SUCCESS);
+	}
 }

@@ -127,10 +127,10 @@ public class OldCommodity implements Serializable {
 	 * 商品数量
 	 */
 	private Integer commodityNum;
-	/**
-	 * 审批状态(1待审核/2已通过/3已拒绝)
-	 */
-	private Integer approveStatus;
+
+	private BigDecimal startPrice;
+
+	private BigDecimal freight;
 
 	public Long getId() {
 		return id;
@@ -356,11 +356,19 @@ public class OldCommodity implements Serializable {
 		this.commodityNum = commodityNum;
 	}
 
-	public Integer getApproveStatus() {
-		return approveStatus;
+	public BigDecimal getStartPrice() {
+		return startPrice;
 	}
 
-	public void setApproveStatus(Integer approveStatus) {
-		this.approveStatus = approveStatus;
+	public void setStartPrice(BigDecimal startPrice) {
+		this.startPrice = startPrice;
+	}
+
+	public BigDecimal getFreight() {
+		return freight;
+	}
+
+	public void setFreight(BigDecimal freight) {
+		this.freight = freight;
 	}
 }

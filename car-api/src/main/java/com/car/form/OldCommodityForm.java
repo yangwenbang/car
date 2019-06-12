@@ -89,6 +89,12 @@ public class OldCommodityForm {
     @NotBlank(message = "商品数量为空")
     private Integer commodityNum;
 
+    @ApiModelProperty(value = "入手价")
+    private BigDecimal startPrice;
+
+    @ApiModelProperty(value = "运费")
+    private BigDecimal freight;
+
     public Long getCommodityCategoryId() {
         return commodityCategoryId;
     }
@@ -287,5 +293,21 @@ public class OldCommodityForm {
 
     public void setCommodityNum(Integer commodityNum) {
         this.commodityNum = commodityNum;
+    }
+
+    public BigDecimal getStartPrice() {
+        return (startPrice == null) ? BigDecimal.valueOf(0.0) : startPrice;
+    }
+
+    public void setStartPrice(BigDecimal startPrice) {
+        this.startPrice = startPrice;
+    }
+
+    public BigDecimal getFreight() {
+        return (freight == null) ? BigDecimal.valueOf(0.0) : freight;
+    }
+
+    public void setFreight(BigDecimal freight) {
+        this.freight = freight;
     }
 }

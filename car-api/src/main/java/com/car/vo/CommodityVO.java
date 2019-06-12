@@ -82,6 +82,12 @@ public class CommodityVO implements Serializable {
     @ApiModelProperty(value = "部位（整体0,前段1,中段2,中后3,后段4）")
     private Integer position;
 
+    @ApiModelProperty(value = "入手价")
+    private BigDecimal start_price;
+
+    @ApiModelProperty(value = "运费")
+    private BigDecimal freight;
+
     public String getBrand() {
         return brand;
     }
@@ -272,5 +278,21 @@ public class CommodityVO implements Serializable {
 
     public void setTradeMode(Integer tradeMode) {
         this.tradeMode = tradeMode;
+    }
+
+    public BigDecimal getStart_price() {
+        return start_price;
+    }
+
+    public void setStart_price(BigDecimal start_price) {
+        this.start_price = start_price;
+    }
+
+    public BigDecimal getFreight() {
+        return freight;
+    }
+
+    public void setFreight(BigDecimal freight) {
+        this.freight = freight;
     }
 }
