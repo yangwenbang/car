@@ -16,7 +16,9 @@ import javax.servlet.http.HttpServletResponse;
 import com.car.form.*;
 import com.car.service.*;
 import com.car.utils.Result;
+import com.car.vo.*;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,12 +40,6 @@ import com.car.pay.service.impl.AliPayServiceImpl;
 import com.car.pay.service.impl.WeChatPayServiceImpl;
 import com.car.pay.wxpay.WeChatPayUtils;
 import com.car.utils.StringUtil;
-import com.car.vo.CityVO;
-import com.car.vo.EquipmentManagerVO;
-import com.car.vo.ProvinceVO;
-import com.car.vo.UserAddressVO;
-import com.car.vo.UserDetailVO;
-import com.car.vo.UserVO;
 
 /**
  * 个人接口
@@ -76,6 +72,10 @@ public class ApiPersonalController {
 
     @Autowired
 	private UserFeedbackService userFeedbackService;
+	@Autowired
+	private CommodityService commodityService;
+	@Autowired
+	private PublishPostService publishPostService;
     
     @Login
     @PostMapping("saveUserDetail")
@@ -459,5 +459,33 @@ public class ApiPersonalController {
 			return new Result<>(500);
 		}
 		return new Result<>(ZERO, SUCCESS);
+	}
+
+	@Login
+	@GetMapping("/getUserOldCommoditys")
+	@ApiOperation("用户旧商品接口")
+	public Result<List<CommodityVO>> getUserOldCommoditysByUserId(@ApiParam(value = "用户ID") Long userId) {
+		List<CommodityVO> commodityList = null;
+    	try {
+			commodityList = commodityService.queryUserOldCommoditysByUserId(userId);
+		} catch (DAOException e) {
+			log.error("get UserOldCommoditys occur errors .", e);
+			return new Result<>(500);
+		}
+		return new Result<>(ZERO, SUCCESS,commodityList);
+	}
+
+	@Login
+	@GetMapping("/getUserPublishPosts")
+	@ApiOperation("用户帖子接口")
+	public Result<List<PublishPostVO>> getUserPublishPostsByUserId(@ApiParam(value = "用户ID") Long userId) {
+		List<PublishPostVO> publishPostList = null;
+    	try {
+			publishPostList = publishPostService.queryUserPublishPostsByUserId(userId);
+		} catch (DAOException e) {
+			log.error("get UserPublishPosts occur errors .", e);
+			return new Result<>(500);
+		}
+		return new Result<>(ZERO, SUCCESS,publishPostList);
 	}
 }

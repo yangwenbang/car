@@ -75,4 +75,10 @@ public class CommodityServiceImpl implements CommodityService {
     public void updateCommodityById(UpdateOldCommodityForm commodityForm) throws DAOException {
         commodityDao.updateCommodityById(commodityForm);
     }
+
+    @Override
+    public List<CommodityVO> queryUserOldCommoditysByUserId(Long userId) throws DAOException {
+        return commodityDao.queryUserOldCommoditysByUserId(userId);
+    }
+
 }

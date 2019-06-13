@@ -13,14 +13,12 @@ import java.util.Date;
  * @email sunlightcs@gmail.com
  * @date 2019-05-19 23:07:55
  */
-@TableName("publish_post")
 public class PublishPost implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * 帖子ID
 	 */
-	@TableId
 	private Long id;
 	/**
 	 * 发布标题
@@ -50,10 +48,6 @@ public class PublishPost implements Serializable {
 	 * 修改时间
 	 */
 	private Date updateTime;
-	/**
-	 * 审批状态(1待审核/2已通过/3已拒绝)
-	 */
-	private Integer approveStatus;
 
 	/**
 	 * 设置：帖子ID
@@ -150,13 +144,5 @@ public class PublishPost implements Serializable {
 	 */
 	public Date getUpdateTime() {
 		return updateTime;
-	}
-
-	public Integer getApproveStatus() {
-		return approveStatus;
-	}
-
-	public void setApproveStatus(Integer approveStatus) {
-		this.approveStatus = approveStatus;
 	}
 }

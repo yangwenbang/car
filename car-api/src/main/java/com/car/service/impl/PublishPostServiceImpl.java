@@ -5,11 +5,13 @@ import com.car.entity.PublishPost;
 import com.car.exception.DAOException;
 import com.car.form.PublishPostForm;
 import com.car.service.PublishPostService;
+import com.car.vo.PublishPostVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
+import java.util.List;
 
 
 @Service("publishPostService")
@@ -36,5 +38,10 @@ public class PublishPostServiceImpl implements PublishPostService {
     @Transactional(rollbackFor = Exception.class)
     public void deletePublishPostById(Long publishPostId) throws DAOException {
         publishPostDao.deletePublishPostById(publishPostId);
+    }
+
+    @Override
+    public List<PublishPostVO> queryUserPublishPostsByUserId(Long userId) throws DAOException {
+        return publishPostDao.queryUserPublishPostsByUserId(userId);
     }
 }

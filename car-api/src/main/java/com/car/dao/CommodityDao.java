@@ -27,4 +27,7 @@ public interface CommodityDao {
     void deleteCommodityById(Long commodityById) throws DAOException;
 
     void updateCommodityById(UpdateOldCommodityForm commodityForm) throws DAOException;
+
+    List<CommodityVO> queryUserOldCommoditysByUserId(Long userId) throws DAOException;
+
 }

@@ -17,4 +17,17 @@
         WHERE
           id = #{publishPostId}
     </delete>
+
+    <select id="queryUserPublishPostsByUserId" resultType="com.car.vo.PublishPostVO">
+        SELECT
+          id AS publishPostId,
+          publish_title,
+          publish_content,
+          publish_picture,
+        publish_address,
+        publish_time
+        FROM
+        publish_post
+        WHERE publish_user_id = #{userId}
+    </select>
 </mapper>
