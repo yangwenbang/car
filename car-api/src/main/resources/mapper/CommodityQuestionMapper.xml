@@ -6,11 +6,11 @@
     <insert id="insertCommodityQuestion" parameterType="com.car.entity.CommodityQuestion">
         INSERT INTO commodity_question (
            parent_id,question_type_id,question_type,user_id,user_name,replay_content,
-           replay_date,replay_status,create_time,update_time
+           replay_date,replay_status,create_time,update_time,user_head
         )
         VALUES(
            #{parentId},#{questionTypeId},#{questionType},#{userId},#{userName},#{replayContent},
-           #{replayDate},#{replayStatus},#{createTime},#{updateTime}
+           #{replayDate},#{replayStatus},#{createTime},#{updateTime},#{userHead}
         )
     </insert>
 
@@ -36,7 +36,10 @@
           publish_title,
           publish_content,
           publish_picture,
-          publish_user_id
+          publish_user_id,
+          publish_user_name,
+          publish_user_head,
+          DATE_FORMAT(publish_time,'%Y-%m-%d %H:%i') AS publish_time
         FROM
           publish_post
         ORDER BY publish_time
@@ -52,6 +55,7 @@
           question_type_id,
           question_type,
           replay_status,
+          user_head,
           DATE_FORMAT(replay_date,'%Y-%m-%d %H:%i') AS replay_date
         FROM commodity_question
         WHERE parent_id = -1
@@ -69,15 +73,18 @@
           question_type_id,
           question_type,
           replay_status,
+          user_head,
           DATE_FORMAT(replay_date, '%Y-%m-%d %H:%i') AS replay_date
         FROM
           commodity_question
         WHERE question_type_id = #{questionTypeId}
         AND question_type = #{questionType}
-        AND parent_id
-        IN <foreach collection="parentIdLsit" item="pId" open="(" close=")" separator=",">
-          #{pId}
-        </foreach>
+        <if test="parentIdLsit != null and parentIdLsit.size() > 0">
+        AND parent_id IN
+            <foreach collection="parentIdLsit" item="pId" open="(" close=")" separator=",">
+                #{pId}
+            </foreach>
+        </if>
         ORDER BY create_time ASC
     </select>
 

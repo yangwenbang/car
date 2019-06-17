@@ -1,7 +1,5 @@
 package com.car.entity;
 
-import com.baomidou.mybatisplus.annotations.TableId;
-import com.baomidou.mybatisplus.annotations.TableName;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -60,6 +58,8 @@ public class CommodityQuestion implements Serializable {
 	 * 修改时间
 	 */
 	private Date updateTime;
+
+	private String userHead;
 
 	/**
 	 * 设置：商品ID
@@ -184,8 +184,16 @@ public class CommodityQuestion implements Serializable {
 
 	public void setParentId(Long parentId) {
 		if(parentId == null){
-			parentId = 1L;
+			parentId = -1L;
 		}
 		this.parentId = parentId;
+	}
+
+	public String getUserHead() {
+		return userHead;
+	}
+
+	public void setUserHead(String userHead) {
+		this.userHead = userHead;
 	}
 }

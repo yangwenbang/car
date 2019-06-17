@@ -30,6 +30,9 @@ public class CommodityQuestionDTO implements Serializable {
     @ApiModelProperty(value = "问答时间")
     private Integer replayStatus;
 
+    @ApiModelProperty(value = "用户头像地址")
+    private String userHead;
+
     private List<CommodityQuestionChildDTO> commodityQuestionChilds;
 
     public Long getParentId() {
@@ -96,4 +99,11 @@ public class CommodityQuestionDTO implements Serializable {
 		this.commodityQuestionChilds = commodityQuestionChilds;
 	}
 
+    public String getUserHead() {
+        return userHead;
+    }
+
+    public void setUserHead(String userHead) {
+        this.userHead = userHead;
+    }
 }

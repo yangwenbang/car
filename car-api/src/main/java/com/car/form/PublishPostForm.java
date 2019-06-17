@@ -24,6 +24,12 @@ public class PublishPostForm {
     @NotBlank(message = "发布人不能为空")
     private Long publishUserId;
 
+    @ApiModelProperty(value = "发布人名字")
+    private String publishUserName;
+
+    @ApiModelProperty(value = "发布人头像地址")
+    private String publishUserHead;
+
     public String getPublishTitle() {
         return publishTitle == null ? "" : publishTitle;
     }
@@ -61,6 +67,22 @@ public class PublishPostForm {
     }
 
     public void setPublishUserId(Long publishUserId) {
-        this.publishUserId = publishUserId;
+        this.publishUserId = publishUserId == null ? 0 : publishUserId;
+    }
+
+    public String getPublishUserName() {
+        return publishUserName == null ? "" : publishUserName;
+    }
+
+    public void setPublishUserName(String publishUserName) {
+        this.publishUserName = publishUserName;
+    }
+
+    public String getPublishUserHead() {
+        return publishUserHead == null ? "" : publishUserHead;
+    }
+
+    public void setPublishUserHead(String publishUserHead) {
+        this.publishUserHead = publishUserHead;
     }
 }

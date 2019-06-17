@@ -6,6 +6,7 @@
 	<select id="queryCommodityCategorys" resultType="com.car.vo.CommodityCategoryVO">
         SELECT id commodityCategoryId, category_name
         FROM commodity_category
+        ORDER BY seq
     </select>
 
 </mapper>

@@ -88,6 +88,12 @@ public class UpdateOldCommodityForm {
     @ApiModelProperty(value = "运费")
     private BigDecimal freight;
 
+    @ApiModelProperty(value = "具体描述")
+    private String concreteDescription;
+
+    @ApiModelProperty(value = "其他分类名称")
+    private String otherCategoryName;
+
     public Long getCommodityId() {
         return commodityId;
     }
@@ -294,5 +300,21 @@ public class UpdateOldCommodityForm {
 
     public void setFreight(BigDecimal freight) {
         this.freight = freight;
+    }
+
+    public String getConcreteDescription() {
+        return concreteDescription;
+    }
+
+    public void setConcreteDescription(String concreteDescription) {
+        this.concreteDescription = concreteDescription;
+    }
+
+    public String getOtherCategoryName() {
+        return otherCategoryName;
+    }
+
+    public void setOtherCategoryName(String otherCategoryName) {
+        this.otherCategoryName = otherCategoryName;
     }
 }

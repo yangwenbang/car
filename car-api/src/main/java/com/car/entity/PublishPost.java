@@ -1,7 +1,5 @@
 package com.car.entity;
 
-import com.baomidou.mybatisplus.annotations.TableId;
-import com.baomidou.mybatisplus.annotations.TableName;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -48,6 +46,10 @@ public class PublishPost implements Serializable {
 	 * 修改时间
 	 */
 	private Date updateTime;
+
+	private String publishUserName;
+
+	private String publishUserHead;
 
 	/**
 	 * 设置：帖子ID
@@ -144,5 +146,21 @@ public class PublishPost implements Serializable {
 	 */
 	public Date getUpdateTime() {
 		return updateTime;
+	}
+
+	public String getPublishUserName() {
+		return publishUserName;
+	}
+
+	public void setPublishUserName(String publishUserName) {
+		this.publishUserName = publishUserName;
+	}
+
+	public String getPublishUserHead() {
+		return publishUserHead;
+	}
+
+	public void setPublishUserHead(String publishUserHead) {
+		this.publishUserHead = publishUserHead;
 	}
 }

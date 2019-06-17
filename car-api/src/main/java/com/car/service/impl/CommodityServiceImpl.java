@@ -53,6 +53,10 @@ public class CommodityServiceImpl implements CommodityService {
         commodityEntity.setPosition(commodity.getPosition());
         commodityEntity.setStartPrice(commodity.getStartPrice());
         commodityEntity.setFreight(commodity.getFreight());
+        commodityEntity.setConcreteDescription(commodity.getConcreteDescription());
+        commodityEntity.setOtherCategoryName(commodity.getOtherCategoryName());
+        commodityEntity.setPublishUserHead(commodity.getPublishUserHead());
+        commodityEntity.setPublishUserName(commodity.getPublishUserName());
         commodityEntity.setCreateTime(new Date());
         commodityEntity.setUpdateTime(new Date());
         commodityDao.insertCommodity(commodityEntity);

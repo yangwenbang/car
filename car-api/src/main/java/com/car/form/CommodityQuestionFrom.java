@@ -36,6 +36,9 @@ public class CommodityQuestionFrom {
     @NotBlank(message = "问答人类型为空")
     private Integer replayStatus;
 
+    @ApiModelProperty(value = "用户头像地址")
+    private String userHead;
+
     public Integer getQuestionType() {
         return questionType;
     }
@@ -90,5 +93,13 @@ public class CommodityQuestionFrom {
 
     public void setQuestionTypeId(Long questionTypeId) {
         this.questionTypeId = questionTypeId;
+    }
+
+    public String getUserHead() {
+        return userHead == null ? "" : userHead;
+    }
+
+    public void setUserHead(String userHead) {
+        this.userHead = userHead;
     }
 }

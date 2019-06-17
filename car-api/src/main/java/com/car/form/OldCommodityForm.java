@@ -95,6 +95,20 @@ public class OldCommodityForm {
     @ApiModelProperty(value = "运费")
     private BigDecimal freight;
 
+    @ApiModelProperty(value = "商品发布人名")
+    private String publishUserName;
+
+    @ApiModelProperty(value = "商品发布人头像地址")
+    private String publishUserHead;
+
+    @ApiModelProperty(value = "其他分类名称")
+    private String otherCategoryName;
+
+    @ApiModelProperty(value = "具体描述")
+    private String concreteDescription;
+
+
+
     public Long getCommodityCategoryId() {
         return commodityCategoryId;
     }
@@ -309,5 +323,37 @@ public class OldCommodityForm {
 
     public void setFreight(BigDecimal freight) {
         this.freight = freight;
+    }
+
+    public String getPublishUserName() {
+        return publishUserName == null ? "" : publishUserName;
+    }
+
+    public void setPublishUserName(String publishUserName) {
+        this.publishUserName = publishUserName;
+    }
+
+    public String getPublishUserHead() {
+        return publishUserHead == null ? "" : publishUserHead;
+    }
+
+    public void setPublishUserHead(String publishUserHead) {
+        this.publishUserHead = publishUserHead;
+    }
+
+    public String getOtherCategoryName() {
+        return otherCategoryName == null ? "" : otherCategoryName;
+    }
+
+    public void setOtherCategoryName(String otherCategoryName) {
+        this.otherCategoryName = otherCategoryName;
+    }
+
+    public String getConcreteDescription() {
+        return concreteDescription == null ? "" : concreteDescription;
+    }
+
+    public void setConcreteDescription(String concreteDescription) {
+        this.concreteDescription = concreteDescription;
     }
 }

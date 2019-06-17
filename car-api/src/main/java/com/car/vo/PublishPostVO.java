@@ -33,7 +33,13 @@ public class PublishPostVO implements Serializable {
 	private String publishAddress;
 
 	@ApiModelProperty(value = "发布时间")
-	private Date publishTime;
+	private String publishTime;
+
+	@ApiModelProperty(value = "发布人名字")
+	private String publishUserName;
+
+	@ApiModelProperty(value = "发布人头像地址")
+	private String publishUserHead;
 
 	public void setPublishTitle(String publishTitle) {
 		this.publishTitle = publishTitle;
@@ -67,11 +73,11 @@ public class PublishPostVO implements Serializable {
 		return publishAddress;
 	}
 
-	public void setPublishTime(Date publishTime) {
+	public void setPublishTime(String publishTime) {
 		this.publishTime = publishTime;
 	}
 
-	public Date getPublishTime() {
+	public String getPublishTime() {
 		return publishTime;
 	}
 
@@ -81,5 +87,21 @@ public class PublishPostVO implements Serializable {
 
 	public void setPublishPostId(Long publishPostId) {
 		this.publishPostId = publishPostId;
+	}
+
+	public String getPublishUserName() {
+		return publishUserName;
+	}
+
+	public void setPublishUserName(String publishUserName) {
+		this.publishUserName = publishUserName;
+	}
+
+	public String getPublishUserHead() {
+		return publishUserHead;
+	}
+
+	public void setPublishUserHead(String publishUserHead) {
+		this.publishUserHead = publishUserHead;
 	}
 }

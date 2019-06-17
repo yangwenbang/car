@@ -132,6 +132,14 @@ public class OldCommodity implements Serializable {
 
 	private BigDecimal freight;
 
+	private String publishUserName;
+
+	private String publishUserHead;
+
+	private String otherCategoryName;
+
+	private String concreteDescription;
+
 	public Long getId() {
 		return id;
 	}
@@ -370,5 +378,37 @@ public class OldCommodity implements Serializable {
 
 	public void setFreight(BigDecimal freight) {
 		this.freight = freight;
+	}
+
+	public String getPublishUserName() {
+		return publishUserName;
+	}
+
+	public void setPublishUserName(String publishUserName) {
+		this.publishUserName = publishUserName;
+	}
+
+	public String getPublishUserHead() {
+		return publishUserHead;
+	}
+
+	public void setPublishUserHead(String publishUserHead) {
+		this.publishUserHead = publishUserHead;
+	}
+
+	public String getOtherCategoryName() {
+		return otherCategoryName;
+	}
+
+	public void setOtherCategoryName(String otherCategoryName) {
+		this.otherCategoryName = otherCategoryName;
+	}
+
+	public String getConcreteDescription() {
+		return concreteDescription;
+	}
+
+	public void setConcreteDescription(String concreteDescription) {
+		this.concreteDescription = concreteDescription;
 	}
 }

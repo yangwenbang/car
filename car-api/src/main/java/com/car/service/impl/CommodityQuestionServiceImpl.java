@@ -36,6 +36,7 @@ public class CommodityQuestionServiceImpl implements CommodityQuestionService {
         commodityQuestionEntity.setReplayContent(commodityQuestionFrom.getReplayContent());
         commodityQuestionEntity.setReplayDate(new Date());
         commodityQuestionEntity.setReplayStatus(commodityQuestionFrom.getReplayStatus());
+        commodityQuestionEntity.setUserHead(commodityQuestionFrom.getUserHead());
         commodityQuestionEntity.setCreateTime(new Date());
         commodityQuestionEntity.setUpdateTime(new Date());
         commodityQuestionDao.insertCommodityQuestion(commodityQuestionEntity);
