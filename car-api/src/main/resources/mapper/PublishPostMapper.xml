@@ -5,9 +5,9 @@
 
     <insert id="insertPublishPost" parameterType="com.car.entity.PublishPost">
         INSERT INTO publish_post (publish_title,publish_content,publish_picture,
-        publish_address,publish_user_id,publish_time,update_time,publish_user_name,publish_user_head)
+        publish_address,publish_user_id,publish_time,update_time,publish_user_name,publish_user_picture)
         VALUES (#{publishTitle},#{publishContent},#{publishPicture},#{publishAddress},
-        #{publishUserId},#{publishTime},#{updateTime},#{publishUserName},#{publishUserHead})
+        #{publishUserId},#{publishTime},#{updateTime},#{publishUserName},#{publishUserPicture})
     </insert>
 
     <delete id="deletePublishPostById">
@@ -27,7 +27,7 @@
           publish_address,
           DATE_FORMAT(publish_time,'%Y-%m-%d %H:%i') AS publish_time,
           publish_user_name,
-          publish_user_head
+          publish_user_picture
         FROM
           publish_post
         WHERE publish_user_id = #{userId}

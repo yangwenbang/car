@@ -28,7 +28,7 @@ public class PublishPostForm {
     private String publishUserName;
 
     @ApiModelProperty(value = "发布人头像地址")
-    private String publishUserHead;
+    private String publishUserPicture;
 
     public String getPublishTitle() {
         return publishTitle == null ? "" : publishTitle;
@@ -78,11 +78,11 @@ public class PublishPostForm {
         this.publishUserName = publishUserName;
     }
 
-    public String getPublishUserHead() {
-        return publishUserHead == null ? "" : publishUserHead;
+    public String getPublishUserPicture() {
+        return publishUserPicture == null ? "" : publishUserPicture;
     }
 
-    public void setPublishUserHead(String publishUserHead) {
-        this.publishUserHead = publishUserHead;
+    public void setPublishUserPicture(String publishUserPicture) {
+        this.publishUserPicture = publishUserPicture;
     }
 }

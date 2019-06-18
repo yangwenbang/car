@@ -28,7 +28,7 @@ public class PublishPostServiceImpl implements PublishPostService {
         publishPostEntity.setPublishContent(publishPost.getPublishContent());
         publishPostEntity.setPublishTitle(publishPost.getPublishTitle());
         publishPostEntity.setPublishUserId(publishPost.getPublishUserId());
-        publishPostEntity.setPublishUserHead(publishPost.getPublishUserHead());
+        publishPostEntity.setPublishUserPicture(publishPost.getPublishUserPicture());
         publishPostEntity.setPublishUserName(publishPost.getPublishUserName());
         publishPostEntity.setPublishTime(new Date());
         publishPostEntity.setUpdateTime(new Date());

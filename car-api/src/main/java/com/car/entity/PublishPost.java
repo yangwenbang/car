@@ -49,7 +49,7 @@ public class PublishPost implements Serializable {
 
 	private String publishUserName;
 
-	private String publishUserHead;
+	private String publishUserPicture;
 
 	/**
 	 * 设置：帖子ID
@@ -156,11 +156,11 @@ public class PublishPost implements Serializable {
 		this.publishUserName = publishUserName;
 	}
 
-	public String getPublishUserHead() {
-		return publishUserHead;
+	public String getPublishUserPicture() {
+		return publishUserPicture;
 	}
 
-	public void setPublishUserHead(String publishUserHead) {
-		this.publishUserHead = publishUserHead;
+	public void setPublishUserPicture(String publishUserPicture) {
+		this.publishUserPicture = publishUserPicture;
 	}
 }
