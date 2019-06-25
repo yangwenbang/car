@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.DeleteMapping;
 
 import com.car.annotation.Login;
 import com.car.common.utils.R;
@@ -76,7 +77,9 @@ public class ApiPersonalController {
 	private CommodityService commodityService;
 	@Autowired
 	private PublishPostService publishPostService;
-    
+	@Autowired
+	private SysInfoService sysInfoService;
+
     @Login
     @PostMapping("saveUserDetail")
     public R login(@ModelAttribute UserDetailForm userDetailForm) throws DAOException {
@@ -487,5 +490,32 @@ public class ApiPersonalController {
 			return new Result<>(500);
 		}
 		return new Result<>(ZERO, SUCCESS,publishPostList);
+	}
+
+	@Login
+	@GetMapping("/getUserInfos")
+	@ApiOperation("用户消息接口")
+	public Result<List<SysInfoVO>> getUserInfosByUserId(@ApiParam(value = "用户ID") Long userId) {
+		List<SysInfoVO> sysInfoList = null;
+		try {
+			sysInfoList = sysInfoService.queryUserInfosByUserId(userId);
+		} catch (DAOException e) {
+			log.error("get UserPublishPosts occur errors .", e);
+			return new Result<>(500);
+		}
+		return new Result<>(ZERO, SUCCESS,sysInfoList);
+	}
+
+	@Login
+	@DeleteMapping("/deleteUserInfo")
+	@ApiOperation("删除消息接口")
+	public Result<List<SysInfoVO>> removeUserInfoById(@ApiParam(value = "消息ID") Long sysInfoId) {
+		try {
+			sysInfoService.deleteUserInfoById(sysInfoId);
+		} catch (DAOException e) {
+			log.error("delete UserInfo occur errors .", e);
+			return new Result<>(500);
+		}
+		return new Result<>(ZERO, SUCCESS);
 	}
 }

@@ -2,6 +2,9 @@ package com.car.service;
 
 import com.car.entity.SysInfo;
 import com.car.exception.DAOException;
+import com.car.vo.SysInfoVO;
+
+import java.util.List;
 
 /**
  * @author wind
@@ -10,5 +13,8 @@ import com.car.exception.DAOException;
 public interface SysInfoService {
 
 	void saveSysInfo(SysInfo sysInfo) throws DAOException;
-	
+
+	List<SysInfoVO> queryUserInfosByUserId(Long userId) throws DAOException;
+
+	void deleteUserInfoById(Long sysInfoId) throws DAOException;
 }

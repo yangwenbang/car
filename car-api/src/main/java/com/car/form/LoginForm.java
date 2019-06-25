@@ -13,7 +13,9 @@ import io.swagger.annotations.ApiModelProperty;
  */
 @ApiModel(value = "登录表单")
 public class LoginForm {
-	@ApiModelProperty(value = "手机号")
+
+	@ApiModelProperty(value = "手机号",required=true)
+	@NotBlank(message = "手机号不能为空")
     private String mobile;
 	
 	@ApiModelProperty(value = "用户设备类别(0安卓/1苹果)")
