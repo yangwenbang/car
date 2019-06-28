@@ -39,7 +39,7 @@ public class PublishPostVO implements Serializable {
 	private String publishUserName;
 
 	@ApiModelProperty(value = "发布人头像地址")
-	private String publishUserHead;
+	private String publishUserPicture;
 
 	public void setPublishTitle(String publishTitle) {
 		this.publishTitle = publishTitle;
@@ -97,11 +97,11 @@ public class PublishPostVO implements Serializable {
 		this.publishUserName = publishUserName;
 	}
 
-	public String getPublishUserHead() {
-		return publishUserHead;
+	public String getPublishUserPicture() {
+		return publishUserPicture;
 	}
 
-	public void setPublishUserHead(String publishUserHead) {
-		this.publishUserHead = publishUserHead;
+	public void setPublishUserPicture(String publishUserPicture) {
+		this.publishUserPicture = publishUserPicture;
 	}
 }
