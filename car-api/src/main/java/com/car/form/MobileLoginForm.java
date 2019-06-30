@@ -12,18 +12,11 @@ import io.swagger.annotations.ApiModelProperty;
  * @author wind
  */
 @ApiModel(value = "登录表单")
-public class LoginForm {
-<<<<<<< HEAD
+public class MobileLoginForm {
 	
 	@ApiModelProperty(value = "手机号", required = true)
 	@NotBlank(message = "手机号不能为空")
 	private String mobile;
-=======
-
-	@ApiModelProperty(value = "手机号",required=true)
-	@NotBlank(message = "手机号不能为空")
-    private String mobile;
->>>>>>> branch 'master' of https://gitee.com/wind2018chao/car.git
 	
 	@ApiModelProperty(value = "用户设备类别(0安卓/1苹果)")
     private Integer equipmentType;
@@ -33,26 +26,10 @@ public class LoginForm {
 	
 	@ApiModelProperty(value = "系统版本号")
     private String systemVersion;
-//    private String softVersion;
-//    private String verficationCode;
-
-//	@ApiModelProperty(value = "登录类型：0微信/1支付宝")
-//	private Integer loginType;
-
-	@ApiModelProperty(value = "微信code")
-	private String code;
 
 	@ApiModelProperty(value = "密码", required = true)
 	@NotBlank(message = "密码不能为空")
 	private String password;
-
-	public String getCode() {
-		return code;
-	}
-
-	public void setCode(String code) {
-		this.code = code;
-	}
 
 	public String getPassword() {
 		return password;

@@ -21,7 +21,8 @@ import com.car.entity.TokenEntity;
 import com.car.entity.UserEntity;
 import com.car.exception.DAOException;
 import com.car.filter.EmojiFilter;
-import com.car.form.LoginForm;
+import com.car.form.MobileLoginForm;
+import com.car.form.WeChatLoginForm;
 import com.car.service.TokenService;
 import com.car.service.UserService;
 import com.car.utils.WeChatLoginUtils;
@@ -46,7 +47,7 @@ public class UserServiceImpl implements UserService {
 	private EquipmentManagerDao equipmentManagerDao;
 	
 	@Transactional(rollbackFor = Exception.class)
-	public UserVO login(LoginForm form) throws DAOException {
+	public UserVO login(MobileLoginForm form) throws DAOException {
 		
 		String mobile = form.getMobile();
 		String shaPwd = StringUtils.isEmpty(form.getPassword()) ? "" : DigestUtils.sha256Hex(form.getPassword());
@@ -107,7 +108,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	@Transactional
-	public UserVO weChatLogin(LoginForm form) throws Exception {
+	public UserVO weChatLogin(WeChatLoginForm form) throws Exception {
 		Map<String, Object> weChatMap = new HashMap<>();
 		
 		String code = form.getCode();
@@ -166,7 +167,7 @@ public class UserServiceImpl implements UserService {
 		return String.format("%08d", userCount);
 	}
 
-	private UserVO saveWeChatLoginInfo(LoginForm form, Map<String, Object> weChatMap) throws DAOException {
+	private UserVO saveWeChatLoginInfo(WeChatLoginForm form, Map<String, Object> weChatMap) throws DAOException {
 		String userName = (String)weChatMap.get("userName");
 		String cityName = (String)weChatMap.get("cityName");
 		String picUrl = (String)weChatMap.get("picUrl");
@@ -196,7 +197,7 @@ public class UserServiceImpl implements UserService {
 		return userVO;
 	}
 
-	private synchronized UserDetailVO saveUserDetail(long userId, LoginForm form, Map<String, Object> weChatMap) throws DAOException {
+	private synchronized UserDetailVO saveUserDetail(long userId, WeChatLoginForm form, Map<String, Object> weChatMap) throws DAOException {
 		
 		String openid = (String)weChatMap.get("openid");
 		int sex = (int) weChatMap.get("sex");

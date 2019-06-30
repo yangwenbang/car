@@ -1,8 +1,6 @@
 package com.car.controller;
 
 
-import static com.car.ApiConstants.DATA;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.car.annotation.Login;
 import com.car.common.utils.R;
 import com.car.exception.DAOException;
-import com.car.form.LoginForm;
+import com.car.form.MobileLoginForm;
+import com.car.form.WeChatLoginForm;
 import com.car.service.TokenService;
 import com.car.service.UserService;
 import com.car.utils.Result;
@@ -42,7 +41,7 @@ public class ApiLoginController {
     
     @PostMapping("mobileLogin")
     @ApiOperation("用户手机登录接口(测试用)")
-    public Result<UserVO> login(@ModelAttribute LoginForm form){
+    public Result<UserVO> login(@ModelAttribute MobileLoginForm form){
 
         //用户登录
         UserVO user = null;
@@ -56,9 +55,9 @@ public class ApiLoginController {
         return new Result<>(user);
     }
     
-    @PostMapping("login")
-    @ApiOperation("用户登录接口")
-    public Result<UserVO> weChatLogin(@ModelAttribute LoginForm form){
+    @PostMapping("weChatLogin")
+    @ApiOperation("用户微信登录接口")
+    public Result<UserVO> weChatLogin(@ModelAttribute WeChatLoginForm form){
 
         //用户登录
         UserVO user = null;

@@ -1,10 +1,9 @@
 package com.car.service;
 
 
-import java.util.Map;
-
 import com.car.exception.DAOException;
-import com.car.form.LoginForm;
+import com.car.form.MobileLoginForm;
+import com.car.form.WeChatLoginForm;
 import com.car.vo.UserVO;
 
 /**
@@ -21,10 +20,10 @@ public interface UserService {
 	 * @param form    登录表单
 	 * @return        返回登录信息
 	 */
-	UserVO login(LoginForm form) throws DAOException;
+	UserVO login(MobileLoginForm form) throws DAOException;
 
 	UserVO findById(long userId) throws DAOException;
 	
-	UserVO weChatLogin(LoginForm form) throws Exception;
+	UserVO weChatLogin(WeChatLoginForm form) throws Exception;
 	
 }
