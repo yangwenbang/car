@@ -13,8 +13,10 @@ import io.swagger.annotations.ApiModelProperty;
  */
 @ApiModel(value = "登录表单")
 public class LoginForm {
-	@ApiModelProperty(value = "手机号")
-    private String mobile;
+	
+	@ApiModelProperty(value = "手机号", required = true)
+	@NotBlank(message = "手机号不能为空")
+	private String mobile;
 	
 	@ApiModelProperty(value = "用户设备类别(0安卓/1苹果)")
     private Integer equipmentType;
@@ -33,7 +35,7 @@ public class LoginForm {
 	@ApiModelProperty(value = "微信code")
 	private String code;
 
-	@ApiModelProperty(value = "密码")
+	@ApiModelProperty(value = "密码", required = true)
 	@NotBlank(message = "密码不能为空")
 	private String password;
 
@@ -62,7 +64,7 @@ public class LoginForm {
 	}
 
 	public Integer getEquipmentType() {
-		return equipmentType;
+		return equipmentType == null ? 0 : equipmentType;
 	}
 
 	public void setEquipmentType(Integer equipmentType) {

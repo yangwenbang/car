@@ -38,7 +38,7 @@
           publish_picture,
           publish_user_id,
           publish_user_name,
-          publish_user_head,
+          publish_user_picture,
           DATE_FORMAT(publish_time,'%Y-%m-%d %H:%i') AS publish_time
         FROM
           publish_post

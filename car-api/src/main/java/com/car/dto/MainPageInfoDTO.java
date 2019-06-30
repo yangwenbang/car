@@ -24,10 +24,10 @@ public class MainPageInfoDTO implements Serializable {
     @ApiModelProperty(value = "发布人")
     private Long publishUserId;
 
-    @ApiModelProperty(value = "发布人名字")
-    private String publishUserHead;
-
     @ApiModelProperty(value = "发布人头像地址")
+    private String publishUserPicture;
+
+    @ApiModelProperty(value = "发布人名字")
     private String publishUserName;
 
     @ApiModelProperty(value = "发布人时间")
@@ -83,15 +83,15 @@ public class MainPageInfoDTO implements Serializable {
 		this.commodityQuestions = commodityQuestions;
 	}
 
-    public String getPublishUserHead() {
-        return publishUserHead;
-    }
+    public String getPublishUserPicture() {
+		return publishUserPicture;
+	}
 
-    public void setPublishUserHead(String publishUserHead) {
-        this.publishUserHead = publishUserHead;
-    }
+	public void setPublishUserPicture(String publishUserPicture) {
+		this.publishUserPicture = publishUserPicture;
+	}
 
-    public String getPublishUserName() {
+	public String getPublishUserName() {
         return publishUserName;
     }
 
