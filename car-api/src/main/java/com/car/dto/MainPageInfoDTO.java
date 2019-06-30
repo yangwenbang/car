@@ -24,6 +24,12 @@ public class MainPageInfoDTO implements Serializable {
     @ApiModelProperty(value = "发布人")
     private Long publishUserId;
 
+<<<<<<< HEAD
+=======
+    @ApiModelProperty(value = "发布人名字")
+    private String publishUserPicture;
+
+>>>>>>> branch 'master' of https://gitee.com/wind2018chao/car.git
     @ApiModelProperty(value = "发布人头像地址")
     private String publishUserPicture;
 
@@ -84,12 +90,23 @@ public class MainPageInfoDTO implements Serializable {
 	}
 
     public String getPublishUserPicture() {
+<<<<<<< HEAD
 		return publishUserPicture;
 	}
+=======
+        return publishUserPicture;
+    }
+>>>>>>> branch 'master' of https://gitee.com/wind2018chao/car.git
 
+<<<<<<< HEAD
 	public void setPublishUserPicture(String publishUserPicture) {
 		this.publishUserPicture = publishUserPicture;
 	}
+=======
+    public void setPublishUserPicture(String publishUserPicture) {
+        this.publishUserPicture = publishUserPicture;
+    }
+>>>>>>> branch 'master' of https://gitee.com/wind2018chao/car.git
 
 	public String getPublishUserName() {
         return publishUserName;

@@ -13,10 +13,17 @@ import io.swagger.annotations.ApiModelProperty;
  */
 @ApiModel(value = "登录表单")
 public class LoginForm {
+<<<<<<< HEAD
 	
 	@ApiModelProperty(value = "手机号", required = true)
 	@NotBlank(message = "手机号不能为空")
 	private String mobile;
+=======
+
+	@ApiModelProperty(value = "手机号",required=true)
+	@NotBlank(message = "手机号不能为空")
+    private String mobile;
+>>>>>>> branch 'master' of https://gitee.com/wind2018chao/car.git
 	
 	@ApiModelProperty(value = "用户设备类别(0安卓/1苹果)")
     private Integer equipmentType;
