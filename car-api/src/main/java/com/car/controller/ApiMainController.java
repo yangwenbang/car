@@ -72,7 +72,7 @@ public class ApiMainController {
 	@Login
 	@GetMapping("/getMainPageInfo")
 	@ApiOperation("获取主页帖子信息")
-	public Result<List<MainPageInfoDTO>> getPageInfoCommodityQuestions(@ApiParam(value = "分页ID(从0开始)")@RequestParam("pageId") int pageId) {
+	public Result<List<MainPageInfoDTO>> getPageInfoCommodityQuestions(@ApiParam(value = "分页ID(从0开始)", required = true)@RequestParam("pageId") int pageId) {
 		List<MainPageInfoDTO> mainPageList = null;
 		try {
 			mainPageList = commodityQuestionService.queryPageInfoCommodityQuestions(pageId);

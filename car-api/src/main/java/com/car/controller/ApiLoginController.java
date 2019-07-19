@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.car.annotation.Login;
 import com.car.common.utils.R;
 import com.car.exception.DAOException;
+import com.car.form.LoginForm;
 import com.car.form.MobileLoginForm;
 import com.car.form.WeChatLoginForm;
 import com.car.service.TokenService;
@@ -39,9 +40,36 @@ public class ApiLoginController {
     @Autowired
     private TokenService tokenService;
     
+    @PostMapping("login")
+    @ApiOperation("用户登录接口")
+    public Result<UserVO> login(@ModelAttribute LoginForm form){
+
+    	int loginType = form.getLoginType();
+        //用户登录
+        UserVO user = null;
+		try {
+			
+			if (loginType == 0) {
+				// 手机登录
+				user = userService.login(form);				
+				
+			} else if (loginType == 1) {
+				// 微信登录
+				user = userService.weChatLogin(form);
+			}
+			
+		} catch (Exception e) {
+			log.error("login occur error ", e);
+			return new Result<>(500, e.getMessage());
+		}
+
+        return new Result<>(user);
+    }
+    
+    @Deprecated
     @PostMapping("mobileLogin")
     @ApiOperation("用户手机登录接口(测试用)")
-    public Result<UserVO> login(@ModelAttribute MobileLoginForm form){
+    public Result<UserVO> mobileLogin(@ModelAttribute LoginForm form){
 
         //用户登录
         UserVO user = null;
@@ -55,9 +83,10 @@ public class ApiLoginController {
         return new Result<>(user);
     }
     
+    @Deprecated
     @PostMapping("weChatLogin")
     @ApiOperation("用户微信登录接口")
-    public Result<UserVO> weChatLogin(@ModelAttribute WeChatLoginForm form){
+    public Result<UserVO> weChatLogin(@ModelAttribute LoginForm form){
 
         //用户登录
         UserVO user = null;
