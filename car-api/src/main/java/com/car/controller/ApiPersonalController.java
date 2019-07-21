@@ -17,6 +17,8 @@ import com.car.form.*;
 import com.car.service.*;
 import com.car.utils.Result;
 import com.car.vo.*;
+
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.slf4j.Logger;
@@ -49,6 +51,7 @@ import com.car.utils.StringUtil;
  */
 @RestController
 @RequestMapping("/api/personal")
+@Api(tags="个人接口")
 public class ApiPersonalController {
 	private static final Logger log = LoggerFactory.getLogger(ApiPersonalController.class);
 	private static final String SUCCESS = "success";
@@ -467,7 +470,7 @@ public class ApiPersonalController {
 	@Login
 	@GetMapping("/getUserOldCommoditys")
 	@ApiOperation("用户旧商品接口")
-	public Result<List<CommodityVO>> getUserOldCommoditysByUserId(@ApiParam(value = "用户ID") Long userId) {
+	public Result<List<CommodityVO>> getUserOldCommoditysByUserId(@ApiParam(value = "用户ID")@RequestParam("userId") Long userId) {
 		List<CommodityVO> commodityList = null;
     	try {
 			commodityList = commodityService.queryUserOldCommoditysByUserId(userId);
@@ -481,7 +484,7 @@ public class ApiPersonalController {
 	@Login
 	@GetMapping("/getUserPublishPosts")
 	@ApiOperation("用户帖子接口")
-	public Result<List<PublishPostVO>> getUserPublishPostsByUserId(@ApiParam(value = "用户ID") Long userId) {
+	public Result<List<PublishPostVO>> getUserPublishPostsByUserId(@ApiParam(value = "用户ID")@RequestParam("userId") Long userId) {
 		List<PublishPostVO> publishPostList = null;
     	try {
 			publishPostList = publishPostService.queryUserPublishPostsByUserId(userId);
@@ -495,7 +498,7 @@ public class ApiPersonalController {
 	@Login
 	@GetMapping("/getUserInfos")
 	@ApiOperation("用户消息接口")
-	public Result<List<SysInfoVO>> getUserInfosByUserId(@ApiParam(value = "用户ID") Long userId) {
+	public Result<List<SysInfoVO>> getUserInfosByUserId(@ApiParam(value = "用户ID")@RequestParam("userId") Long userId) {
 		List<SysInfoVO> sysInfoList = null;
 		try {
 			sysInfoList = sysInfoService.queryUserInfosByUserId(userId);
