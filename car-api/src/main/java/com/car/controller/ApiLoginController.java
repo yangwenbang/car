@@ -4,25 +4,27 @@ package com.car.controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.car.annotation.Login;
 import com.car.common.utils.R;
 import com.car.exception.DAOException;
 import com.car.form.LoginForm;
-import com.car.form.MobileLoginForm;
-import com.car.form.WeChatLoginForm;
 import com.car.service.TokenService;
 import com.car.service.UserService;
+import com.car.utils.AliSmsUtils;
 import com.car.utils.Result;
 import com.car.vo.UserVO;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 
 /**
  * 登录接口
@@ -39,6 +41,23 @@ public class ApiLoginController {
     private UserService userService;
     @Autowired
     private TokenService tokenService;
+    
+    @GetMapping("sendSms")
+    @ApiOperation("发送手机验证码接口")
+    public Result<String> sendSms(@ApiParam(value = "用户手机号", required = true)@RequestParam("mobile") String mobile){
+
+        String verificationCode  = (int)((Math.random()*9+1)*100000)+"";
+		try {
+			
+			AliSmsUtils.sendSms(mobile, verificationCode);
+			
+		} catch (Exception e) {
+			log.error("send sms occur error ", e);
+			return new Result<>(500, e.getMessage());
+		}
+
+        return new Result<>(verificationCode);
+    }
     
     @PostMapping("login")
     @ApiOperation("用户登录接口")
