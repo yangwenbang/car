@@ -4,14 +4,13 @@
 <mapper namespace="com.car.dao.SysInfoDao">
 
 	<insert id="saveSysInfo" parameterType="com.car.entity.SysInfo">
-		INSERT INTO sys_info (user_id,project_id,info_type,produce_date,produce_username,info_content) 
-		VALUES (#{userId},#{projectId},#{infoType},#{produceDate},#{produceUserName},#{infoContent})
+		INSERT INTO sys_info (user_id,info_type,produce_date,produce_username,info_content) 
+		VALUES (#{userId},#{infoType},#{produceDate},#{produceUserName},#{infoContent})
 	</insert>
 
 	<select id="queryUserInfosByUserId" resultType="com.car.vo.SysInfoVO">
 		SELECT
 		  id sysInfoId,
-		  project_id,
 		  info_type,
 		  DATE_FORMAT(produce_date,'%Y-%m-%d %H:%i') AS produce_date,
 		  produce_username,
