@@ -2,25 +2,37 @@ package com.car.controller;
 
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
-import com.car.annotation.Login;
-import com.car.form.CommodityQuestionFrom;
-import com.car.form.UpdateOldCommodityForm;
-import com.car.service.CommodityQuestionService;
-import com.car.dto.CommodityQuestionDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
+import com.aliyuncs.exceptions.ClientException;
+import com.aliyuncs.exceptions.ServerException;
+import com.car.annotation.Login;
+import com.car.dto.CommodityQuestionDTO;
 import com.car.exception.DAOException;
+import com.car.form.CommodityQuestionFrom;
 import com.car.form.OldCommodityForm;
 import com.car.form.PublishPostForm;
+import com.car.form.UpdateOldCommodityForm;
 import com.car.service.CommodityCategoryService;
+import com.car.service.CommodityQuestionService;
 import com.car.service.CommodityService;
 import com.car.service.PublishPostService;
 import com.car.utils.Result;
+import com.car.utils.STSUtils;
 import com.car.vo.CommodityCategoryVO;
 import com.car.vo.CommodityVO;
 
@@ -50,6 +62,7 @@ public class ApiOldCommodityController {
 	private PublishPostService publishPostService;
 	@Autowired
 	private CommodityQuestionService commodityQuestionService;
+	
 	/**
 	 * 保存商品
 	 */
@@ -207,4 +220,23 @@ public class ApiOldCommodityController {
 		publishPostService.deletePublishPostById(publishPostId);
 		return new Result<>(ZERO, SUCCESS);
 	}
+	
+	@GetMapping("/getSTSInfos")
+	@ApiOperation("获取OSS的STS授权信息")
+	public Result<Map<String, String>> getSTSInfos(){
+		
+		Map<String, String> stsMap = new LinkedHashMap<String, String>();
+		try {
+			stsMap = STSUtils.getSTSInfos();
+		} catch (ServerException e) {
+			log.error("get sts occur errors . ", e);
+			return new Result<>(500, e.getMessage());
+		} catch (ClientException e) {
+			log.error("get sts occur errors . ", e);
+			return new Result<>(500, e.getMessage());
+		}
+		
+		return new Result<>(ZERO, SUCCESS, stsMap);
+	}
+	
 }
