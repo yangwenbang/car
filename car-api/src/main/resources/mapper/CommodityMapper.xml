@@ -4,55 +4,22 @@
 <mapper namespace="com.car.dao.CommodityDao">
 
     <insert id="insertCommodity" parameterType="com.car.entity.OldCommodity">
-        INSERT INTO old_commodity (commodity_category_id,commodity_name,commodity_picture,
-        description,use_start_time,use_end_time,use_state,price,publish_user_id,
-        trade_mode,create_time,update_time,brand,model,color,material,have_flaw,
-        tyre_size,hole_spacing,manufactur_mode,light_type,hub_size,size,type,
-        flaw,position,commodity_num,start_price,freight,publish_user_name,publish_user_head,
-        other_category_name,concrete_description)
-        VALUES (#{commodityCategoryId},#{commodityName},#{commodityPicture},
-        #{description},#{useStartTime},#{useEndTime},#{useState},#{price},#{publishUserId},
-        #{tradeMode},#{createTime},#{updateTime},#{brand},#{model},#{color},#{material},#{haveFlaw},
-        #{tyreSize},#{holeSpacing},#{manufacturMode},#{lightType},#{hubSize},#{size},#{type},
-        #{flaw},#{position},#{commodityNum},#{startPrice},#{freight},#{publishUserName},#{publishUserHead},
-        #{otherCategoryName},#{concreteDescription})
+        INSERT INTO old_commodity (quality_shop_id,commodity_category_id,commodity_name,commodity_code,
+        commodity_picture,description,use_time_length,price,consignment_price,freight,publish_user_id,
+        arrival_time,address,detail_address,longitude,latitude,create_time,update_time)
+        VALUES (#{qualityShopId},#{commodityCategoryId},#{commodityName},#{commodityCode},
+        #{commodityPicture},#{description},#{useTimeLength},#{price},#{consignmentPrice},
+        #{freight},#{publishUserId},#{arrivalTime},#{address},#{detailAddress},#{longitude},
+        #{latitude},#{createTime},#{updateTime})
     </insert>
 
     <select id="queryCommoditysByCategoryId" resultType="com.car.vo.CommodityVO">
-        SELECT
-          id commodityId,
-          commodity_name,
-          commodity_picture,
-          description,
-          DATE_FORMAT(use_start_time,'%Y-%m-%d %H:%i') AS use_start_time,
-          DATE_FORMAT(use_end_time,'%Y-%m-%d %H:%i') AS use_end_time,
-          use_state,
-          price,
-          trade_mode,
-          brand,
-          model,
-          color,
-          material,
-          have_flaw,
-          tyre_size,
-          hole_spacing,
-          manufactur_mode,
-          light_type,
-          hub_size,
-          size,
-          flaw,
-          type,
-          position,
-          commodity_num,
-          start_price,
-          freight,
-          publish_user_name,
-          publish_user_head,
-          other_category_name,
-          concrete_description
+        SELECT id oldCommodityId,quality_shop_id,commodity_category_id,commodity_name,commodity_code,
+        commodity_picture,description,use_time_length,price,consignment_price,
+        freight,publish_user_id,address,detail_address,longitude,latitude
         FROM old_commodity
         WHERE commodity_category_id = #{commodityCategoryId}
-        ORDER BY seq DESC LIMIT #{pageId}, #{pageSize}
+        ORDER BY create_time DESC LIMIT #{pageId}, #{pageSize}
     </select>
 
     <delete id="deleteCommodityById">

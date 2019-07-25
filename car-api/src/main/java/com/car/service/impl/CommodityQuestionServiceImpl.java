@@ -65,9 +65,9 @@ public class CommodityQuestionServiceImpl implements CommodityQuestionService {
     public List<MainPageInfoDTO> queryPageInfoCommodityQuestions(int pageId) throws DAOException {
         int pageSize = pageId * ApiConstants.PAGE_COUNT;
         List<MainPageInfoDTO> mainPageInfoList = commodityQuestionDao.queryPageInfoCommodityQuestions(pageSize, ApiConstants.PAGE_COUNT);
-        for (MainPageInfoDTO MainPageInfo : mainPageInfoList) {
-            MainPageInfo.setCommodityQuestions(queryCommodityQuestionsByTypeId(MainPageInfo.getPublishPostId(),PUBLISHPOST_TYPE));
-        }
+//        for (MainPageInfoDTO MainPageInfo : mainPageInfoList) {
+//            MainPageInfo.setCommodityQuestions(queryCommodityQuestionsByTypeId(MainPageInfo.getPublishPostId(),PUBLISHPOST_TYPE));
+//        }
         return mainPageInfoList;
     }
 

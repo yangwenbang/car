@@ -31,10 +31,12 @@ import com.car.service.CommodityCategoryService;
 import com.car.service.CommodityQuestionService;
 import com.car.service.CommodityService;
 import com.car.service.PublishPostService;
+import com.car.service.QualityShopService;
 import com.car.utils.Result;
 import com.car.utils.STSUtils;
 import com.car.vo.CommodityCategoryVO;
 import com.car.vo.CommodityVO;
+import com.car.vo.QualityShopVO;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -62,6 +64,21 @@ public class ApiOldCommodityController {
 	private PublishPostService publishPostService;
 	@Autowired
 	private CommodityQuestionService commodityQuestionService;
+	@Autowired
+	private QualityShopService qualityShopService;
+	
+	@GetMapping("/getQualityShops")
+	@ApiOperation("获取质检商家接口")
+	public Result<List<QualityShopVO>> getQualityShops(@ApiParam(value = "分页ID(从0开始)")@RequestParam("pageId") int pageId){
+		List<QualityShopVO> qualityShopVOList = new ArrayList<>();
+		try {
+			qualityShopVOList = qualityShopService.getQualityShops(pageId);
+		} catch (DAOException e) {
+			log.error("get QualityShopVO occur errors .", e);
+			return new Result<>(500, e.getMessage());
+		}
+		return new Result<>(ZERO, SUCCESS, qualityShopVOList);
+	}
 	
 	/**
 	 * 保存商品
@@ -70,12 +87,14 @@ public class ApiOldCommodityController {
 	@PostMapping("/publishCommodity")
 	@ApiOperation("发布商品")
 	public Result<String> saveCommodity(@ModelAttribute OldCommodityForm oldCommodity) {
-		if(oldCommodity.getCommodityName() == null || oldCommodity.getCommodityName().isEmpty()){
+		if(oldCommodity.getCommodityName() == null){
 			return new Result<>(500, "商品名称为空");
 		}
+		
 		if(oldCommodity.getCommodityCategoryId() == null){
-			return new Result<>(500, "商品分类不能为空");
+			return new Result<>(500, "商品分类ID不能为空");
 		}
+		
 		try {
 			commodityService.insertCommodity(oldCommodity);
 		} catch (DAOException e) {

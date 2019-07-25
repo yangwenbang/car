@@ -1,10 +1,10 @@
 package com.car.utils;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -39,7 +39,9 @@ public class STSUtils {
 		
 		ProtocolType protocolType = ProtocolType.HTTPS;
 		String roleSessionName = "alice-001";
-		String policy = ReadJson(STSUtils.class.getResource("all_policy.txt").getPath()); 
+		
+		InputStream inputStream = STSUtils.class.getResourceAsStream("all_policy.txt");
+		String policy = ReadJson(inputStream); 
 
 		// 创建一个 AssumeRoleRequest 并设置请求参数
 		AssumeRoleRequest request = new AssumeRoleRequest();
@@ -70,15 +72,15 @@ public class STSUtils {
 	 * @param path
 	 * @return
 	 */
-	public static String ReadJson(String path){
+	public static String ReadJson(InputStream inputStream){
         //从给定位置获取文件
-        File file = new File(path);
+//        File file = new File(path);
         BufferedReader reader = null;
         //返回值,使用StringBuffer
         StringBuffer data = new StringBuffer();
         //
         try {
-            reader = new BufferedReader(new FileReader(file));
+            reader = new BufferedReader(new InputStreamReader(inputStream));
             //每次读取文件的缓存
             String temp = null;
             while((temp = reader.readLine()) != null){

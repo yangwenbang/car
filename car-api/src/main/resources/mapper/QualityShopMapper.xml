@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.car.modules.car.dao.QualityShopDao">
+
+	<select id="getQualityShops" resultType="com.car.vo.QualityShopVO">
+		SELECT id as qualityShopId,shop_name,description,shop_picture,business_time,
+		address,detail_address,longitude,latitude
+		FROM quality_shop 
+		ORDER BY create_time DESC LIMIT #{pageId}, #{pageSize}
+	</select>
+
+
+</mapper>
