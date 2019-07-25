@@ -67,6 +67,7 @@ public class ApiOldCommodityController {
 	@Autowired
 	private QualityShopService qualityShopService;
 	
+	@Login
 	@GetMapping("/getQualityShops")
 	@ApiOperation("获取质检商家接口")
 	public Result<List<QualityShopVO>> getQualityShops(@ApiParam(value = "分页ID(从0开始)")@RequestParam("pageId") int pageId){
