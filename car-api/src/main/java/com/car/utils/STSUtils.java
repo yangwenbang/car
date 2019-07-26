@@ -1,10 +1,5 @@
 package com.car.utils;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -29,10 +24,6 @@ public class STSUtils {
 	private static final String ACCESS_KEY = "LTAIphJgIBq2KcGw";
 	private static final String ACCESS_KEY_SECRET = "mOxYtr92pCAloJCBaA5jrxRtk4gd3T";
 	
-	public static void main(String[] args) {
-		System.out.println(STSUtils.class.getResource("all_policy.txt"));
-	}
-
 	public static Map<String, String> getSTSInfos() throws ServerException,ClientException {
 		IClientProfile profile = DefaultProfile.getProfile(REGION_CN_HANGZHOU, ACCESS_KEY, ACCESS_KEY_SECRET);
 		DefaultAcsClient client = new DefaultAcsClient(profile);
@@ -40,8 +31,20 @@ public class STSUtils {
 		ProtocolType protocolType = ProtocolType.HTTPS;
 		String roleSessionName = "alice-001";
 		
-		InputStream inputStream = STSUtils.class.getResourceAsStream("all_policy.txt");
-		String policy = ReadJson(inputStream); 
+		String policy =  "{\n" +
+                "    \"Version\": \"1\", \n" +
+                "    \"Statement\": [\n" +
+                "        {\n" +
+                "            \"Action\": [\n" +
+                "                \"oss:*\"\n" +
+                "            ], \n" +
+                "            \"Resource\": [\n" +
+                "                \"acs:oss:*:*:*\" \n" +
+                "            ], \n" +
+                "            \"Effect\": \"Allow\"\n" +
+                "        }\n" +
+                "    ]\n" +
+                "}"; 
 
 		// 创建一个 AssumeRoleRequest 并设置请求参数
 		AssumeRoleRequest request = new AssumeRoleRequest();
@@ -67,41 +70,4 @@ public class STSUtils {
 		return respMap;
 	}
 	
-	/**
-	 * 读取配置文件
-	 * @param path
-	 * @return
-	 */
-	public static String ReadJson(InputStream inputStream){
-        //从给定位置获取文件
-//        File file = new File(path);
-        BufferedReader reader = null;
-        //返回值,使用StringBuffer
-        StringBuffer data = new StringBuffer();
-        //
-        try {
-            reader = new BufferedReader(new InputStreamReader(inputStream));
-            //每次读取文件的缓存
-            String temp = null;
-            while((temp = reader.readLine()) != null){
-                data.append(temp);
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }finally {
-            //关闭文件流
-            if (reader != null){
-                try {
-                    reader.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        return data.toString();
-    }
-
-
 }
