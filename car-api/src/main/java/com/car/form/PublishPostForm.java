@@ -17,18 +17,21 @@ public class PublishPostForm {
     @ApiModelProperty(value = "发布图片，多个用逗号隔开")
     private String publishPicture;
 
-    @ApiModelProperty(value = "发布地址")
+    @ApiModelProperty(value = "帖子发布地址(省，市，区)")
     private String publishAddress;
 
     @ApiModelProperty(value = "发布人",required=true)
     @NotBlank(message = "发布人不能为空")
     private Long publishUserId;
 
-    @ApiModelProperty(value = "发布人名字")
-    private String publishUserName;
-
-    @ApiModelProperty(value = "发布人头像地址")
-    private String publishUserPicture;
+    @ApiModelProperty(value = "详情地址")
+    private String detailAddress;
+    
+    @ApiModelProperty(value = "经度")
+	private String longitude;
+	
+    @ApiModelProperty(value = "纬度")
+	private String latitude;
 
     public String getPublishTitle() {
         return publishTitle == null ? "" : publishTitle;
@@ -70,19 +73,27 @@ public class PublishPostForm {
         this.publishUserId = publishUserId == null ? 0 : publishUserId;
     }
 
-    public String getPublishUserName() {
-        return publishUserName == null ? "" : publishUserName;
-    }
+	public String getDetailAddress() {
+		return detailAddress;
+	}
 
-    public void setPublishUserName(String publishUserName) {
-        this.publishUserName = publishUserName;
-    }
+	public void setDetailAddress(String detailAddress) {
+		this.detailAddress = detailAddress;
+	}
 
-    public String getPublishUserPicture() {
-        return publishUserPicture == null ? "" : publishUserPicture;
-    }
+	public String getLongitude() {
+		return longitude;
+	}
 
-    public void setPublishUserPicture(String publishUserPicture) {
-        this.publishUserPicture = publishUserPicture;
-    }
+	public void setLongitude(String longitude) {
+		this.longitude = longitude;
+	}
+
+	public String getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(String latitude) {
+		this.latitude = latitude;
+	}
 }

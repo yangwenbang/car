@@ -50,6 +50,10 @@ public class PublishPost implements Serializable {
 	private String publishUserName;
 
 	private String publishUserPicture;
+	
+	private String detailAddress;
+	private String longitude;
+	private String latitude;
 
 	/**
 	 * 设置：帖子ID
@@ -162,5 +166,23 @@ public class PublishPost implements Serializable {
 
 	public void setPublishUserPicture(String publishUserPicture) {
 		this.publishUserPicture = publishUserPicture;
+	}
+	public String getDetailAddress() {
+		return detailAddress;
+	}
+	public void setDetailAddress(String detailAddress) {
+		this.detailAddress = detailAddress;
+	}
+	public String getLongitude() {
+		return longitude;
+	}
+	public void setLongitude(String longitude) {
+		this.longitude = longitude;
+	}
+	public String getLatitude() {
+		return latitude;
+	}
+	public void setLatitude(String latitude) {
+		this.latitude = latitude;
 	}
 }

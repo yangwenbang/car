@@ -5,9 +5,11 @@
 
     <insert id="insertPublishPost" parameterType="com.car.entity.PublishPost">
         INSERT INTO publish_post (publish_title,publish_content,publish_picture,
-        publish_address,publish_user_id,publish_time,update_time,publish_user_name,publish_user_picture)
+        publish_address,publish_user_id,publish_time,update_time,publish_user_name,
+        publish_user_picture,detail_address,longitude,latitude)
         VALUES (#{publishTitle},#{publishContent},#{publishPicture},#{publishAddress},
-        #{publishUserId},#{publishTime},#{updateTime},#{publishUserName},#{publishUserPicture})
+        #{publishUserId},#{publishTime},#{updateTime},#{publishUserName},#{publishUserPicture},
+        #{detail_address},#{longitude},#{latitude})
     </insert>
 
     <delete id="deletePublishPostById">

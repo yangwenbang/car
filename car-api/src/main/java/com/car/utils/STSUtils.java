@@ -19,6 +19,8 @@ import com.aliyuncs.profile.IClientProfile;
  * @author wind
  */
 public class STSUtils {
+	private static final String BUCKET_NAME = "car-pict";
+	private static final String ENDPOINT = "oss-cn-beijing.aliyuncs.com";
 	private static final String REGION_CN_HANGZHOU = "cn-hangzhou";
 	private static final String STS_API_VERSION = "2015-04-01";
 	private static final String ACCESS_KEY = "LTAIphJgIBq2KcGw";
@@ -61,6 +63,8 @@ public class STSUtils {
 		Map<String, String> respMap = new LinkedHashMap<String, String>();
 		AssumeRoleResponse stsResponse = client.getAcsResponse(request);
 		respMap.put("StatusCode", "200");
+		respMap.put("bucketName", BUCKET_NAME);
+		respMap.put("endpoint", ENDPOINT);
         respMap.put("AccessKeyId", stsResponse.getCredentials().getAccessKeyId());
         respMap.put("AccessKeySecret", stsResponse.getCredentials().getAccessKeySecret());
         respMap.put("SecurityToken", stsResponse.getCredentials().getSecurityToken());
