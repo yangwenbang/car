@@ -4,18 +4,19 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Date;
 import java.util.List;
 
-import com.car.form.UpdateOldCommodityForm;
-
 import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.car.ApiConstants;
+import com.car.common.utils.DateUtils;
 import com.car.dao.CommodityDao;
 import com.car.entity.OldCommodity;
 import com.car.exception.DAOException;
 import com.car.form.OldCommodityForm;
+import com.car.form.UpdateOldCommodityForm;
 import com.car.service.CommodityService;
 import com.car.vo.CommodityVO;
 
@@ -30,11 +31,28 @@ public class CommodityServiceImpl implements CommodityService {
     public void insertCommodity(OldCommodityForm commodityForm) throws DAOException {
         OldCommodity commodityEntity = new OldCommodity();
         
-        try {
-			BeanUtils.copyProperties(commodityEntity, commodityForm);
-		} catch (IllegalAccessException | InvocationTargetException e) {
-			e.printStackTrace();
-		}
+        commodityEntity.setAddress(commodityForm.getAddress());
+        commodityEntity.setCommodityCategoryId(commodityForm.getCommodityCategoryId());
+        commodityEntity.setQualityShopId(commodityForm.getQualityShopId());
+        commodityEntity.setCommodityName(commodityForm.getCommodityName());
+        commodityEntity.setCommodityCode("0000");
+        commodityEntity.setCommodityPicture(commodityForm.getCommodityPicture());
+        commodityEntity.setDetailAddress(commodityForm.getDetailAddress());
+        commodityEntity.setAuditStatus(0);
+        commodityEntity.setConsignmentPrice(commodityForm.getConsignmentPrice());
+        commodityEntity.setPublishUserId(commodityForm.getPublishUserId());
+        commodityEntity.setDescription(commodityForm.getDescription());
+        commodityEntity.setFreight(commodityForm.getFreight());
+        commodityEntity.setLatitude(commodityForm.getLatitude());
+        commodityEntity.setLongitude(commodityForm.getLatitude());
+        commodityEntity.setPrice(commodityForm.getPrice());
+        commodityEntity.setUseTimeLength(commodityForm.getUseTimeLength());
+        
+        String arrivalTimeString = commodityForm.getArrivalTime();
+        if (StringUtils.isNoneEmpty(arrivalTimeString)) {
+        	Date arrivalTime = DateUtils.parseDate(arrivalTimeString);
+        	commodityEntity.setArrivalTime(arrivalTime);
+        }
         
         commodityEntity.setCreateTime(new Date());
         commodityEntity.setUpdateTime(new Date());

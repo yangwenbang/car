@@ -100,7 +100,7 @@ public class ApiOldCommodityController {
 			commodityService.insertCommodity(oldCommodity);
 		} catch (DAOException e) {
 			log.error("insert oldCommodity occur errors .", e);
-			return new Result<>(500);
+			return new Result<>(500, e.getMessage());
 		}
 		return new Result<>(ZERO, SUCCESS);
 	}

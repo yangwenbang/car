@@ -54,8 +54,8 @@ public class OldCommodityForm {
 	@ApiModelProperty(value = "运费")
 	private Double freight;
 
-	@ApiModelProperty(value = "到店时间")
-	private Date arrivalTime;
+	@ApiModelProperty(value = "到店时间,格式：yyyy-mm-dd")
+	private String arrivalTime;
 
 	public Long getCommodityCategoryId() {
 		return commodityCategoryId;
@@ -74,7 +74,7 @@ public class OldCommodityForm {
 	}
 
 	public String getCommodityName() {
-		return commodityName;
+		return commodityName == null ? "" : commodityName;
 	}
 
 	public void setCommodityName(String commodityName) {
@@ -82,7 +82,7 @@ public class OldCommodityForm {
 	}
 
 	public String getDescription() {
-		return description;
+		return description == null ? "" : description;
 	}
 
 	public void setDescription(String description) {
@@ -90,7 +90,7 @@ public class OldCommodityForm {
 	}
 
 	public String getCommodityPicture() {
-		return commodityPicture;
+		return commodityPicture == null ? "" : commodityPicture;
 	}
 
 	public void setCommodityPicture(String commodityPicture) {
@@ -98,7 +98,7 @@ public class OldCommodityForm {
 	}
 
 	public String getUseTimeLength() {
-		return useTimeLength;
+		return useTimeLength == null ? "" : useTimeLength;
 	}
 
 	public void setUseTimeLength(String useTimeLength) {
@@ -106,7 +106,7 @@ public class OldCommodityForm {
 	}
 
 	public Double getPrice() {
-		return price;
+		return price == null ? 0 : price;
 	}
 
 	public void setPrice(Double price) {
@@ -114,7 +114,7 @@ public class OldCommodityForm {
 	}
 
 	public String getAddress() {
-		return address;
+		return address == null ? "" : address;
 	}
 
 	public void setAddress(String address) {
@@ -122,7 +122,7 @@ public class OldCommodityForm {
 	}
 
 	public String getDetailAddress() {
-		return detailAddress;
+		return detailAddress == null ? "" : detailAddress;
 	}
 
 	public void setDetailAddress(String detailAddress) {
@@ -130,7 +130,7 @@ public class OldCommodityForm {
 	}
 
 	public String getLongitude() {
-		return longitude;
+		return longitude == null ? "" : longitude;
 	}
 
 	public void setLongitude(String longitude) {
@@ -138,7 +138,7 @@ public class OldCommodityForm {
 	}
 
 	public String getLatitude() {
-		return latitude;
+		return latitude == null ? "" : latitude;
 	}
 
 	public void setLatitude(String latitude) {
@@ -146,7 +146,7 @@ public class OldCommodityForm {
 	}
 
 	public Double getConsignmentPrice() {
-		return consignmentPrice;
+		return consignmentPrice == null ? 0 : consignmentPrice;
 	}
 
 	public void setConsignmentPrice(Double consignmentPrice) {
@@ -154,21 +154,27 @@ public class OldCommodityForm {
 	}
 
 	public Double getFreight() {
-		return freight;
+		return freight == null ? 0 : freight;
 	}
 
 	public void setFreight(Double freight) {
 		this.freight = freight;
 	}
 
-	public Date getArrivalTime() {
-		return arrivalTime;
+	public String getArrivalTime() {
+		return arrivalTime == null ? "" : arrivalTime;
 	}
 
-	public void setArrivalTime(Date arrivalTime) {
+	public void setArrivalTime(String arrivalTime) {
 		this.arrivalTime = arrivalTime;
 	}
-	
-	
+
+	public Long getPublishUserId() {
+		return publishUserId;
+	}
+
+	public void setPublishUserId(Long publishUserId) {
+		this.publishUserId = publishUserId;
+	}
 
 }
