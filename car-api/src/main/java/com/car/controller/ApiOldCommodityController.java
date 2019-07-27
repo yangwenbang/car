@@ -125,10 +125,10 @@ public class ApiOldCommodityController {
 	@PostMapping("/savePublishPost")
 	@ApiOperation("发布帖子接口")
 	public Result<String> savePublishPost(@ModelAttribute PublishPostForm publishPost) throws DAOException {
-		if(publishPost.getPublishTitle() == null || publishPost.getPublishTitle().isEmpty()){
+		if(publishPost.getPublishTitle() == null){
 			throw new DAOException("帖子标题为空");
 		}
-		if(publishPost.getPublishContent() == null || publishPost.getPublishContent().isEmpty()){
+		if(publishPost.getPublishContent() == null){
 			throw new DAOException("帖子内容为空");
 		}
 		if(publishPost.getPublishUserId() == null){

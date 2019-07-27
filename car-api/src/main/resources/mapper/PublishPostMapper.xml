@@ -9,7 +9,7 @@
         publish_user_picture,detail_address,longitude,latitude)
         VALUES (#{publishTitle},#{publishContent},#{publishPicture},#{publishAddress},
         #{publishUserId},#{publishTime},#{updateTime},#{publishUserName},#{publishUserPicture},
-        #{detail_address},#{longitude},#{latitude})
+        #{detailAddress},#{longitude},#{latitude})
     </insert>
 
     <delete id="deletePublishPostById">

@@ -30,7 +30,7 @@ public class OldCommodityForm {
 	@ApiModelProperty(value = "商品图片，多个用逗号隔开")
 	private String commodityPicture;
 
-	@ApiModelProperty(value = "使用时长(单位是年)")
+	@ApiModelProperty(value = "购入时间(年月)")
 	private String useTimeLength;
 
 	@ApiModelProperty(value = "商品价格")
