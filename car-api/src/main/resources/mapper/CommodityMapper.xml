@@ -21,7 +21,7 @@
         <if test="commodityCategoryId != 0">
         	WHERE commodity_category_id = #{commodityCategoryId}
         </if>
-        ORDER BY create_time DESC LIMIT #{pageId}, #{pageSize}
+        ORDER BY seq DESC LIMIT #{pageId}, #{pageSize}
     </select>
 
     <delete id="deleteCommodityById">
