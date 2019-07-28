@@ -140,7 +140,7 @@ public class ApiOldCommodityController {
 
 	@GetMapping("/getCommoditysByCategorys")
 	@ApiOperation("获取二手商品")
-	public Result<List<CommodityVO>> getCommoditysByCategoryId(@ApiParam(value = "商品分类ID")@RequestParam("commodityCategoryId") long commodityCategoryId,
+	public Result<List<CommodityVO>> getCommoditysByCategoryId(@ApiParam(value = "商品分类ID(推荐默认为0)")@RequestParam("commodityCategoryId") long commodityCategoryId,
 			@ApiParam(value = "分页ID(从0开始)")@RequestParam("pageId") int pageId) {
 		List<CommodityVO> commodityList = new ArrayList<>();
 		try {

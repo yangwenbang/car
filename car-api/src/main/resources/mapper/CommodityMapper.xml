@@ -18,7 +18,9 @@
         commodity_picture,description,use_time_length,price,consignment_price,
         freight,publish_user_id,address,detail_address,longitude,latitude
         FROM old_commodity
-        WHERE commodity_category_id = #{commodityCategoryId}
+        <if test="commodityCategoryId != 0">
+        	WHERE commodity_category_id = #{commodityCategoryId}
+        </if>
         ORDER BY create_time DESC LIMIT #{pageId}, #{pageSize}
     </select>
 
