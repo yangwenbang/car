@@ -1,10 +1,17 @@
 package com.car.controller;
 
 
+import static com.car.ApiConstants.ZERO;
+
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.SortedMap;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,21 +29,31 @@ import com.aliyuncs.exceptions.ClientException;
 import com.aliyuncs.exceptions.ServerException;
 import com.car.annotation.Login;
 import com.car.dto.CommodityQuestionDTO;
+import com.car.entity.PayRecord;
 import com.car.exception.DAOException;
 import com.car.form.CommodityQuestionFrom;
 import com.car.form.OldCommodityForm;
+import com.car.form.PayForm;
 import com.car.form.PublishPostForm;
 import com.car.form.UpdateOldCommodityForm;
+import com.car.pay.alipay.AlipayUtils;
+import com.car.pay.service.PayService;
+import com.car.pay.service.impl.AliPayServiceImpl;
+import com.car.pay.service.impl.WeChatPayServiceImpl;
+import com.car.pay.wxpay.WeChatPayUtils;
 import com.car.service.CommodityCategoryService;
 import com.car.service.CommodityQuestionService;
 import com.car.service.CommodityService;
+import com.car.service.PayRecordService;
 import com.car.service.PublishPostService;
 import com.car.service.QualityShopService;
+import com.car.service.UserService;
 import com.car.utils.Result;
 import com.car.utils.STSUtils;
 import com.car.vo.CommodityCategoryVO;
 import com.car.vo.CommodityVO;
 import com.car.vo.QualityShopVO;
+import com.car.vo.UserVO;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -66,6 +83,10 @@ public class ApiOldCommodityController {
 	private CommodityQuestionService commodityQuestionService;
 	@Autowired
 	private QualityShopService qualityShopService;
+	@Autowired
+    private PayRecordService payRecordService;
+	@Autowired
+    private UserService userService;
 	
 	@Login
 	@GetMapping("/getQualityShops")
@@ -162,9 +183,9 @@ public class ApiOldCommodityController {
 			commodityQuestionList = commodityQuestionService.queryCommodityQuestionsByTypeId(questionTypeId,questionType);
 		} catch (DAOException e) {
 			log.error("get CommodityQuestionDTO occur errors .", e);
-			return new Result<>(500);
+			return new Result<>(500, e.getMessage());
 		}
-		return new Result<>(0, SUCCESS,commodityQuestionList);
+		return new Result<>(0, SUCCESS, commodityQuestionList);
 	}
 
 	/**
@@ -257,6 +278,124 @@ public class ApiOldCommodityController {
 		}
 		
 		return new Result<>(ZERO, SUCCESS, stsMap);
+	}
+	
+	@Login
+    @PostMapping("pay")
+    @ApiOperation("支付接口")
+    public Result<String> pay(@ModelAttribute PayForm payForm,
+    		HttpServletRequest request) throws Exception {
+    	
+    	long userId = payForm.getUserId();
+    	int payType = payForm.getPayType();
+    	String money = payForm.getMoney();
+    	
+    	if (userId == 0) {
+    		throw new DAOException("userId is null");
+    	}
+    	
+    	String data = "";
+    	try {
+    		String ipAddress = getIpAddress(request);
+    		String orderNo = AlipayUtils.getOrderNo();
+    		if (payType == 0) { // 支付宝
+    			PayService aliPayService = new AliPayServiceImpl();
+    			String notifyUrl = AlipayUtils.getNotifyUrl(request);
+    			data = aliPayService.createAliOrder(notifyUrl, orderNo, money, "车配件购买", ipAddress);
+    			
+    			// orderNo错误
+    			savePayRecord(userId, payForm.getCommodityId(), payType, orderNo, money);
+    			
+    			return new Result<>(ZERO, SUCCESS, data);
+    		} else if (payType == 1) { // 微信
+    			PayService weChatService = new WeChatPayServiceImpl();
+    			String notifyUrl = WeChatPayUtils.getNotifyUrl(request);
+//    			Map<String, String> dataMap = weChatService.createWeChatOrder(notifyUrl, orderNo, coin, "", ipAddress);
+    			SortedMap<String, Object> dataMap = weChatService.createWeChatOrder(notifyUrl, orderNo, money, "车配件购买", ipAddress);
+    			
+    			savePayRecord(userId, payForm.getCommodityId(), payType, orderNo, money);
+    			
+//    			return new Result<>(ZERO, SUCCESS, dataMap);
+    			return new Result<>(ZERO, SUCCESS);
+    		}
+				
+		} catch (Exception e) {
+			log.error("get pay occur error ", e);
+			return new Result<>(500, e.getMessage());
+		}
+		
+        return new Result<>(ZERO, SUCCESS);
+    }
+
+    @PostMapping("alipayNotify")
+    public String alipayNotify(HttpServletRequest request, HttpServletResponse response) {
+        try {
+        	PayService aliPayService = new AliPayServiceImpl();
+            return aliPayService.callBack(request, response);
+        } catch (Exception e) {
+            response.setHeader("Content-type", "application/xml");
+            return "<xml>\n" +
+                    "  <return_code><![CDATA[FAIL]]></return_code>\n" +
+                    "  <return_msg><![CDATA[]]></return_msg>\n" +
+                    "</xml>";
+        }
+    }
+    
+    @PostMapping("weChatNotify")
+    public String weChatNotify(HttpServletRequest request, HttpServletResponse response) {
+        try {
+        	PayService weChatService = new WeChatPayServiceImpl();
+            return weChatService.callBack(request, response);
+        } catch (Exception e) {
+            response.setHeader("Content-type", "application/xml");
+            return "<xml>\n" +
+                    "  <return_code><![CDATA[FAIL]]></return_code>\n" +
+                    "  <return_msg><![CDATA[]]></return_msg>\n" +
+                    "</xml>";
+        }
+    }
+    
+    private void savePayRecord(long userId, long commodityId, int payType, String orderNo, String money)
+			throws DAOException {
+		// payRecord
+		UserVO user = userService.findById(userId);
+		PayRecord payRecord = new PayRecord();
+		payRecord.setUserId(userId);
+		payRecord.setCommodityId(commodityId);
+		payRecord.setUserMobile(user.getMobile());
+		payRecord.setUserName(user.getUserName());
+		payRecord.setCargoType(ZERO);
+		payRecord.setPayOrReturn(ZERO);
+		payRecord.setPayDate(new Date());
+		payRecord.setPayMoney(Double.parseDouble(money));
+		payRecord.setPayType(payType);
+		payRecord.setBank("");
+		payRecord.setCardNum("");
+		payRecord.setPayer(user.getUserName());
+		payRecord.setOrderNo(orderNo);
+		payRecord.setPayStatus(ZERO);
+		payRecord.setVersion(ZERO);
+		payRecordService.savePayRecord(payRecord);
+	}
+    
+    private static String getIpAddress(HttpServletRequest request) {
+		String ip = request.getHeader("x-forwarded-for");
+		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+			ip = request.getHeader("Proxy-Client-IP");
+		}
+		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+			ip = request.getHeader("WL-Proxy-Client-IP");
+		}
+		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+			ip = request.getHeader("HTTP_CLIENT_IP");
+		}
+		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+			ip = request.getHeader("HTTP_X_FORWARDED_FOR");
+		}
+		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+			ip = request.getRemoteAddr();
+		}
+		return ip;
 	}
 	
 }

@@ -1,17 +1,39 @@
 package com.car.form;
 
+import javax.validation.constraints.NotBlank;
+
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 /**
  * @author wind
  */
+@ApiModel(value = "用户地址表单")
 public class UserAddressForm {
 
+	@ApiModelProperty(value = "用户ID")
+	@NotBlank(message = "用户ID不能为空")
 	private Long userId;
+	
+	@ApiModelProperty(value = "用户地址ID(修改用)")
 	private Long userAddressId;
+	
+	@ApiModelProperty(value = "收货人")
 	private String receiver;
+	
+	@ApiModelProperty(value = "收货人手机号")
 	private String mobile;
+	
+	@ApiModelProperty(value = "所在地址(省，市，区)")
 	private String address;
+	
+	@ApiModelProperty(value = "详情地址")
 	private String detailAddress;
+	
+	@ApiModelProperty(value = "是否默认地址(0不是/1是)")
 	private Integer isDefault;
+	
+	@ApiModelProperty(value = "邮政编码")
 	private String postcode;
 
 	public Long getUserId() {
