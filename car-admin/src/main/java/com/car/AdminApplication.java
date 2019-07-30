@@ -18,6 +18,7 @@ public class AdminApplication extends SpringBootServletInitializer {
         application.run(args);
     }
 
+    //
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
         return application.sources(AdminApplication.class);
