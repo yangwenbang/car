@@ -16,15 +16,17 @@
 
 package com.car.common.utils;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 import org.apache.commons.lang.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.LocalDate;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
-
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * 日期处理
@@ -34,6 +36,7 @@ import java.util.Date;
  * @date 2016年12月21日 下午12:53:33
  */
 public class DateUtils {
+	private static Logger log = LoggerFactory.getLogger(DateUtils.class);
 	/** 时间格式(yyyy-MM-dd) */
 	public final static String DATE_PATTERN = "yyyy-MM-dd";
 	/** 时间格式(yyyy-MM-dd HH:mm:ss) */
@@ -65,6 +68,23 @@ public class DateUtils {
         }
         return null;
     }
+    
+    /**
+	 * format the date to 'yyyy-mm-dd'
+	 * 
+	 * @param date
+	 *          String
+	 * @return Date
+	 */
+	public static Date parseDate(String date) {
+		try {
+			return org.apache.commons.lang.time.DateUtils.parseDate(date,
+					new String[] { DATE_PATTERN });
+		} catch (Exception ex) {
+			log.error("Date format occurs error .", ex);
+			return null;
+		}
+	}
 
     /**
      * 字符串转换成日期

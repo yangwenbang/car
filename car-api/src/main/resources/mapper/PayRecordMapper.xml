@@ -20,11 +20,10 @@
 	</select>
 	
 	<insert id="savePayRecord" parameterType="com.car.entity.PayRecord">
-		INSERT INTO pay_record (user_id,user_mobile,user_name,pay_or_return,pay_date,
-		coin,pay_type,bank,card_num,order_no,payer,pay_status,cargo_type,cargo_id,version) 
-		VALUES (#{userId},#{userMobile},#{userName},#{payOrReturn},#{payDate},
-		#{coin},#{payType},#{bank},#{cardNum},#{orderNo},#{payer},
-		#{payStatus},#{cargoType},#{cargoId},#{version})
+		INSERT INTO pay_record (user_id,user_name,commodity_id,commodity_name,pay_or_return,pay_date,
+		pay_money,pay_type,order_no,payer,pay_status,version) 
+		VALUES (#{userId},#{userName},#{commodityId},#{commodityName},#{payOrReturn},#{payDate},
+		#{payMoney},#{payType},#{orderNo},#{payer},#{payStatus},#{version})
 	</insert>
 	
 	<update id="updatePayRecordStatus" parameterType="com.car.vo.PayRecordVO">

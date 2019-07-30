@@ -1,32 +1,27 @@
 package com.car.entity;
 
 
-import java.math.BigDecimal;
 import java.io.Serializable;
 import java.util.Date;
 
 /**
- * 
- * 
  * @author lzp
- * @email sunlightcs@gmail.com
- * @date 2019-05-16 21:33:04
  */
 public class OldCommodity implements Serializable {
 	private static final long serialVersionUID = 1L;
-
-	/**
-	 * 商品ID
-	 */
+	
 	private Long id;
-	/**
-	 * 商品分类ID
-	 */
+	private Long qualityShopId;
 	private Long commodityCategoryId;
+
 	/**
 	 * 商品名称
 	 */
 	private String commodityName;
+	/**
+	 * 商品单号(规则：0100 + 商品数量递增)
+	 */
+	private String commodityCode;
 	/**
 	 * 商品图片，多个用逗号隔开
 	 */
@@ -36,29 +31,49 @@ public class OldCommodity implements Serializable {
 	 */
 	private String description;
 	/**
-	 * 商品使用开始时间
+	 * 使用时长(单位是年)
 	 */
-	private Date useStartTime;
-	/**
-	 * 商品使用结束时间
-	 */
-	private Date useEndTime;
-	/**
-	 * 使用状况
-	 */
-	private String useState;
+	private String useTimeLength;
 	/**
 	 * 商品价格
 	 */
-	private BigDecimal price;
+	private Double price;
 	/**
 	 * 商品发布人
 	 */
 	private Long publishUserId;
 	/**
-	 * 交易方式(0同城面交/1邮寄)
+	 * 商品发布地址(省，市，区)
 	 */
-	private Integer tradeMode;
+	private String address;
+	/**
+	 * 详情地址
+	 */
+	private String detailAddress;
+	/**
+	 * 经度
+	 */
+	private String longitude;
+	/**
+	 * 纬度
+	 */
+	private String latitude;
+	/**
+	 * 寄卖费
+	 */
+	private Double consignmentPrice;
+	/**
+	 * 运费
+	 */
+	private Double freight;
+	/**
+	 * 到店时间
+	 */
+	private Date arrivalTime;
+	/**
+	 * 审核状态(0未审核/1已通过/2已拒绝)
+	 */
+	private Integer auditStatus;
 	/**
 	 * 创建时间
 	 */
@@ -67,348 +82,227 @@ public class OldCommodity implements Serializable {
 	 * 修改时间
 	 */
 	private Date updateTime;
-	/**
-	 * 商品品牌
-	 */
-	private String brand;
-	/**
-	 * 商品型号
-	 */
-	private String model;
-	/**
-	 * 商品颜色
-	 */
-	private String color;
-	/**
-	 * 商品材料
-	 */
-	private String material;
-	/**
-	 * 有无瑕疵（0没有,1有）
-	 */
-	private Integer haveFlaw;
-	/**
-	 * 轮胎胎宽,扁平比和直径(165-20-R14)
-	 */
-	private String tyreSize;
-	/**
-	 * 孔距(100-4)
-	 */
-	private String holeSpacing;
-	/**
-	 * 制造方式(单片锻造0,双片锻造1，三片锻造2)
-	 */
-	private Integer manufacturMode;
-	/**
-	 * 光源类型
-	 */
-	private String lightType;
-	/**
-	 * 轮毂J值和直径（6,。9J-16）
-	 */
-	private String hubSize;
-	/**
-	 * 尺寸
-	 */
-	private String size;
-	/**
-	 * 类型
-	 */
-	private String type;
-	/**
-	 * 瑕疵内容
-	 */
-	private String flaw;
-	/**
-	 * 部位（整体0,前段1,中段2,中后3,后段4）
-	 */
-	private Integer position;
-	/**
-	 * 商品数量
-	 */
-	private Integer commodityNum;
 
-	private BigDecimal startPrice;
-
-	private BigDecimal freight;
-
-	private String publishUserName;
-
-	private String publishUserHead;
-
-	private String otherCategoryName;
-
-	private String concreteDescription;
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public Long getCommodityCategoryId() {
-		return commodityCategoryId;
-	}
-
-	public void setCommodityCategoryId(Long commodityCategoryId) {
-		this.commodityCategoryId = commodityCategoryId;
-	}
-
-	public String getCommodityName() {
-		return commodityName;
-	}
-
+	/**
+	 * 设置：商品名称
+	 */
 	public void setCommodityName(String commodityName) {
 		this.commodityName = commodityName;
 	}
-
-	public String getCommodityPicture() {
-		return commodityPicture;
+	/**
+	 * 获取：商品名称
+	 */
+	public String getCommodityName() {
+		return commodityName;
 	}
-
+	/**
+	 * 设置：商品单号(规则：0100 + 商品数量递增)
+	 */
+	public void setCommodityCode(String commodityCode) {
+		this.commodityCode = commodityCode;
+	}
+	/**
+	 * 获取：商品单号(规则：0100 + 商品数量递增)
+	 */
+	public String getCommodityCode() {
+		return commodityCode;
+	}
+	/**
+	 * 设置：商品图片，多个用逗号隔开
+	 */
 	public void setCommodityPicture(String commodityPicture) {
 		this.commodityPicture = commodityPicture;
 	}
-
-	public String getDescription() {
-		return description;
+	/**
+	 * 获取：商品图片，多个用逗号隔开
+	 */
+	public String getCommodityPicture() {
+		return commodityPicture;
 	}
-
+	/**
+	 * 设置：商品描述
+	 */
 	public void setDescription(String description) {
 		this.description = description;
 	}
-
-	public Date getUseStartTime() {
-		return useStartTime;
+	/**
+	 * 获取：商品描述
+	 */
+	public String getDescription() {
+		return description;
 	}
-
-	public void setUseStartTime(Date useStartTime) {
-		this.useStartTime = useStartTime;
+	/**
+	 * 设置：使用时长(单位是年)
+	 */
+	public void setUseTimeLength(String useTimeLength) {
+		this.useTimeLength = useTimeLength;
 	}
-
-	public Date getUseEndTime() {
-		return useEndTime;
+	/**
+	 * 获取：使用时长(单位是年)
+	 */
+	public String getUseTimeLength() {
+		return useTimeLength;
 	}
-
-	public void setUseEndTime(Date useEndTime) {
-		this.useEndTime = useEndTime;
-	}
-
-	public String getUseState() {
-		return useState;
-	}
-
-	public void setUseState(String useState) {
-		this.useState = useState;
-	}
-
-	public BigDecimal getPrice() {
-		return price;
-	}
-
-	public void setPrice(BigDecimal price) {
+	/**
+	 * 设置：商品价格
+	 */
+	public void setPrice(Double price) {
 		this.price = price;
 	}
-
-	public Long getPublishUserId() {
-		return publishUserId;
+	/**
+	 * 获取：商品价格
+	 */
+	public Double getPrice() {
+		return price;
 	}
-
+	/**
+	 * 设置：商品发布人
+	 */
 	public void setPublishUserId(Long publishUserId) {
 		this.publishUserId = publishUserId;
 	}
-
-	public Integer getTradeMode() {
-		return tradeMode;
+	/**
+	 * 获取：商品发布人
+	 */
+	public Long getPublishUserId() {
+		return publishUserId;
 	}
-
-	public void setTradeMode(Integer tradeMode) {
-		this.tradeMode = tradeMode;
+	/**
+	 * 设置：商品发布地址(省，市，区)
+	 */
+	public void setAddress(String address) {
+		this.address = address;
 	}
-
-	public Date getCreateTime() {
-		return createTime;
+	/**
+	 * 获取：商品发布地址(省，市，区)
+	 */
+	public String getAddress() {
+		return address;
 	}
-
+	/**
+	 * 设置：详情地址
+	 */
+	public void setDetailAddress(String detailAddress) {
+		this.detailAddress = detailAddress;
+	}
+	/**
+	 * 获取：详情地址
+	 */
+	public String getDetailAddress() {
+		return detailAddress;
+	}
+	/**
+	 * 设置：经度
+	 */
+	public void setLongitude(String longitude) {
+		this.longitude = longitude;
+	}
+	/**
+	 * 获取：经度
+	 */
+	public String getLongitude() {
+		return longitude;
+	}
+	/**
+	 * 设置：纬度
+	 */
+	public void setLatitude(String latitude) {
+		this.latitude = latitude;
+	}
+	/**
+	 * 获取：纬度
+	 */
+	public String getLatitude() {
+		return latitude;
+	}
+	/**
+	 * 设置：寄卖费
+	 */
+	public void setConsignmentPrice(Double consignmentPrice) {
+		this.consignmentPrice = consignmentPrice;
+	}
+	/**
+	 * 获取：寄卖费
+	 */
+	public Double getConsignmentPrice() {
+		return consignmentPrice;
+	}
+	/**
+	 * 设置：运费
+	 */
+	public void setFreight(Double freight) {
+		this.freight = freight;
+	}
+	/**
+	 * 获取：运费
+	 */
+	public Double getFreight() {
+		return freight;
+	}
+	/**
+	 * 设置：到店时间
+	 */
+	public void setArrivalTime(Date arrivalTime) {
+		this.arrivalTime = arrivalTime;
+	}
+	/**
+	 * 获取：到店时间
+	 */
+	public Date getArrivalTime() {
+		return arrivalTime;
+	}
+	/**
+	 * 设置：审核状态(0未审核/1已通过/2已拒绝)
+	 */
+	public void setAuditStatus(Integer auditStatus) {
+		this.auditStatus = auditStatus;
+	}
+	/**
+	 * 获取：审核状态(0未审核/1已通过/2已拒绝)
+	 */
+	public Integer getAuditStatus() {
+		return auditStatus;
+	}
+	/**
+	 * 设置：创建时间
+	 */
 	public void setCreateTime(Date createTime) {
 		this.createTime = createTime;
 	}
-
-	public Date getUpdateTime() {
-		return updateTime;
+	/**
+	 * 获取：创建时间
+	 */
+	public Date getCreateTime() {
+		return createTime;
 	}
-
+	/**
+	 * 设置：修改时间
+	 */
 	public void setUpdateTime(Date updateTime) {
 		this.updateTime = updateTime;
 	}
-
-	public String getBrand() {
-		return brand;
+	/**
+	 * 获取：修改时间
+	 */
+	public Date getUpdateTime() {
+		return updateTime;
 	}
-
-	public void setBrand(String brand) {
-		this.brand = brand;
+	public Long getId() {
+		return id;
 	}
-
-	public String getModel() {
-		return model;
+	public void setId(Long id) {
+		this.id = id;
 	}
-
-	public void setModel(String model) {
-		this.model = model;
+	public Long getQualityShopId() {
+		return qualityShopId;
 	}
-
-	public String getColor() {
-		return color;
+	public void setQualityShopId(Long qualityShopId) {
+		this.qualityShopId = qualityShopId;
 	}
-
-	public void setColor(String color) {
-		this.color = color;
+	public Long getCommodityCategoryId() {
+		return commodityCategoryId;
 	}
-
-	public String getMaterial() {
-		return material;
-	}
-
-	public void setMaterial(String material) {
-		this.material = material;
-	}
-
-	public Integer getHaveFlaw() {
-		return haveFlaw;
-	}
-
-	public void setHaveFlaw(Integer haveFlaw) {
-		this.haveFlaw = haveFlaw;
-	}
-
-	public String getTyreSize() {
-		return tyreSize;
-	}
-
-	public void setTyreSize(String tyreSize) {
-		this.tyreSize = tyreSize;
-	}
-
-	public String getHoleSpacing() {
-		return holeSpacing;
-	}
-
-	public void setHoleSpacing(String holeSpacing) {
-		this.holeSpacing = holeSpacing;
-	}
-
-	public Integer getManufacturMode() {
-		return manufacturMode;
-	}
-
-	public void setManufacturMode(Integer manufacturMode) {
-		this.manufacturMode = manufacturMode;
-	}
-
-	public String getLightType() {
-		return lightType;
-	}
-
-	public void setLightType(String lightType) {
-		this.lightType = lightType;
-	}
-
-	public String getHubSize() {
-		return hubSize;
-	}
-
-	public void setHubSize(String hubSize) {
-		this.hubSize = hubSize;
-	}
-
-	public String getSize() {
-		return size;
-	}
-
-	public void setSize(String size) {
-		this.size = size;
-	}
-
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
-	}
-
-	public String getFlaw() {
-		return flaw;
-	}
-
-	public void setFlaw(String flaw) {
-		this.flaw = flaw;
-	}
-
-	public Integer getPosition() {
-		return position;
-	}
-
-	public void setPosition(Integer position) {
-		this.position = position;
-	}
-
-	public Integer getCommodityNum() {
-		return commodityNum;
-	}
-
-	public void setCommodityNum(Integer commodityNum) {
-		this.commodityNum = commodityNum;
-	}
-
-	public BigDecimal getStartPrice() {
-		return startPrice;
-	}
-
-	public void setStartPrice(BigDecimal startPrice) {
-		this.startPrice = startPrice;
-	}
-
-	public BigDecimal getFreight() {
-		return freight;
-	}
-
-	public void setFreight(BigDecimal freight) {
-		this.freight = freight;
-	}
-
-	public String getPublishUserName() {
-		return publishUserName;
-	}
-
-	public void setPublishUserName(String publishUserName) {
-		this.publishUserName = publishUserName;
-	}
-
-	public String getPublishUserHead() {
-		return publishUserHead;
-	}
-
-	public void setPublishUserHead(String publishUserHead) {
-		this.publishUserHead = publishUserHead;
-	}
-
-	public String getOtherCategoryName() {
-		return otherCategoryName;
-	}
-
-	public void setOtherCategoryName(String otherCategoryName) {
-		this.otherCategoryName = otherCategoryName;
-	}
-
-	public String getConcreteDescription() {
-		return concreteDescription;
-	}
-
-	public void setConcreteDescription(String concreteDescription) {
-		this.concreteDescription = concreteDescription;
+	public void setCommodityCategoryId(Long commodityCategoryId) {
+		this.commodityCategoryId = commodityCategoryId;
 	}
 }

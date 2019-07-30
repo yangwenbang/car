@@ -34,6 +34,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 
 import com.car.annotation.Login;
 import com.car.common.utils.R;
+import com.car.dto.CommodityQuestionDTO;
 import com.car.dto.ProvinceAndCityNameDTO;
 import com.car.entity.PayRecord;
 import com.car.exception.DAOException;
@@ -68,8 +69,6 @@ public class ApiPersonalController {
     @Autowired
     private ProvinceService provinceService;
     @Autowired
-    private PayRecordService payRecordService;
-    @Autowired
     private UserAddressService userAddressService;
     @Autowired
     private EquipmentManagerService equipmentManagerService;
@@ -82,235 +81,11 @@ public class ApiPersonalController {
 	private PublishPostService publishPostService;
 	@Autowired
 	private SysInfoService sysInfoService;
-
-    @Login
-    @PostMapping("saveUserDetail")
-    public R login(@ModelAttribute UserDetailForm userDetailForm) throws DAOException {
-    	
-    	long userId = userDetailForm.getUserId();
-    	String columnNames = userDetailForm.getColumnNames();
-    	String columnValues = userDetailForm.getColumnValues();
-    	
-    	if (userId == 0) {
-    		throw new DAOException("userId is null");
-    	}
-
-		try {
-			UserVO userVO = userService.findById(userId);
-			
-			UserDetailVO detailVO = userDetailService.getUserDetailByCondition(userId);
-			
-			String cityName = "";
-			String education = "";
-			String userPic = "";
-			int userType = 0;
-			int buySmsRemind = 0;
-			int openSmsRemind = 1;
-			long cityId = 0;
-			
-			
-			if (detailVO != null) {
-				cityId = detailVO.getCityId();
-				education = detailVO.getEducation();
-				buySmsRemind = detailVO.getBuySmsRemind();
-				openSmsRemind = detailVO.getOpenSmsRemind();
-				userType = detailVO.getUserType();
-				userPic = detailVO.getUserPicture();
-			}
-			
-			String[] columnName = StringUtil.tokenize(columnNames, ";", true, true);
-			String[] columnValue = StringUtil.tokenize(columnValues, ";", true, true);
-			
-			if (columnName.length != columnValue.length) {
-				throw new DAOException("字段名和字段值不匹配！");
-			}
-			
-			boolean isBuy = false;
-			for (int i = 0; i < columnName.length; i++) {
-				
-				String name = columnName[i];
-				String value = columnValue[i];
-				
-				if ("cityName".equals(name)) {
-					
-					CityVO cityVO = cityService.findByCityName(value);
-					
-					if (cityVO == null) {
-						throw new DAOException("cityName : " + cityName + " 在数据库中不存在!");
-					}
-					
-					cityId = cityVO.getCityId();
-					continue;
-					
-				}
-				
-				if ("education".equals(name)) {
-					education = value;
-					continue;
-				}
-				
-				if ("buySmsRemind".equals(name)) {
-					buySmsRemind = Integer.valueOf(value);
-					continue;
-				}
-
-				if ("openSmsRemind".equals(name)) {
-					openSmsRemind = Integer.valueOf(value);
-					continue;
-				}
-				
-				if ("userType".equals(name)) {
-					userType = Integer.valueOf(value);
-					continue;
-				}
-				
-				if ("userPicture".equals(name)) {
-					userPic = value;
-					continue;
-				}
-				
-			}
-			
-			if (detailVO == null) {
-				
-				// 新增.
-				detailVO = new UserDetailVO();
-				detailVO.setUserId(userId);
-				detailVO.setCityId(cityId);
-				detailVO.setEducation(education);
-				detailVO.setBuySmsRemind(buySmsRemind);
-				detailVO.setOpenSmsRemind(openSmsRemind);
-				detailVO.setUserType(userType);
-				userDetailService.saveUserDetail(detailVO);
-				
-			} else {
-				
-				detailVO.setCityId(cityId);
-				detailVO.setEducation(education);
-				detailVO.setBuySmsRemind(buySmsRemind);
-				detailVO.setOpenSmsRemind(openSmsRemind);
-				detailVO.setUserType(userType);
-				userDetailService.updateUserDetail(detailVO);
-				
-			}
-		} catch (DAOException e) {
-			log.error("save userDetail occur error ", e);
-			return R.error();
-		}
-
-        return R.ok();
-    }
-    
-    @Login
-    @GetMapping("provinceAndCityNames")
-    public R getProvinceAndCityNames() throws DAOException {
-    	List<ProvinceAndCityNameDTO> provinceCityNames = new ArrayList<>();
-		try {
-			List<ProvinceVO> provinceVOs = provinceService.getProvinces();
-			
-			List<String> cityNames = null;
-			ProvinceAndCityNameDTO vo = null;
-			List<CityVO> citys = new ArrayList<CityVO>();
-			for (ProvinceVO province : provinceVOs) {
-				
-				citys = cityService.getCitysByProvince(province.getProvinceId());
-				
-				cityNames = new ArrayList<String>();
-				for (CityVO city : citys) {
-					cityNames.add(city.getCityName());
-				}
-				
-				vo = new ProvinceAndCityNameDTO(province.getProvinceName(), cityNames);
-				
-				provinceCityNames.add(vo);
-				
-				vo = null;
-				
-			}
-		} catch (DAOException e) {
-			log.error("get provinceCityNames occur error ", e);
-			return R.error();
-		}
-		
-        return R.ok().put(DATA, provinceCityNames);
-    }
-    
-    @Login
-    @PostMapping("pay")
-    public R pay(@ModelAttribute PayForm payForm,
-    		HttpServletRequest request) throws Exception {
-    	
-    	long userId = payForm.getUserId();
-    	int payType = payForm.getPayType();
-    	String coin = payForm.getCoin();
-    	
-    	if (userId == 0) {
-    		throw new DAOException("userId is null");
-    	}
-    	
-    	String data = "";
-    	try {
-    		String ipAddress = getIpAddress(request);
-    		String orderNo = AlipayUtils.getOrderNo();
-    		if (payType == 0) { // 支付宝
-    			PayService aliPayService = new AliPayServiceImpl();
-    			String notifyUrl = AlipayUtils.getNotifyUrl(request);
-    			data = aliPayService.createAliOrder(notifyUrl, orderNo, coin, "学币充值", ipAddress);
-    			
-    			// orderNo错误
-    			savePayRecord(userId, payType, orderNo, coin);
-    			
-    			return R.ok().put(DATA, data);
-    		} else if (payType == 1) { // 微信
-    			PayService weChatService = new WeChatPayServiceImpl();
-    			String notifyUrl = WeChatPayUtils.getNotifyUrl(request);
-//    			Map<String, String> dataMap = weChatService.createWeChatOrder(notifyUrl, orderNo, coin, "", ipAddress);
-    			SortedMap<String, Object> dataMap = weChatService.createWeChatOrder(notifyUrl, orderNo, coin, "学币充值", ipAddress);
-    			
-    			savePayRecord(userId, payType, orderNo, coin);
-    			
-    			return R.ok().put(DATA, dataMap);
-    		}
-				
-		} catch (Exception e) {
-			log.error("get pay occur error ", e);
-			return R.error();
-		}
-		
-        return R.ok();
-    }
-
-    @PostMapping("alipayNotify")
-    public String alipayNotify(HttpServletRequest request, HttpServletResponse response) {
-        try {
-        	PayService aliPayService = new AliPayServiceImpl();
-            return aliPayService.callBack(request, response);
-        } catch (Exception e) {
-            response.setHeader("Content-type", "application/xml");
-            return "<xml>\n" +
-                    "  <return_code><![CDATA[FAIL]]></return_code>\n" +
-                    "  <return_msg><![CDATA[]]></return_msg>\n" +
-                    "</xml>";
-        }
-    }
-    
-    @PostMapping("weChatNotify")
-    public String weChatNotify(HttpServletRequest request, HttpServletResponse response) {
-        try {
-        	PayService weChatService = new WeChatPayServiceImpl();
-            return weChatService.callBack(request, response);
-        } catch (Exception e) {
-            response.setHeader("Content-type", "application/xml");
-            return "<xml>\n" +
-                    "  <return_code><![CDATA[FAIL]]></return_code>\n" +
-                    "  <return_msg><![CDATA[]]></return_msg>\n" +
-                    "</xml>";
-        }
-    }
     
     @Login
     @GetMapping("userAddress")
-    public R getUserAddress(@RequestParam("userId") long userId) throws DAOException {
+    @ApiOperation("获取用户地址接口")
+    public Result<List<UserAddressVO>> getUserAddress(@ApiParam(value = "用户ID")@RequestParam("userId") long userId) throws DAOException {
     	List<UserAddressVO> userAddress = new ArrayList<>();
 		try {
 			
@@ -318,15 +93,16 @@ public class ApiPersonalController {
 				
 		} catch (DAOException e) {
 			log.error("get userAddress occur error ", e);
-			return R.error();
+			return new Result<>(500, e.getMessage());
 		}
 		
-        return R.ok().put(DATA, userAddress);
+        return new Result<>(ZERO, SUCCESS, userAddress);
     }
     
     @Login
     @PostMapping("saveUserAddress")
-    public R saveUserAddress(@ModelAttribute UserAddressForm userAddressForm) throws DAOException {
+    @ApiOperation("保存用户地址接口")
+    public Result<String> saveUserAddress(@ModelAttribute UserAddressForm userAddressForm) throws DAOException {
     	
     	if (userAddressForm == null) {
     		throw new DAOException("userAddressForm is null");
@@ -343,10 +119,10 @@ public class ApiPersonalController {
 			
 		} catch (DAOException e) {
 			log.error("save userAddress occur error ", e);
-			return R.error();
+			return new Result<>(500, e.getMessage());
 		}
 
-        return R.ok();
+		return new Result<>(ZERO, SUCCESS);
     }
     
     @Login
@@ -412,48 +188,6 @@ public class ApiPersonalController {
         return R.ok().put(DATA, EquipmentManager);
     }
     
-    private void savePayRecord(long userId, int payType, String orderNo, String coin)
-			throws DAOException {
-		// payRecord
-		UserVO user = userService.findById(userId);
-		PayRecord payRecord = new PayRecord();
-		payRecord.setUserId(userId);
-		payRecord.setUserMobile(user.getMobile());
-		payRecord.setUserName(user.getUserName());
-		payRecord.setCargoType(ZERO);
-		payRecord.setPayOrReturn(ZERO);
-		payRecord.setPayDate(new Date());
-		payRecord.setCoin(new BigDecimal(coin));
-		payRecord.setPayType(payType);
-		payRecord.setBank("");
-		payRecord.setCardNum("");
-		payRecord.setPayer(user.getUserName());
-		payRecord.setOrderNo(orderNo);
-		payRecord.setPayStatus(ZERO);
-		payRecord.setVersion(ZERO);
-		payRecordService.savePayRecord(payRecord);
-	}
-    
-    private static String getIpAddress(HttpServletRequest request) {
-		String ip = request.getHeader("x-forwarded-for");
-		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-			ip = request.getHeader("Proxy-Client-IP");
-		}
-		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-			ip = request.getHeader("WL-Proxy-Client-IP");
-		}
-		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-			ip = request.getHeader("HTTP_CLIENT_IP");
-		}
-		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-			ip = request.getHeader("HTTP_X_FORWARDED_FOR");
-		}
-		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-			ip = request.getRemoteAddr();
-		}
-		return ip;
-	}
-
 	@Login
 	@PostMapping("/saveUserFeedback")
 	@ApiOperation("用户反馈接口")

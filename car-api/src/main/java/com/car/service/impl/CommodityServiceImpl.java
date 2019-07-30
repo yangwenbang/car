@@ -1,18 +1,22 @@
 package com.car.service.impl;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Date;
 import java.util.List;
 
-import com.car.form.UpdateOldCommodityForm;
+import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.car.ApiConstants;
+import com.car.common.utils.DateUtils;
 import com.car.dao.CommodityDao;
 import com.car.entity.OldCommodity;
 import com.car.exception.DAOException;
 import com.car.form.OldCommodityForm;
+import com.car.form.UpdateOldCommodityForm;
 import com.car.service.CommodityService;
 import com.car.vo.CommodityVO;
 
@@ -24,39 +28,32 @@ public class CommodityServiceImpl implements CommodityService {
     private CommodityDao commodityDao;
 
     @Transactional(rollbackFor = Exception.class)
-    public void insertCommodity(OldCommodityForm commodity) throws DAOException {
+    public void insertCommodity(OldCommodityForm commodityForm) throws DAOException {
         OldCommodity commodityEntity = new OldCommodity();
-        commodityEntity.setCommodityName(commodity.getCommodityName());
-        commodityEntity.setCommodityCategoryId(commodity.getCommodityCategoryId());
-        commodityEntity.setDescription(commodity.getDescription());
-        commodityEntity.setUseStartTime(commodity.getUseStartTime());
-        commodityEntity.setUseEndTime(commodity.getUseEndTime());
-        commodityEntity.setTradeMode(commodity.getTradeMode());
-        commodityEntity.setPublishUserId(commodity.getPublishUserId());
-        commodityEntity.setCommodityPicture(commodity.getCommodityPicture());
-        commodityEntity.setUseState(commodity.getUseState());
-        commodityEntity.setBrand(commodity.getBrand());
-        commodityEntity.setModel(commodity.getModel());
-        commodityEntity.setColor(commodity.getColor());
-        commodityEntity.setMaterial(commodity.getMaterial());
-        commodityEntity.setHaveFlaw(commodity.getHaveFlaw());
-        commodityEntity.setTyreSize(commodity.getTyreSize());
-        commodityEntity.setHoleSpacing(commodity.getHoleSpacing());
-        commodityEntity.setManufacturMode(commodity.getManufacturMode());
-        commodityEntity.setLightType(commodity.getLightType());
-        commodityEntity.setHubSize(commodity.getHubSize());
-        commodityEntity.setSize(commodity.getSize());
-        commodityEntity.setType(commodity.getType());
-        commodityEntity.setFlaw(commodity.getFlaw());
-        commodityEntity.setCommodityNum(commodity.getCommodityNum());
-        commodityEntity.setPrice(commodity.getPrice());
-        commodityEntity.setPosition(commodity.getPosition());
-        commodityEntity.setStartPrice(commodity.getStartPrice());
-        commodityEntity.setFreight(commodity.getFreight());
-        commodityEntity.setConcreteDescription(commodity.getConcreteDescription());
-        commodityEntity.setOtherCategoryName(commodity.getOtherCategoryName());
-        commodityEntity.setPublishUserHead(commodity.getPublishUserHead());
-        commodityEntity.setPublishUserName(commodity.getPublishUserName());
+        
+        commodityEntity.setAddress(commodityForm.getAddress());
+        commodityEntity.setCommodityCategoryId(commodityForm.getCommodityCategoryId());
+        commodityEntity.setQualityShopId(commodityForm.getQualityShopId());
+        commodityEntity.setCommodityName(commodityForm.getCommodityName());
+        commodityEntity.setCommodityCode("0000");
+        commodityEntity.setCommodityPicture(commodityForm.getCommodityPicture());
+        commodityEntity.setDetailAddress(commodityForm.getDetailAddress());
+        commodityEntity.setAuditStatus(0);
+        commodityEntity.setConsignmentPrice(commodityForm.getConsignmentPrice());
+        commodityEntity.setPublishUserId(commodityForm.getPublishUserId());
+        commodityEntity.setDescription(commodityForm.getDescription());
+        commodityEntity.setFreight(commodityForm.getFreight());
+        commodityEntity.setLatitude(commodityForm.getLatitude());
+        commodityEntity.setLongitude(commodityForm.getLatitude());
+        commodityEntity.setPrice(commodityForm.getPrice());
+        commodityEntity.setUseTimeLength(commodityForm.getUseTimeLength());
+        
+        String arrivalTimeString = commodityForm.getArrivalTime();
+        if (StringUtils.isNoneEmpty(arrivalTimeString)) {
+        	Date arrivalTime = DateUtils.parseDate(arrivalTimeString);
+        	commodityEntity.setArrivalTime(arrivalTime);
+        }
+        
         commodityEntity.setCreateTime(new Date());
         commodityEntity.setUpdateTime(new Date());
         commodityDao.insertCommodity(commodityEntity);

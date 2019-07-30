@@ -10,10 +10,12 @@ public class PayRecord implements Serializable {
 	
 	private Long id;
 	private Long userId;
+	private Long commodityId;
+	private String commodityName;
 	private String userMobile;
 	private String userName;
 	private Date payDate;
-	private BigDecimal coin;
+	private Double payMoney;
 	private Integer payType;
 	private String bank;
 	private String cardNum;
@@ -65,12 +67,20 @@ public class PayRecord implements Serializable {
 		this.payDate = payDate;
 	}
 
-	public BigDecimal getCoin() {
-		return coin == null ? new BigDecimal(0) : coin;
+	public Long getCommodityId() {
+		return commodityId;
 	}
 
-	public void setCoin(BigDecimal coin) {
-		this.coin = coin;
+	public void setCommodityId(Long commodityId) {
+		this.commodityId = commodityId;
+	}
+
+	public Double getPayMoney() {
+		return payMoney;
+	}
+
+	public void setPayMoney(Double payMoney) {
+		this.payMoney = payMoney;
 	}
 
 	public Integer getPayType() {
@@ -151,6 +161,14 @@ public class PayRecord implements Serializable {
 
 	public void setVersion(Integer version) {
 		this.version = version;
+	}
+
+	public String getCommodityName() {
+		return commodityName == null ? "" : commodityName;
+	}
+
+	public void setCommodityName(String commodityName) {
+		this.commodityName = commodityName;
 	}
 
 }
