@@ -1,11 +1,9 @@
 package com.car.service.impl;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.commons.beanutils.BeanUtils;
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -49,11 +47,11 @@ public class CommodityServiceImpl implements CommodityService {
         commodityEntity.setUseTimeLength(commodityForm.getUseTimeLength());
         
         String arrivalTimeString = commodityForm.getArrivalTime();
-        if (StringUtils.isNoneEmpty(arrivalTimeString)) {
+        if (StringUtils.isNotEmpty(arrivalTimeString)) {
         	Date arrivalTime = DateUtils.parseDate(arrivalTimeString);
         	commodityEntity.setArrivalTime(arrivalTime);
         }
-        
+
         commodityEntity.setCreateTime(new Date());
         commodityEntity.setUpdateTime(new Date());
         commodityDao.insertCommodity(commodityEntity);
